@@ -1,0 +1,41 @@
+<{* $Id: inc_map_param_js.html,v 1.1.1.1 2012/03/17 09:28:11 ohwada Exp $ *}>
+
+	var param = {};
+	param["latitude"]    = <{$latitude}>;
+	param["longitude"]   = <{$longitude}>;
+	param["zoom"]        = <{$zoom}>;
+	param["map_div_id"]  = "<{$map_div_id}>";
+
+<{* value: strings : "true" or "false" *}>
+	<{if $map_type_control}>
+		param["map_type_control"] = <{$map_type_control}>;
+	<{/if}>
+	<{if $zoom_control}>
+		param["zoom_control"] = <{$zoom_control}>;
+	<{/if}>
+	<{if $pan_control}>
+		param["pan_control"] = <{$pan_control}>;
+	<{/if}>
+	<{if $street_view_control}>
+		param["street_view_control"] = <{$street_view_control}>;
+	<{/if}>
+	<{if $scale_control}>
+		param["scale_control"] = <{$scale_control}>;
+	<{/if}>
+	<{if $overview_map_control}>
+		param["overview_map_control"] = <{$overview_map_control}>;
+	<{/if}>
+	<{if $overview_map_control_opened}>
+		param["overview_map_control_opened"] = <{$overview_map_control_opened}>;
+	<{/if}>
+
+<{* value: strings *}>
+	<{if $map_type_control_style}>
+		param["map_type_control_style"] = "<{$map_type_control_style}>";
+	<{/if}>
+	<{if $map_type}>
+		param["map_type"] = "<{$map_type}>";
+	<{/if}>
+	<{if $zoom_control_style}>
+		param["zoom_control_style"] = "<{$zoom_control_style}>";
+	<{/if}>

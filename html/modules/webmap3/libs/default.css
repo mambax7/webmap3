@@ -1,0 +1,42 @@
+/* $Id: default.css,v 1.1.1.1 2012/03/17 09:28:53 ohwada Exp $ */
+
+.webmap3_map
+{
+	border:  1px solid #808080;	/* gray */
+	width:   98%;
+	height:  450px;
+	margin:  5px;
+	padding: 5px;
+}
+
+.webmap3_map_search
+{
+	border:  1px solid #808080;	/* gray */
+	width:   98%;
+	height:  450px;
+	margin:  5px;
+	padding: 5px;
+}
+
+.webmap3_map_location
+{
+	border:  1px solid #808080;	/* gray */
+	width:   98%;
+	height:  450px;
+	margin:  5px;
+	padding: 5px;
+}
+
+.webmap3_map_admin
+{
+	border:  1px solid #808080;	/* gray */
+	width:   98%;
+	height:  450px;
+	margin:  5px;
+	padding: 5px;
+}
+
+.webmap3_error
+{
+  color: #ff0000;
+}
