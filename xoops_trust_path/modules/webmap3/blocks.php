@@ -13,22 +13,22 @@
 // $MY_DIRNAME WEBPHOTO_TRUST_PATH are set by caller
 //---------------------------------------------------------
 
-if ( ! defined( 'WEBMAP3_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBMAP3_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webmap3 files
 //---------------------------------------------------------
-include_once WEBMAP3_TRUST_PATH.'/class/d3/optional.php';
-include_once WEBMAP3_TRUST_PATH.'/include/optional.php';
+include_once WEBMAP3_TRUST_PATH . '/class/d3/optional.php';
+include_once WEBMAP3_TRUST_PATH . '/include/optional.php';
 
-webmap3_include_once( 'include/api.php',      $MY_DIRNAME );
-webmap3_include_once( 'class/inc/config.php', $MY_DIRNAME );
-webmap3_include_once( 'class/inc/blocks.php', $MY_DIRNAME );
-webmap3_include_once( 'blocks/functions.php', $MY_DIRNAME );
+webmap3_include_once('include/api.php', $MY_DIRNAME);
+webmap3_include_once('class/inc/config.php', $MY_DIRNAME);
+webmap3_include_once('class/inc/blocks.php', $MY_DIRNAME);
+webmap3_include_once('blocks/functions.php', $MY_DIRNAME);
 
-webmap3_include_language( 'main.php',   $MY_DIRNAME );
-webmap3_include_language( 'blocks.php', $MY_DIRNAME );
+webmap3_include_language('main.php', $MY_DIRNAME);
+webmap3_include_language('blocks.php', $MY_DIRNAME);
 
 webmap3_include_once_preload_trust();
-
-?>

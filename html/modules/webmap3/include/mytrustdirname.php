@@ -6,26 +6,26 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // main
 //=========================================================
 $GLOBALS['MY_DIRNAME'] = $MY_DIRNAME;
 
-$MY_TRUST_DIRNAME = 'webmap3' ;
+$MY_TRUST_DIRNAME = 'webmap3';
 
 // xoops_virsion.php call many times
-if ( !defined("WEBMAP3_TIME_START") ) {
-	list($usec, $sec) = explode(" ",microtime()); 
-	$time = floatval($sec) + floatval($usec); 
-	define("WEBMAP3_TIME_START", $time );
+if (!defined('WEBMAP3_TIME_START')) {
+    list($usec, $sec) = explode(' ', microtime());
+    $time = (float)$sec + (float)$usec;
+    define('WEBMAP3_TIME_START', $time);
 }
-if ( !defined("WEBMAP3_TRUST_DIRNAME") ) {
-	define("WEBMAP3_TRUST_DIRNAME", $MY_TRUST_DIRNAME );
+if (!defined('WEBMAP3_TRUST_DIRNAME')) {
+    define('WEBMAP3_TRUST_DIRNAME', $MY_TRUST_DIRNAME);
 }
-if ( !defined("WEBMAP3_TRUST_PATH") ) {
-	define("WEBMAP3_TRUST_PATH", XOOPS_TRUST_PATH.'/modules/'.WEBMAP3_TRUST_DIRNAME );
+if (!defined('WEBMAP3_TRUST_PATH')) {
+    define('WEBMAP3_TRUST_PATH', XOOPS_TRUST_PATH . '/modules/' . WEBMAP3_TRUST_DIRNAME);
 }
-
-?>

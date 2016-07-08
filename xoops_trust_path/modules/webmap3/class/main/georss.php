@@ -9,7 +9,9 @@
 // 2012-03-01 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webmap3_main_georss
@@ -17,46 +19,43 @@ if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webmap3_main_georss extends webmap3_view_map
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webmap3_main_georss( $dirname )
-{
-	$this->webmap3_view_map( $dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname)
+    {
+        parent::__construct($dirname);
+    }
+
+    public static function getInstance($dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webmap3_main_georss($dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // main
+    //---------------------------------------------------------
+    public function main()
+    {
+        $param                = $this->build_main();
+        $param['geo_url_s']   = $this->get_config_text('geo_url', 's');
+        $param['geo_title_s'] = $this->get_config_text('geo_title', 's');
+
+        $this->build_map();
+
+        return $param;
+    }
+
+    public function build_map()
+    {
+        $this->init_map();
+        $param = $this->_map_class->build_geoxml($this->get_config_text('geo_url'), true);
+        $this->_map_class->fetch_geoxml_head($param);
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webmap3_main_georss( $dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// main
-//---------------------------------------------------------
-function main()
-{
-	$param = $this->build_main();
-	$param['geo_url_s']   = $this->get_config_text('geo_url',   's');
-	$param['geo_title_s'] = $this->get_config_text('geo_title', 's');
-
-	$this->build_map();
-
-	return $param;
-}
-
-function build_map()
-{
-	$this->init_map();
-	$param = $this->_map_class->build_geoxml( 
-		$this->get_config_text('geo_url'), true );
-	$this->_map_class->fetch_geoxml_head( $param );
-}
-
-// --- class end ---
-}
-
-?>

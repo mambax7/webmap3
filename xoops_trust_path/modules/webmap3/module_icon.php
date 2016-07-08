@@ -10,19 +10,19 @@
 // $MY_DIRNAME is set by caller
 //---------------------------------------------------------
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webmap3 files
 //---------------------------------------------------------
-include_once XOOPS_TRUST_PATH.'/modules/webmap3/init.php';
+include_once XOOPS_TRUST_PATH . '/modules/webmap3/init.php';
 
-webmap3_include_once( 'class/d3/module_icon.php', $MY_DIRNAME );
+webmap3_include_once('class/d3/module_icon.php', $MY_DIRNAME);
 
 //---------------------------------------------------------
 // main
 //---------------------------------------------------------
-$webmap3_module_icon = new webmap3_d3_module_icon( $MY_DIRNAME, WEBMAP3_TRUST_DIRNAME );
+$webmap3_module_icon = new webmap3_d3_module_icon($MY_DIRNAME, WEBMAP3_TRUST_DIRNAME);
 $webmap3_module_icon->output_image();
-
-?>

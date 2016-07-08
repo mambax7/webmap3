@@ -9,21 +9,21 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webmap3 files
 //---------------------------------------------------------
-webmap3_include_once( 'main/header.php' );
-webmap3_include_once( 'class/view/kml.php' );
-webmap3_include_once( 'class/main/kml.php' );
+webmap3_include_once('main/header.php');
+webmap3_include_once('class/view/kml.php');
+webmap3_include_once('class/main/kml.php');
 
 //=========================================================
 // main
 //=========================================================
-$builder =& webmap3_main_kml::getInstance( WEBMAP3_DIRNAME );
+$builder = webmap3_main_kml::getInstance(WEBMAP3_DIRNAME);
 $builder->main();
 
 exit();
-
-?>

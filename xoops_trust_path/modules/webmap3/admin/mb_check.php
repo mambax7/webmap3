@@ -6,21 +6,21 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webmap3 files
 //---------------------------------------------------------
-webmap3_include_once( 'class/lib/multibyte.php' );
-webmap3_include_once( 'class/admin/mb_check_base.php' );
-webmap3_include_once( 'class/admin/mb_check.php' );
-webmap3_include_language( 'admin.php' );
+webmap3_include_once('class/lib/multibyte.php');
+webmap3_include_once('class/admin/mb_check_base.php');
+webmap3_include_once('class/admin/mb_check.php');
+webmap3_include_language('admin.php');
 
 //=========================================================
 // main
 //=========================================================
-$manager =& webmap3_admin_mb_check::getInstance();
+$manager = webmap3_admin_mb_check::getInstance();
 $manager->main();
 exit();
-
-?>

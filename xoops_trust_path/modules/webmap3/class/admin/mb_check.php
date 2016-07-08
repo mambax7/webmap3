@@ -6,7 +6,9 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webmap3_admin_mb_check
@@ -14,25 +16,23 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webmap3_admin_mb_check extends webmap3_admin_mb_check_base
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webmap3_admin_mb_check()
-{
-	$this->webmap3_admin_mb_check_base();
-	$this->set_lang_success( _AM_WEBMAP3_CHK_MB_SUCCESS );
-}
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct()
+    {
+        parent::__construct();
+        $this->set_lang_success(_AM_WEBMAP3_CHK_MB_SUCCESS);
+    }
 
-function &getInstance()
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webmap3_admin_mb_check();
-	}
-	return $instance;
-}
+    public static function getInstance()
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webmap3_admin_mb_check();
+        }
+        return $instance;
+    }
 
-// --- class end ---
+    // --- class end ---
 }
-
-?>

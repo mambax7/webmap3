@@ -6,41 +6,41 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webmap3_main_kml
 //=========================================================
 class webmap3_main_kml
 {
-	var $_builder;
+    public $_builder;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webmap3_main_kml( $dirname )
-{
-	$this->_builder =& webmap3_view_kml::getInstance( $dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname)
+    {
+        $this->_builder = webmap3_view_kml::getInstance($dirname);
+    }
+
+    public static function getInstance($dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webmap3_main_kml($dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // main
+    //---------------------------------------------------------
+    public function main()
+    {
+        $this->_builder->build_webmap3_kml();
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webmap3_main_kml( $dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// main
-//---------------------------------------------------------
-function main()
-{
-	$this->_builder->build_webmap3_kml();
-}
-
-// --- class end ---
-}
-
-?>

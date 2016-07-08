@@ -6,40 +6,40 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webmap3_xoops_config_dirname
 //=========================================================
 class webmap3_xoops_config_dirname extends webmap3_xoops_config_base
 {
-	var $_cached = null ;
+    public $_cached = null;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webmap3_xoops_config_dirname( $dirname )
-{
-	$this->webmap3_xoops_config_base();
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname)
+    {
+        parent::__construct();
 
-	$config = $this->get_config_by_dirname( $dirname );
-	if ( is_array($config) ) {
-		$this->_cached = $config ;
-	}
+        $config = $this->get_config_by_dirname($dirname);
+        if (is_array($config)) {
+            $this->_cached = $config;
+        }
+    }
+
+    //---------------------------------------------------------
+    // function
+    //---------------------------------------------------------
+    public function get_value_by_name($name)
+    {
+        if (isset($this->_cached[$name])) {
+            return $this->_cached[$name];
+        }
+        return false;
+    }
+
+    // --- class end ---
 }
-
-//---------------------------------------------------------
-// function
-//---------------------------------------------------------
-function get_value_by_name( $name )
-{
-	if ( isset( $this->_cached[ $name ] ) ) {
-		return  $this->_cached[ $name ];
-	}
-	return false ;
-}
-
-// --- class end ---
-}
-
-?>

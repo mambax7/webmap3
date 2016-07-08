@@ -6,22 +6,22 @@
 // 2012-03-01 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webmap3 files
 //---------------------------------------------------------
-webmap3_include_once( 'admin/header.php' );
-webmap3_include_once( 'class/lib/gd.php' );
-webmap3_include_once( 'class/lib/server_info.php' );
-webmap3_include_once( 'class/admin/server_check.php' );
-webmap3_include_once( 'class/admin/index.php' );
+webmap3_include_once('admin/header.php');
+webmap3_include_once('class/lib/gd.php');
+webmap3_include_once('class/lib/server_info.php');
+webmap3_include_once('class/admin/server_check.php');
+webmap3_include_once('class/admin/index.php');
 
 //=========================================================
 // main
 //=========================================================
-$manager =& webmap3_admin_index::getInstance( WEBMAP3_DIRNAME, WEBMAP3_TRUST_DIRNAME );
+$manager = webmap3_admin_index::getInstance(WEBMAP3_DIRNAME, WEBMAP3_TRUST_DIRNAME);
 $manager->main();
 exit();
-
-?>

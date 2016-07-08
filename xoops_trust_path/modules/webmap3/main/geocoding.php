@@ -6,22 +6,22 @@
 // 2012-04-02 K.OHWADA
 //=========================================================
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
-webmap3_include_once( 'main/header.php' );
-webmap3_include_once( 'include/api.php' );
-webmap3_include_once( 'class/main/geocoding.php' );
+webmap3_include_once('main/header.php');
+webmap3_include_once('include/api.php');
+webmap3_include_once('class/main/geocoding.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webmap3_main_geocoding::getInstance( WEBMAP3_DIRNAME );
+$manage = webmap3_main_geocoding::getInstance(WEBMAP3_DIRNAME);
 
-$xoopsOption['template_main'] = WEBMAP3_DIRNAME.'_main_geocoding.html' ;
-include XOOPS_ROOT_PATH . "/header.php" ;
+$xoopsOption['template_main'] = WEBMAP3_DIRNAME . '_main_geocoding.html';
+include XOOPS_ROOT_PATH . '/header.php';
 
-$xoopsTpl->assign( $manage->main() ) ;
+$xoopsTpl->assign($manage->main());
 
-include( XOOPS_ROOT_PATH . "/footer.php" ) ;
-
-?>
+include(XOOPS_ROOT_PATH . '/footer.php');
