@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_gicon_table_manage
 //=========================================================
+
+/**
+ * Class webmap3_admin_gicon_table_manage
+ */
 class webmap3_admin_gicon_table_manage extends webmap3_lib_admin_manage
 {
     public $_URL_SIZE = 80;
@@ -20,24 +24,36 @@ class webmap3_admin_gicon_table_manage extends webmap3_lib_admin_manage
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_admin_gicon_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webmap3_handler_gicon::getSingleton($dirname));
         $this->set_manage_title_by_name('GICON_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('gicon_title', 'gicon_image_path'));
+        $this->set_manage_list_column_array(['gicon_title', 'gicon_image_path']);
 
         $menu_class = webmap3_admin_menu::getInstance($dirname, $trust_dirname);
         $this->set_manage_menu($menu_class->build_menu());
     }
 
-    public static function getInstance($dirname, $trust_dirname)
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_admin_gicon_table_manage|\webmap3_lib_form
+     */
+    public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_admin_gicon_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -52,9 +68,13 @@ class webmap3_admin_gicon_table_manage extends webmap3_lib_admin_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
+        $row = [
             'gicon_id'            => $this->_post_class->get_post_get_int('gicon_id'),
             'gicon_title'         => $this->_post_class->get_post_text('gicon_title'),
             'gicon_image_url'     => $this->_post_class->get_post_url('gicon_image_url'),
@@ -71,15 +91,19 @@ class webmap3_admin_gicon_table_manage extends webmap3_lib_admin_manage
             'gicon_anchor_y'      => $this->_post_class->get_post_int('gicon_anchor_y'),
             'gicon_info_x'        => $this->_post_class->get_post_int('gicon_info_x'),
             'gicon_info_y'        => $this->_post_class->get_post_int('gicon_info_y'),
+        ];
 
-        );
         return $row;
     }
 
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
-    public function _print_form($row)
+
+    /**
+     * @param $row
+     */
+    public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);
 

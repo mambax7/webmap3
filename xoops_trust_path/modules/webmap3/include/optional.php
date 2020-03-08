@@ -14,61 +14,110 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // optional functions
 // do not replace this file
 //=========================================================
+/**
+ * @return null|string|string[]
+ */
 function webmap3_fct()
 {
     $d3_class = webmap3_d3_optional::getInstance();
+
     return $d3_class->get_fct();
 }
 
+/**
+ * @param      $file
+ * @param bool $debug
+ * @return bool
+ */
 function webmap3_include_once_trust($file, $debug = true)
 {
     $d3_class = webmap3_d3_optional::getInstance();
     $d3_class->init_trust(WEBMAP3_TRUST_DIRNAME);
+
     return $d3_class->include_once_trust_file($file, $debug);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ * @param bool $debug
+ * @return bool
+ */
 function webmap3_include_once($file, $dirname = null, $debug = true)
 {
     $d3_class = webmap3_d3_optional::getInstance();
     $d3_class->init(webmap3_get_dirname($dirname), WEBMAP3_TRUST_DIRNAME);
+
     return $d3_class->include_once_file($file, $debug);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ * @param null $language
+ * @return bool
+ */
 function webmap3_include_once_language($file, $dirname = null, $language = null)
 {
     $d3_class = webmap3_d3_optional::getInstance();
     $d3_class->init(webmap3_get_dirname($dirname), WEBMAP3_TRUST_DIRNAME);
+
     return $d3_class->include_once_language($file);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ * @param null $language
+ * @return bool
+ */
 function webmap3_include_language($file, $dirname = null, $language = null)
 {
     $d3_class = webmap3_d3_optional::getInstance();
     $d3_class->init(webmap3_get_dirname($dirname), WEBMAP3_TRUST_DIRNAME);
+
     return $d3_class->include_language($file);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ */
 function webmap3_debug_msg($file, $dirname = null)
 {
     $d3_class = webmap3_d3_optional::getInstance();
     $d3_class->init(webmap3_get_dirname($dirname), WEBMAP3_TRUST_DIRNAME);
+
     return $d3_class->debug_msg_include_file($file);
 }
 
+/**
+ * @param null $dirname
+ * @return bool
+ */
 function webmap3_include_once_preload($dirname = null)
 {
     $preload_class = webmap3_d3_preload::getInstance();
     $preload_class->init(webmap3_get_dirname($dirname), WEBMAP3_TRUST_DIRNAME);
+
     return $preload_class->include_once_preload_files();
 }
 
+/**
+ * @return bool
+ */
 function webmap3_include_once_preload_trust()
 {
     $preload_class = webmap3_d3_preload::getInstance();
     $preload_class->init_trust(WEBMAP3_TRUST_DIRNAME);
+
     return $preload_class->include_once_preload_trust_files();
 }
 
+/**
+ * @param $dirname
+ * @return mixed|null|string
+ */
 function webmap3_get_dirname($dirname)
 {
     if (!defined('WEBMAP3_TRUST_DIRNAME')) {

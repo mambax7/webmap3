@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_view_base
 //=========================================================
+
+/**
+ * Class webmap3_view_base
+ */
 class webmap3_view_base
 {
     public $_xoops_param;
@@ -24,6 +28,11 @@ class webmap3_view_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_view_base constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME        = $dirname;
@@ -35,11 +44,15 @@ class webmap3_view_base
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_base()
     {
         $this->_header_class->assign_or_get_default_css(true);
 
-        $arr = array(
+        $arr = [
             'xoops_dirname'   => $this->_DIRNAME,
             'mydirname'       => $this->_DIRNAME,
             'module_name'     => $this->_xoops_param->get_module_name(),
@@ -68,14 +81,19 @@ class webmap3_view_base
             'lang_download_kml'         => $this->get_lang('DOWNLOAD_KML'),
             'lang_get_location'         => $this->get_lang('GET_LOCATION'),
             'lang_look_google_map'      => $this->get_lang('LOOK_GOOGLE_MAP'),
+        ];
 
-        );
         return $arr;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
@@ -84,11 +102,19 @@ class webmap3_view_base
     //---------------------------------------------------------
     // config
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function get_config($name)
     {
         return $this->_xoops_param->get_module_config_by_name($name);
     }
 
+    /**
+     * @param $name
+     * @return mixed|null|string
+     */
     public function get_config_text($name)
     {
         return $this->_xoops_param->get_module_config_text_by_name($name);
@@ -97,6 +123,11 @@ class webmap3_view_base
     //---------------------------------------------------------
     // language
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_lang($name)
     {
         return $this->_language_class->get_constant($name);

@@ -16,6 +16,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_d3_language_base
 //=========================================================
+
+/**
+ * Class webmap3_d3_language_base
+ */
 class webmap3_d3_language_base
 {
     public $_DIRNAME;
@@ -28,6 +32,12 @@ class webmap3_d3_language_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_d3_language_base constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_DIRNAME       = $dirname;
@@ -39,38 +49,48 @@ class webmap3_d3_language_base
         $this->set_debug_error_by_const_name($dirname . '_C_DEBUG_ERROR');
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_d3_language_base
+     */
     public static function getInstance($dirname, $trust_dirname)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_d3_language_base($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_lang_array()
     {
-        $arr1 = array();
-        $arr2 = array();
+        $arr1 = [];
+        $arr2 = [];
 
-        $needle1      = strtoupper('_' . $this->_TRUST_DIRNAME . '_');
-        $needle2      = strtolower($this->_DIRNAME . '_');
+        $needle1      = mb_strtoupper('_' . $this->_TRUST_DIRNAME . '_');
+        $needle2      = mb_strtolower($this->_DIRNAME . '_');
         $constant_arr = get_defined_constants();
 
         foreach ($constant_arr as $k => $v) {
-            if (strpos($k, $needle1) !== 0) {
+            if (0 !== mb_strpos($k, $needle1)) {
                 continue;
             }
 
-            $key        = strtolower(str_replace($needle1, '', $k));
+            $key        = mb_strtolower(str_replace($needle1, '', $k));
             $arr1[$key] = $v;
         }
 
         foreach ($arr1 as $k => $v) {
-            if (strpos($k, $needle2) !== 0) {
+            if (0 !== mb_strpos($k, $needle2)) {
                 continue;
             }
 
@@ -86,6 +106,10 @@ class webmap3_d3_language_base
         return $arr2;
     }
 
+    /**
+     * @param $name
+     * @return mixed|string
+     */
     public function get_constant($name)
     {
         $cont_name_1 = $this->build_constant_name_1($name);
@@ -104,19 +128,26 @@ class webmap3_d3_language_base
         }
 
         if ($this->_DEBUG_ERROR) {
-            echo $this->highlight('CANNOT get constant ' . $name) . "<br />\n";
+            echo $this->highlight('CANNOT get constant ' . $name) . "<br >\n";
         }
+
         return $cont_name_4;
     }
 
+    /**
+     * @param $val
+     */
     public function set_debug_error($val)
     {
         $this->_DEBUG_ERROR = (bool)$val;
     }
 
+    /**
+     * @param $name
+     */
     public function set_debug_error_by_const_name($name)
     {
-        $name = strtoupper($name);
+        $name = mb_strtoupper($name);
         if (defined($name)) {
             $this->set_debug_error(constant($name));
         }
@@ -125,33 +156,59 @@ class webmap3_d3_language_base
     //---------------------------------------------------------
     // private
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_constant_name_1($name)
     {
         $str = '_' . $this->_TRUST_DIRNAME . '_' . $this->_DIRNAME . '_' . $name;
-        return strtoupper($str);
+
+        return mb_strtoupper($str);
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_constant_name_2($name)
     {
         $str = '_' . $this->_DIRNAME . '_' . $name;
-        return strtoupper($str);
+
+        return mb_strtoupper($str);
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_constant_name_3($name)
     {
         $str = '_' . $this->_TRUST_DIRNAME . '_' . $name;
-        return strtoupper($str);
+
+        return mb_strtoupper($str);
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_constant_name_4($name)
     {
         $str = '_' . $name;
-        return strtoupper($str);
+
+        return mb_strtoupper($str);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function highlight($str)
     {
         $val = '<span style="color:#ff0000;">' . $str . '</span>';
+
         return $val;
     }
 

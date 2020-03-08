@@ -12,6 +12,10 @@
 //=========================================================
 // class webmap3_admin_location
 //=========================================================
+
+/**
+ * Class webmap3_admin_location
+ */
 class webmap3_admin_location extends webmap3_admin_base
 {
     public $_config_item_class;
@@ -24,6 +28,12 @@ class webmap3_admin_location extends webmap3_admin_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_admin_location constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -35,12 +45,18 @@ class webmap3_admin_location extends webmap3_admin_base
         $this->_THIS_URL = $this->build_this_url($this->_THIS_FCT);
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_admin_base|\webmap3_admin_location|\webmap3_lib_admin_base
+     */
     public static function getInstance($dirname, $trust_dirname)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_admin_location($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -51,7 +67,7 @@ class webmap3_admin_location extends webmap3_admin_base
     {
         $op = isset($_POST['op']) ? $_POST['op'] : null;
 
-        if ($op == 'edit') {
+        if ('edit' == $op) {
             if ($this->check_token()) {
                 $this->save();
                 redirect_header($this->_THIS_URL, 1, _EDIT);
@@ -93,21 +109,28 @@ class webmap3_admin_location extends webmap3_admin_base
         }
     }
 
+    /**
+     * @return mixed|string|void
+     */
     public function build_content()
     {
-        $template = 'db:' . $this->_DIRNAME . '_admin_location.html';
+        $template = 'db:' . $this->_DIRNAME . '_admin_location.tpl';
         $param    = $this->build_param();
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($template);
     }
 
+    /**
+     * @return array
+     */
     public function build_param()
     {
         list($show_default_css, $default_css) = $this->_header_class->assign_or_get_default_css(false);
 
-        $arr = array(
+        $arr = [
             'xoops_dirname' => $this->_DIRNAME,
             'default_css'   => $default_css,
             'form_js'       => $this->_form_class->build_form_js(false),
@@ -122,24 +145,31 @@ class webmap3_admin_location extends webmap3_admin_base
             //      'display_js'       => $this->_form_class->build_display_html_js() ,
             //      'map_display'      => $this->_form_class->build_form_desc_html(),
             //      'map_iframe'       => $this->_form_class->build_div_html(),
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @return mixed|string|void
+     */
     public function build_form_location()
     {
-        $template = 'db:' . $this->_DIRNAME . '_inc_set_location_form.html';
+        $template = 'db:' . $this->_DIRNAME . '_inc_set_location_form.tpl';
         $param    = $this->build_param_form();
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($template);
     }
 
+    /**
+     * @return array
+     */
     public function build_param_form()
     {
-        $arr = array(
+        $arr = [
             'ticket'         => $this->get_token(),
             'address'        => $this->get_config('address'),
             'latitude'       => $this->get_config('latitude'),
@@ -153,11 +183,14 @@ class webmap3_admin_location extends webmap3_admin_base
             'lang_title'     => _AM_WEBMAP3_LOCATION,
             'lang_icon'      => _AM_WEBMAP3_ICON,
             'lang_edit'      => _EDIT,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @return string
+     */
     public function build_icon_content()
     {
         $id = $this->get_config('marker_gicon');
@@ -167,7 +200,7 @@ class webmap3_admin_location extends webmap3_admin_base
         $this->_form_class->set_gicon_img_id('webmap3_gicon_img');
 
         $text = $this->_form_class->build_gicon_icon();
-        $text .= "<br />\n";
+        $text .= "<br >\n";
         $text .= $this->_form_class->build_ele_gicon($id);
 
         return $text;

@@ -13,27 +13,41 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_xoops_config_item
 //=========================================================
+
+/**
+ * Class webmap3_xoops_config_item
+ */
 class webmap3_xoops_config_item
 {
-    public $_config_handler;
+    public $_configHandler;
     public $_module_mid = 0;
-    public $_conf_objs  = array();
+    public $_conf_objs  = [];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_xoops_config_item constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
-        $this->_config_handler = xoops_getHandler('ConfigItem');
-        $this->_module_mid     = $this->get_module_mid_by_dirname($dirname);
+        $this->_configHandler = xoops_getHandler('ConfigItem');
+        $this->_module_mid    = $this->get_module_mid_by_dirname($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_xoops_config_item
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_xoops_config_item($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
@@ -42,10 +56,10 @@ class webmap3_xoops_config_item
     //---------------------------------------------------------
     public function get_objects()
     {
-        $this->_conf_objs = array();
+        $this->_conf_objs = [];
 
         $criteria = new CriteriaCompo(new Criteria('conf_modid', $this->_module_mid));
-        $objs     = $this->_config_handler->getObjects($criteria);
+        $objs     = $this->_configHandler->getObjects($criteria);
 
         if (is_array($objs)) {
             foreach ($objs as $obj) {
@@ -54,34 +68,49 @@ class webmap3_xoops_config_item
         }
     }
 
+    /**
+     * @param $name
+     * @param $val
+     */
     public function save($name, $val)
     {
         $obj = $this->get_obj($name);
         if (is_object($obj)) {
             $obj->setVar('conf_value', $val);
-            $this->_config_handler->insert($obj);
+            $this->_configHandler->insert($obj);
         }
     }
 
+    /**
+     * @param $name
+     * @return bool|mixed
+     */
     public function get_obj($name)
     {
         $ret = false;
         if (isset($this->_conf_objs[$name])) {
             return $this->_conf_objs[$name];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // module handler
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @return int
+     */
     public function get_module_mid_by_dirname($dirname)
     {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($dirname);
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname($dirname);
         if (is_object($module)) {
             return $module->getVar('mid');
         }
+
         return 0;
     }
 

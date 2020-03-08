@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_inc_admin_menu_base
 //=========================================================
+
+/**
+ * Class webmap3_inc_admin_menu_base
+ */
 class webmap3_inc_admin_menu_base
 {
     public $_prefix_mi;
@@ -23,6 +27,11 @@ class webmap3_inc_admin_menu_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_inc_admin_menu_base constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME   = $dirname;
@@ -42,23 +51,33 @@ class webmap3_inc_admin_menu_base
         // dummy
     }
 
+    /**
+     * @return array|null
+     */
     public function build_main_menu()
     {
         return $this->build_menu_common($this->define_main_menu());
     }
 
+    /**
+     * @return array|null
+     */
     public function build_sub_menu()
     {
         return $this->build_menu_common($this->define_sub_menu());
     }
 
+    /**
+     * @param $menu
+     * @return array|null
+     */
     public function build_menu_common($menu)
     {
         if (!is_array($menu) || !count($menu)) {
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($menu as $k => $v) {
             $title  = $this->get_lang_mi($v['title']);
             $link   = 'admin/index.php';
@@ -69,11 +88,11 @@ class webmap3_inc_admin_menu_base
             if (isset($v['target']) && $v['target']) {
                 $target = $v['target'];
             }
-            $arr[$k] = array(
+            $arr[$k] = [
                 'title'  => $title,
                 'link'   => $link,
                 'target' => $target,
-            );
+            ];
         }
 
         return $arr;
@@ -82,12 +101,18 @@ class webmap3_inc_admin_menu_base
     //---------------------------------------------------------
     // langauge
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed|string
+     */
     public function get_lang_mi($name)
     {
-        $const_name = strtoupper($this->_prefix_mi . $name);
+        $const_name = mb_strtoupper($this->_prefix_mi . $name);
         if (defined($const_name)) {
             return constant($const_name);
         }
+
         return $const_name;
     }
 

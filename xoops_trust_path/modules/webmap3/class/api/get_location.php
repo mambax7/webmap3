@@ -12,6 +12,10 @@
 //=========================================================
 // class webmap3_api_get_location
 //=========================================================
+
+/**
+ * Class webmap3_api_get_location
+ */
 class webmap3_api_get_location
 {
     public $_map_class;
@@ -70,6 +74,11 @@ class webmap3_api_get_location
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_api_get_location constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_WEBMAP3_DIRNAME = $dirname;
@@ -86,12 +95,17 @@ class webmap3_api_get_location
         $this->_ele_id_current_address  = $dirname . '_map_current_address';
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_api_get_location($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -109,6 +123,10 @@ class webmap3_api_get_location
         echo $this->_html_class->fetch_get_location($param);
     }
 
+    /**
+     * @param $opener_mode
+     * @return mixed
+     */
     public function build_param($opener_mode)
     {
         $param   = $this->build_map($opener_mode);
@@ -125,13 +143,17 @@ class webmap3_api_get_location
         $this->_html_class->set_map_ele_id_current_location($this->_ele_id_current_location);
         $this->_html_class->set_map_ele_id_current_address($this->_ele_id_current_address);
 
-        if ($opener_mode == 'opener') {
+        if ('opener' == $opener_mode) {
             $this->_html_class->set_show_close(true);
         }
 
         return $this->_html_class->build_param_get_location();
     }
 
+    /**
+     * @param $opener_mode
+     * @return array
+     */
     public function build_map($opener_mode)
     {
         $this->_map_class->init();
@@ -175,9 +197,9 @@ class webmap3_api_get_location
         $param   = $this->_map_class->build_get_location();
         $head_js = $this->_map_class->fetch_get_location_head($param, false);
 
-        $arr = array(
+        $arr = [
             'head_js' => $head_js,
-        );
+        ];
 
         return $arr;
     }
@@ -185,165 +207,265 @@ class webmap3_api_get_location
     //---------------------------------------------------------
     // $_GET
     //---------------------------------------------------------
+
+    /**
+     * @param      $key
+     * @param null $default
+     */
     public function get_get($key, $default = null)
     {
         $str = isset($_GET[$key]) ? $_GET[$key] : $default;
+
         return $str;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_latitude($val)
     {
         $this->_latitude = (float)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_longitude($val)
     {
         $this->_longitude = (float)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_zoom($val)
     {
         $this->_zoom = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_address($val)
     {
         $this->_address = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_latitude($val)
     {
         $this->_ele_id_parent_latitude = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_longitude($val)
     {
         $this->_ele_id_parent_longitude = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_zoom($val)
     {
         $this->_ele_id_parent_zoom = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_address($val)
     {
         $this->_ele_id_parent_address = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_list($val)
     {
         $this->_ele_id_list = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_search($val)
     {
         $this->_ele_id_search = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_current_location($val)
     {
         $this->_ele_id_current_location = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_current_address($val)
     {
         $this->_ele_id_current_address = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_type_control($val)
     {
         $this->_map_type_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_zoom_control($val)
     {
         $this->_zoom_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_pan_control($val)
     {
         $this->_pan_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_street_view_control($val)
     {
         $this->_street_view_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_scale_control($val)
     {
         $this->_scale_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_overview_map_control($val)
     {
         $this->_overview_map_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_overview_map_control_opened($val)
     {
         $this->_overview_map_control_opened = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_type_control_style($val)
     {
         $this->_map_type_control_style = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_zoom_control_style($val)
     {
         $this->_zoom_control_style = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_type($val)
     {
         $this->_map_type = $val;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_div_id($v)
     {
         $this->_map_div_id = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_func($v)
     {
         $this->_map_func = $v;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_draggable_marker($val)
     {
         $this->_use_draggable_marker = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_center_marker($val)
     {
         $this->_use_center_marker = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_search_marker($val)
     {
         $this->_use_search_marker = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_current_location($val)
     {
         $this->_use_current_location = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_current_address($val)
     {
         $this->_use_current_address = (bool)$val;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_set_address($v)
     {
         $this->_show_set_address = (bool)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_current_address($v)
     {
         $this->_show_current_address = (bool)$v;

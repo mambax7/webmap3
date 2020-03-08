@@ -22,6 +22,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_main_get_location
 //=========================================================
+
+/**
+ * Class webmap3_main_get_location
+ */
 class webmap3_main_get_location
 {
     public $_xoops_param;
@@ -36,18 +40,28 @@ class webmap3_main_get_location
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_main_get_location constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_xoops_param = webmap3_xoops_param::getInstance();
         $this->_api_class   = webmap3_api_get_location::getSingleton($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_main_get_location
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_main_get_location($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
@@ -83,6 +97,10 @@ class webmap3_main_get_location
     //---------------------------------------------------------
     // config
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function get_config($name)
     {
         return $this->_xoops_param->get_module_config_by_name($name);

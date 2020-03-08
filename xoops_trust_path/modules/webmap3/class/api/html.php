@@ -12,6 +12,10 @@
 //=========================================================
 // class webmap3_api_html
 //=========================================================
+
+/**
+ * Class webmap3_api_html
+ */
 class webmap3_api_html
 {
     public $_multibyte_class;
@@ -112,6 +116,11 @@ class webmap3_api_html
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_api_html constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_WEBMAP3_DIRNAME = $dirname;
@@ -136,10 +145,10 @@ class webmap3_api_html
         $this->_map_ele_id_current_location = $dirname . '_map_current_location';
         $this->_map_ele_id_current_address  = $dirname . '_map_current_address';
 
-        $this->_template_display_style_js  = 'db:' . $dirname . '_inc_display_style_js.html';
-        $this->_template_display_html_js   = 'db:' . $dirname . '_inc_display_html_js.html';
-        $this->_template_set_location_form = 'db:' . $dirname . '_inc_set_location_form.html';
-        $this->_template_get_location      = 'db:' . $dirname . '_inc_get_location.html';
+        $this->_template_display_style_js  = 'db:' . $dirname . '_inc_display_style_js.tpl';
+        $this->_template_display_html_js   = 'db:' . $dirname . '_inc_display_html_js.tpl';
+        $this->_template_set_location_form = 'db:' . $dirname . '_inc_set_location_form.tpl';
+        $this->_template_get_location      = 'db:' . $dirname . '_inc_get_location.tpl';
 
         $this->_lang_latitude           = $this->get_lang('LATITUDE');
         $this->_lang_longitude          = $this->get_lang('LONGITUDE');
@@ -163,12 +172,17 @@ class webmap3_api_html
         $this->_lang_current_address    = $this->get_lang('CURRENT_ADDRESS');
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_api_html($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -180,6 +194,9 @@ class webmap3_api_html
         header('Content-Type:text/html; charset=UTF-8');
     }
 
+    /**
+     * @return string
+     */
     public function build_display_iframe()
     {
         $text = '<iframe src="' . $this->sanitize($this->_display_iframe_url) . '" ';
@@ -194,29 +211,44 @@ class webmap3_api_html
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_anchor()
     {
         $text = '<a name="' . $this->_display_anchor . '"></a>';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_logo()
     {
         $src_s = $this->sanitize($this->_display_src);
 
-        $text = '<img src="' . $src_s . '" border="0" alt="google map" />';
+        $text = '<img src="' . $src_s . '" border="0" alt="google map" >';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function build_display_desc()
     {
         $text = $this->_lang_display_desc;
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_new()
     {
         $href = $this->sanitize($this->_display_url_opener);
@@ -226,9 +258,13 @@ class webmap3_api_html
         $text .= $this->_lang_display_new;
         $text .= '</a>';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_popup()
     {
         $text = '<a href="#' . $this->_display_anchor . '" ';
@@ -237,29 +273,46 @@ class webmap3_api_html
         $text .= $this->_lang_display_popup;
         $text .= '</a>';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_style_show()
     {
         return $this->build_display_show($this->_display_func_style_show);
     }
 
+    /**
+     * @return string
+     */
     public function build_display_style_hide()
     {
         return $this->build_display_hide($this->_display_func_style_hide);
     }
 
+    /**
+     * @return string
+     */
     public function build_display_html_show()
     {
         return $this->build_display_show($this->_display_func_html_show);
     }
 
+    /**
+     * @return string
+     */
     public function build_display_html_hide()
     {
         return $this->build_display_hide($this->_display_func_html_hide);
     }
 
+    /**
+     * @param $func
+     * @return string
+     */
     public function build_display_show($func)
     {
         $text = '<a href="#' . $this->_display_anchor . '" ';
@@ -268,9 +321,14 @@ class webmap3_api_html
         $text .= $this->_lang_display_inline;
         $text .= '</a>';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @param $func
+     * @return string
+     */
     public function build_display_hide($func)
     {
         $text = '<a href="#' . $this->_display_anchor . '" ';
@@ -279,33 +337,49 @@ class webmap3_api_html
         $text .= $this->_lang_display_hide;
         $text .= '</a>';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_div_style_begin()
     {
         $text = '<div ';
         $text .= 'id="' . $this->_display_div_id . '" ';
         $text .= 'style="' . $this->_display_div_style . '">';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_div_begin()
     {
         $text = '<div ';
         $text .= 'id="' . $this->_display_div_id . '">';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_display_div_end()
     {
         $text = '</div>';
         $text .= "\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_gicon_icon()
     {
         $icon = '';
@@ -313,9 +387,13 @@ class webmap3_api_html
             $icon = $this->_gicon_options[$this->_gicon_id];
         }
         $icon_s = $this->sanitize($icon);
+
         return $icon_s;
     }
 
+    /**
+     * @return string
+     */
     public function build_gicon_select()
     {
         $options = $this->_form_class->build_form_select_options($this->_gicon_id, $this->_gicon_options);
@@ -337,6 +415,9 @@ class webmap3_api_html
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_gicon_img()
     {
         $src_s  = $this->sanitize($this->_gicon_img_src);
@@ -348,49 +429,69 @@ class webmap3_api_html
         $text .= 'src="' . $src_s . '" ';
         $text .= 'alt="' . $alt_s . '" ';
         $text .= 'border="' . $border . '" ';
-        $text .= '/>';
+        $text .= '>';
         $text .= "\n";
 
         return $text;
     }
 
+    /**
+     * @return mixed|string|void
+     */
     public function build_display_style_js()
     {
         $param = $this->build_param_display_js();
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_template_display_style_js);
     }
 
+    /**
+     * @return mixed|string|void
+     */
     public function build_display_html_js()
     {
         $param = $this->build_param_display_js();
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_template_display_html_js);
     }
 
+    /**
+     * @return mixed|string|void
+     */
     public function build_set_location()
     {
         $param = $this->build_param_set_location();
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_template_set_location_form);
     }
 
+    /**
+     * @param $param
+     * @return mixed|string|void
+     */
     public function fetch_get_location($param)
     {
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_template_get_location);
     }
 
+    /**
+     * @return array
+     */
     public function build_param_display_js()
     {
-        $arr = array(
+        $arr = [
             'func_popup'      => $this->_display_func_popup,
             'func_style_show' => $this->_display_func_style_show,
             'func_style_hide' => $this->_display_func_style_hide,
@@ -408,14 +509,17 @@ class webmap3_api_html
             'iframe_width'    => $this->_display_iframe_width,
             'iframe_height'   => $this->_display_iframe_height,
             'lang_hide'       => $this->_lang_display_hide,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function build_param_set_location()
     {
-        $arr = array(
+        $arr = [
             'dirname'        => $this->_dirname,
             'ticket'         => $this->_ticket,
             'latitude'       => $this->_latitude,
@@ -432,18 +536,21 @@ class webmap3_api_html
             'lang_longitude' => $this->_lang_longitude,
             'lang_zoom'      => $this->_lang_zoom,
             'lang_edit'      => $this->_lang_edit,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function build_param_get_location()
     {
         $map_style = 'width:' . $this->_map_width . '; ';
         $map_style .= 'height:' . $this->_map_height . '; ';
         $map_style .= $this->_map_style_option;
 
-        $arr = array(
+        $arr = [
             'webmap3_dirname' => $this->_WEBMAP3_DIRNAME,
             'map_div_id'      => $this->_map_div_id,
             'map_func'        => $this->_map_func,
@@ -475,16 +582,21 @@ class webmap3_api_html
             'lang_current_address'  => $this->_lang_current_address,
             'lang_current_location' => $this->_lang_current_location,
             'lang_not_js_support'   => $this->_lang_not_js_support,
-
-        );
+        ];
 
         $ret = $this->utf8_array($arr);
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
@@ -493,28 +605,47 @@ class webmap3_api_html
     //---------------------------------------------------------
     // language
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_lang($name)
     {
         return $this->_language_class->get_constant($name);
     }
 
+    /**
+     * @param $arr
+     * @return array
+     */
     public function utf8_array($arr)
     {
-        $ret = array();
+        $ret = [];
         foreach ($arr as $k => $v) {
             $ret[$k] = $this->utf8($v);
         }
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @param string $encoding
+     * @return bool|string
+     */
     public function http_output($encoding = 'pass')
     {
         return $this->_multibyte_class->m_mb_http_output($encoding);
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function utf8($str)
     {
         return $this->_multibyte_class->convert_to_utf8($str);
@@ -523,6 +654,10 @@ class webmap3_api_html
     //---------------------------------------------------------
     // header
     //---------------------------------------------------------
+
+    /**
+     * @param $var
+     */
     public function assign_to_header($var)
     {
         $this->_header_class->assign_xoops_module_header($var);
@@ -531,271 +666,438 @@ class webmap3_api_html
     //---------------------------------------------------------
     // setter
     //---------------------------------------------------------
+
+    /**
+     * @param $v
+     */
     public function set_dirname($v)
     {
         $this->_dirname = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_template($v)
     {
         $this->_template = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_latitude($v)
     {
         $this->_latitude = (float)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_longitude($v)
     {
         $this->_longitude = (float)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_zoom($v)
     {
         $this->_zoom = (int)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_address($v)
     {
         $this->_address = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_ticket($v)
     {
         $this->_ticket = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_iframe_url($v)
     {
         $this->_display_iframe_url = $v;
     }
 
+    /**
+     * @param        $v
+     * @param string $u
+     */
     public function set_display_iframe_width($v, $u = 'px')
     {
         $this->_display_iframe_width = (int)$v . $u;
     }
 
+    /**
+     * @param        $v
+     * @param string $u
+     */
     public function set_display_iframe_height($v, $u = 'px')
     {
         $this->_display_iframe_height = (int)$v . $u;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_anchor($v)
     {
         $this->_display_anchor = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_url_opener($v)
     {
         $this->_display_url_opener = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_func_inline($v)
     {
         $this->_display_func_inline = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_func_popup($v)
     {
         $this->_display_func_popup = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_func_hide($v)
     {
         $this->_display_func_hide = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_open_name($v)
     {
         $this->_display_open_name = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_open_width($v)
     {
         $this->_display_open_width = (int)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_open_height($v)
     {
         $this->_display_open_height = (int)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_div_id($v)
     {
         $this->_display_div_id = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_display_div_style($v)
     {
         $this->_display_div_style = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_select_id($v)
     {
         $this->_gicon_select_id = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_select_name($v)
     {
         $this->_gicon_select_name = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_img_id($v)
     {
         $this->_gicon_img_id = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_img_src($v)
     {
         $this->_gicon_img_src = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_img_alt($v)
     {
         $this->_gicon_img_alt = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_img_border($v)
     {
         $this->_gicon_img_border = (int)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_id($v)
     {
         $this->_gicon_id = (int)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_gicon_options($v)
     {
         $this->_gicon_options = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_head_js($v)
     {
         $this->_head_js = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_js($v)
     {
         $this->_map_js = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_style_option($v)
     {
         $this->_map_style_option = $v;
     }
 
+    /**
+     * @param        $v
+     * @param string $u
+     */
     public function set_map_width($v, $u = 'px')
     {
         $this->_map_width = (int)$v . $u;
     }
 
+    /**
+     * @param        $v
+     * @param string $u
+     */
     public function set_map_height($v, $u = 'px')
     {
         $this->_map_height = (int)$v . $u;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_div_id($v)
     {
         $this->_map_div_id = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_func($v)
     {
         $this->_map_func = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_ele_id_list($v)
     {
         $this->_map_ele_id_list = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_ele_id_search($v)
     {
         $this->_map_ele_id_search = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_ele_id_current_location($v)
     {
         $this->_map_ele_id_current_location = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_map_ele_id_current_address($v)
     {
         $this->_map_ele_id_current_address = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_set_address($v)
     {
-        $this->_show_set_address = (boolean)$v;
+        $this->_show_set_address = (bool)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_close($v)
     {
-        $this->_show_close = (boolean)$v;
+        $this->_show_close = (bool)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_hide_map($v)
     {
-        $this->_show_hide_map = (boolean)$v;
+        $this->_show_hide_map = (bool)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_search_reverse($v)
     {
-        $this->_show_search_reverse = (boolean)$v;
+        $this->_show_search_reverse = (bool)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_show_current_address($v)
     {
-        $this->_show_current_address = (boolean)$v;
+        $this->_show_current_address = (bool)$v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_template_display_style_js($v)
     {
         $this->_template_display_style_js = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_template_display_html_js($v)
     {
         $this->_template_display_html_js = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_template_set_location_form($v)
     {
         $this->_template_set_location_form = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_template_get_location($v)
     {
         $this->_template_get_location = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_lang_latitude($v)
     {
         $this->_lang_latitude = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_lang_longitude($v)
     {
         $this->_lang_longitude = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_lang_zoom($v)
     {
         $this->_lang_zoom = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_lang_title_set_location($v)
     {
         $this->_lang_title_set_location = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_lang_edit($v)
     {
         $this->_lang_edit = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_lang_not_iframe_support($v)
     {
         $this->_lang_not_iframe_support = $v;

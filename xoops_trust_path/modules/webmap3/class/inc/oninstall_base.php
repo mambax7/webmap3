@@ -13,11 +13,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_inc_oninstall_base
 //=========================================================
+
+/**
+ * Class webmap3_inc_oninstall_base
+ */
 class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
 {
     public $_IS_XOOPS_2018 = false;
 
-    public $_msg_array = array();
+    public $_msg_array = [];
 
     public $_DIRNAME       = null;
     public $_MODULE_URL    = null;
@@ -34,6 +38,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         parent::__construct();
     }
 
+    /**
+     * @param $trust_dirname
+     */
     public function set_trust_dirname($trust_dirname)
     {
         $this->_TRUST_DIRNAME = $trust_dirname;
@@ -50,12 +57,17 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $module
+     * @return bool
+     */
     public function install(&$module)
     {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         $this->init($module);
@@ -64,19 +76,23 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         $msg_arr = $this->get_msg_array();
         if (is_array($msg_arr) && count($msg_arr)) {
             foreach ($msg_arr as $msg) {
-                $ret[] = $msg . "<br />\n";
+                $ret[] = $msg . "<br >\n";
             }
         }
 
         return $ret_code;
     }
 
+    /**
+     * @param $module
+     * @return bool
+     */
     public function update(&$module)
     {
         global $msgs; // TODO :-D
 
         if (!is_array($msgs)) {
-            $msgs = array();
+            $msgs = [];
         }
 
         $this->init($module);
@@ -92,12 +108,16 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         return $ret_code;
     }
 
+    /**
+     * @param $module
+     * @return bool
+     */
     public function uninstall(&$module)
     {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         $this->init($module);
@@ -106,7 +126,7 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         $msg_arr = $this->get_msg_array();
         if (is_array($msg_arr) && count($msg_arr)) {
             foreach ($msg_arr as $msg) {
-                $ret[] = $msg . '<br />';
+                $ret[] = $msg . '<br >';
             }
         }
 
@@ -116,7 +136,11 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
     //---------------------------------------------------------
     // private
     //---------------------------------------------------------
-    public function init(&$module)
+
+    /**
+     * @param $module
+     */
+    public function init($module)
     {
         $dirname           = $module->getVar('dirname', 'n');
         $this->_MODULE_MID = $module->getVar('mid', 'n');
@@ -126,6 +150,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
     }
 
+    /**
+     * @return bool
+     */
     public function exec_install()
     {
         // for Cube 2.1
@@ -149,6 +176,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function exec_update()
     {
         // for Cube 2.1
@@ -167,6 +197,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function exec_uninstall()
     {
         // for Cube 2.1
@@ -187,6 +220,10 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
     //---------------------------------------------------------
     // table handler
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function table_install()
     {
         $sql_file_path = $this->get_table_sql();
@@ -216,6 +253,7 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
             if (!$prefixed_query) {
                 $this->set_msg('Invalid SQL <b>' . $this->sanitize($piece) . '</b>');
+
                 return false;
             }
 
@@ -225,6 +263,7 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             $ret = $this->query($sql);
             if (!$ret) {
                 $this->set_msg($this->get_db_error());
+
                 return false;
             }
 
@@ -241,6 +280,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function table_update()
     {
         $sql_file_path = $this->get_table_sql();
@@ -264,13 +306,14 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             return true;    // no action
         }
 
-        $sql_array = array();
+        $sql_array = [];
 
         // get added table
         foreach ($pieces as $piece) {
             $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
             if (!$prefixed_query) {
                 $this->set_msg('Invalid SQL <b>' . $this->sanitize($piece) . '</b>');
+
                 return false;
             }
 
@@ -302,6 +345,7 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             $ret = $this->query($sql);
             if (!$ret) {
                 $this->set_msg($this->get_db_error());
+
                 return false;
             }
 
@@ -312,6 +356,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function table_uninstall()
     {
         $sql_file_path = $this->get_table_sql();
@@ -350,6 +397,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         return true;
     }
 
+    /**
+     * @return bool|string
+     */
     public function get_table_sql()
     {
         $sql_trust_path = $this->_TRUST_DIR . '/sql/mysql.sql';
@@ -360,30 +410,46 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         } elseif (is_file($sql_trust_path)) {
             return $sql_trust_path;
         }
+
         return false;
     }
 
+    /**
+     * @param $sql
+     * @return bool
+     */
     public function parse_create_table($sql)
     {
         if (preg_match('/^CREATE TABLE \`?([a-zA-Z0-9_-]+)\`? /i', $sql, $match)) {
             return $match[1];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // template handler
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function template_install()
     {
         return $this->template_common();
     }
 
+    /**
+     * @return bool
+     */
     public function template_update()
     {
         return $this->template_common();
     }
 
+    /**
+     * @return bool
+     */
     public function template_common()
     {
         $this->set_msg('Updating tmplates ...');
@@ -395,7 +461,6 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         if ($this->_IS_XOOPS_2018) {
             $tpl_path = $TPL_ROOT_PATH . '/';
             $prefix   = '';
-
             // read xxx.html in trust_path
         } else {
             $tpl_path = $TPL_TRUST_PATH . '/';
@@ -403,15 +468,16 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         }
 
         // TEMPLATES (all templates have been already removed by modulesadmin)
-        $tplfile_handler = xoops_getHandler('tplfile');
+        $tplfileHandler = xoops_getHandler('tplfile');
 
         $handler = @opendir($tpl_path);
         if (!$handler) {
             xoops_template_clear_module_cache($this->_MODULE_MID);
+
             return true;
         }
 
-        while (($file = readdir($handler)) !== false) {
+        while (false !== ($file = readdir($handler))) {
             // check file
             if (!$this->check_tpl_file($file)) {
                 continue;
@@ -433,7 +499,7 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             $mtime          = (int)(@filemtime($file_path));
 
             // set table
-            $tplfile = $tplfile_handler->create();
+            $tplfile = $tplfileHandler->create();
             $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
             $tplfile->setVar('tpl_refid', $this->_MODULE_MID);
             $tplfile->setVar('tpl_tplset', 'default');
@@ -444,7 +510,7 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             $tplfile->setVar('tpl_lastimported', 0);
             $tplfile->setVar('tpl_type', 'module');
 
-            $ret1 = $tplfile_handler->insert($tplfile);
+            $ret1 = $tplfileHandler->insert($tplfile);
             if ($ret1) {
                 $tplid = $tplfile->getVar('tpl_id');
                 $this->set_msg(' &nbsp; Template <b>' . $dirname_file_s . '</b> added to the database. (ID: <b>' . $tplid . '</b>)');
@@ -472,31 +538,44 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         // TEMPLATES (Not necessary because modulesadmin removes all templates)
     }
 
+    /**
+     * @param $file
+     * @return bool
+     */
     public function check_tpl_file($file)
     {
         // ignore . and ..
-        if ($this->parse_first_char($file) == '.') {
+        if ('.' == $this->parse_first_char($file)) {
             return false;
         }
         // ignore 'index.htm'
-        if (($file == 'index.htm') || ($file == 'index.html')) {
+        if (('index.htm' == $file) || ('index.html' == $file)) {
             return false;
         }
         // ignore not html
-        if ($this->parse_ext($file) != 'html') {
+        if ('html' != $this->parse_ext($file)) {
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @param $file
+     * @return bool|string
+     */
     public function parse_first_char($file)
     {
-        return substr($file, 0, 1);
+        return mb_substr($file, 0, 1);
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
-        return strtolower(substr(strrchr($file, '.'), 1));
+        return mb_strtolower(mb_substr(mb_strrchr($file, '.'), 1));
     }
 
     //---------------------------------------------------------
@@ -511,6 +590,10 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
     //---------------------------------------------------------
     // msg
     //---------------------------------------------------------
+
+    /**
+     * @param $msg
+     */
     public function set_msg($msg)
     {
         // array type
@@ -518,7 +601,6 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
             foreach ($msg as $m) {
                 $this->_msg_array[] = $m;
             }
-
             // string type
         } else {
             $arr = explode("\n", $msg);
@@ -528,6 +610,9 @@ class webmap3_inc_oninstall_base extends webmap3_lib_handler_basic
         }
     }
 
+    /**
+     * @return array
+     */
     public function get_msg_array()
     {
         return $this->_msg_array;

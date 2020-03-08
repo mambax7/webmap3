@@ -27,8 +27,8 @@ if (!defined('_AM_WEBMAP3_LANG_LOADED')) {
     define('_AM_WEBMAP3_CHK_MB_SUCCESS', 'Can you read this sentence correctly, wihout character garble ? ');
     define('_AM_WEBMAP3_CHK_GD_LINK', "Check that 'GD2' is working correctly under your GD bundled with PHP");
     define('_AM_WEBMAP3_CHK_GD_DSC', "If the page linked to from here doesn't display correctly, you should not use your GD in truecolor mode");
-    define('_AM_WEBMAP3_CHK_GD_SUCCESS', 'Success!<br />Perhaps, you can use GD2 (truecolor) in this environment.');
-    define('_AM_WEBMAP3_CHK_GD_FAILED', 'Failed!<br />Perhaps, you can NOT use GD2 in this environment.');
+    define('_AM_WEBMAP3_CHK_GD_SUCCESS', 'Success!<br >Perhaps, you can use GD2 (truecolor) in this environment.');
+    define('_AM_WEBMAP3_CHK_GD_FAILED', 'Failed!<br >Perhaps, you can NOT use GD2 in this environment.');
     define('_AM_WEBMAP3_CHK_ERR_CHAR_FIRST_NEED', "Error: The first charactor should be '/'");
     define('_AM_WEBMAP3_CHK_ERR_CHAR_FIRST_NOT', "Error: The first charactor should NOT be '/'");
     define('_AM_WEBMAP3_CHK_ERR_CHAR_LAST_NEED', "Error: The last charactor should be '/'");
@@ -63,6 +63,5 @@ if (!defined('_AM_WEBMAP3_LANG_LOADED')) {
     define('_AM_WEBMAP3_CAP_MAXPIXEL', 'Max pixel size');
     define('_AM_WEBMAP3_CAP_MAXSIZE', 'Max file size (byte)');
     define('_AM_WEBMAP3_DSC_RESIZE', 'Resize automatically if bigger than this size');
-
     // === define end ===
 }

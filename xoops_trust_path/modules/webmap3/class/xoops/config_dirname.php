@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_xoops_config_dirname
 //=========================================================
+
+/**
+ * Class webmap3_xoops_config_dirname
+ */
 class webmap3_xoops_config_dirname extends webmap3_xoops_config_base
 {
     public $_cached = null;
@@ -20,6 +24,11 @@ class webmap3_xoops_config_dirname extends webmap3_xoops_config_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_xoops_config_dirname constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct();
@@ -33,11 +42,17 @@ class webmap3_xoops_config_dirname extends webmap3_xoops_config_base
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return bool|mixed
+     */
     public function get_value_by_name($name)
     {
         if (isset($this->_cached[$name])) {
             return $this->_cached[$name];
         }
+
         return false;
     }
 

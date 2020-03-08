@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_lib_multibyte
 //=========================================================
+
+/**
+ * Class webmap3_lib_multibyte
+ */
 class webmap3_lib_multibyte
 {
     public $_language;
@@ -23,7 +27,7 @@ class webmap3_lib_multibyte
     public $_JA_PERIOD  = null;
     public $_JA_COMMA   = null;
 
-    public $_JPAPANESE_ARRAY = array('japanese', 'japaneseutf', 'ja_utf8');
+    public $_JPAPANESE_ARRAY = ['japanese', 'japaneseutf', 'ja_utf8'];
 
     //---------------------------------------------------------
     // constructor
@@ -35,90 +39,126 @@ class webmap3_lib_multibyte
         $this->_is_japanese = $this->is_japanese();
     }
 
+    /**
+     * @return \webmap3_lib_multibyte
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_lib_multibyte();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // encoding
     //---------------------------------------------------------
+
+    /**
+     * @param $charset
+     * @return bool|string
+     */
     public function set_internal_encoding($charset)
     {
         if (function_exists('iconv_get_encoding')
-            && function_exists('iconv_set_encoding')
-        ) {
+            && function_exists('iconv_set_encoding')) {
             $current = iconv_get_encoding('internal_encoding');
             if (PHP_VERSION_ID < 50600) {
                 $ret = iconv_set_encoding('internal_encoding', $charset);
             } else {
                 $ret = ini_set('default_charset', $charset);
             }
-            if ($ret === false) {
+            if (false === $ret) {
                 if (PHP_VERSION_ID < 50600) {
                     iconv_set_encoding('internal_encoding', $current);
                 } else {
                     ini_set('default_charset', $current);
                 }
             }
+
             return $ret;
         }
 
         if (function_exists('mb_internal_encoding')) {
             $current = mb_internal_encoding();
             $ret     = mb_internal_encoding($charset);
-            if ($ret === false) {
+            if (false === $ret) {
                 mb_internal_encoding($current);
             }
+
             return $ret;
         }
 
         return true;    // dummy
     }
 
+    /**
+     * @param $type
+     * @return mixed|null
+     */
     public function i_iconv_get_encoding($type)
     {
         if (function_exists('iconv_get_encoding')) {
             return iconv_get_encoding($type);
         }
+
         return null;    // dummy
     }
 
+    /**
+     * @param $type
+     * @param $charset
+     * @return bool
+     */
     public function i_iconv_set_encoding($type, $charset)
     {
         if (function_exists('iconv_set_encoding')) {
             return iconv_set_encoding($type, $charset);
         }
+
         return true;    // dummy
     }
 
+    /**
+     * @param null $encoding
+     * @return bool|string
+     */
     public function m_mb_internal_encoding($encoding = null)
     {
         if (function_exists('mb_internal_encoding')) {
             if ($encoding) {
                 return mb_internal_encoding($encoding);
-            } else {
-                return mb_internal_encoding();
             }
+
+            return mb_internal_encoding();
         }
+
         return true;    // dummy
     }
 
+    /**
+     * @param null $language
+     * @return bool|string
+     */
     public function m_mb_language($language = null)
     {
         if (function_exists('mb_language')) {
             if ($language) {
                 return mb_language($language);
-            } else {
-                return mb_language();
             }
+
+            return mb_language();
         }
     }
 
+    /**
+     * @param      $str
+     * @param null $encoding_list
+     * @param null $strict
+     * @return bool|false|mixed|string
+     */
     public function m_mb_detect_encoding($str, $encoding_list = null, $strict = null)
     {
         if (function_exists('mb_detect_encoding')) {
@@ -127,11 +167,16 @@ class webmap3_lib_multibyte
             } elseif ($encoding_list) {
                 return mb_detect_encoding($str, $encoding_list);
             }
+
             return mb_detect_encoding($str);
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function exists_convert_encoding()
     {
         if (function_exists('iconv')) {
@@ -140,12 +185,19 @@ class webmap3_lib_multibyte
         if (function_exists('mb_convert_encoding')) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // convert
     //---------------------------------------------------------
+
+    /**
+     * @param        $str
+     * @param string $encoding
+     * @return null|string|string[]
+     */
     public function convert_to_utf8($str, $encoding = _CHARSET)
     {
         if (function_exists('iconv')) {
@@ -157,6 +209,11 @@ class webmap3_lib_multibyte
         $str = utf8_encode($str);
     }
 
+    /**
+     * @param        $str
+     * @param string $encoding
+     * @return null|string|string[]
+     */
     public function convert_from_utf8($str, $encoding = _CHARSET)
     {
         if (function_exists('iconv')) {
@@ -168,6 +225,12 @@ class webmap3_lib_multibyte
         $str = utf8_decode($str);
     }
 
+    /**
+     * @param $str
+     * @param $to
+     * @param $from
+     * @return null|string|string[]
+     */
     public function convert_encoding($str, $to, $from)
     {
         if ($to == $from) {
@@ -179,52 +242,86 @@ class webmap3_lib_multibyte
         if (function_exists('mb_convert_encoding')) {
             return mb_convert_encoding($str, $to, $from);
         }
+
         return $str;
     }
 
+    /**
+     * @param        $from
+     * @param        $to
+     * @param        $str
+     * @param string $extra
+     * @return string
+     */
     public function i_iconv($from, $to, $str, $extra = '//IGNORE')
     {
         if (function_exists('iconv')) {
             return iconv($from, $to . $extra, $str);
         }
+
         return $str;
     }
 
+    /**
+     * @param      $str
+     * @param      $to
+     * @param null $from
+     * @return null|string|string[]
+     */
     public function m_mb_convert_encoding($str, $to, $from = null)
     {
         if (function_exists('mb_convert_encoding')) {
             if ($from) {
                 return mb_convert_encoding($str, $to, $from);
-            } else {
-                return mb_convert_encoding($str, $to);
             }
+
+            return mb_convert_encoding($str, $to);
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function convert_space_zen_to_han($str)
     {
         if (function_exists('mb_convert_kana')) {
             return mb_convert_kana($str, 's');
         }
+
         return $str;
     }
 
+    /**
+     * @param        $str
+     * @param string $option
+     * @param null   $encoding
+     * @return string
+     */
     public function m_mb_convert_kana($str, $option = 'KV', $encoding = null)
     {
         if (function_exists('mb_convert_kana')) {
             if ($encoding) {
                 return mb_convert_kana($str, $option, $encoding);
-            } else {
-                return mb_convert_kana($str, $option);
             }
+
+            return mb_convert_kana($str, $option);
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // strlen
     //---------------------------------------------------------
+
+    /**
+     * @param      $str
+     * @param null $charset
+     * @return int
+     */
     public function str_len($str, $charset = null)
     {
         if (function_exists('iconv_strlen')) {
@@ -233,36 +330,57 @@ class webmap3_lib_multibyte
         if (function_exists('mb_strlen')) {
             return $this->m_mb_strlen($str, $charset);
         }
-        return strlen($str);
+
+        return mb_strlen($str);
     }
 
+    /**
+     * @param      $str
+     * @param null $charset
+     * @return int
+     */
     public function i_iconv_strlen($str, $charset = null)
     {
         if (function_exists('iconv_strlen')) {
             if ($charset) {
                 return iconv_strlen($str, $charset);
-            } else {
-                return iconv_strlen($str);
             }
+
+            return iconv_strlen($str);
         }
-        return strlen($str);
+
+        return mb_strlen($str);
     }
 
+    /**
+     * @param      $str
+     * @param null $encoding
+     * @return int
+     */
     public function m_mb_strlen($str, $encoding = null)
     {
         if (function_exists('mb_strlen')) {
             if ($encoding) {
                 return mb_strlen($str, $encoding);
-            } else {
-                return mb_strlen($str);
             }
+
+            return mb_strlen($str);
         }
-        return strlen($str);
+
+        return mb_strlen($str);
     }
 
     //---------------------------------------------------------
     // strpos
     //---------------------------------------------------------
+
+    /**
+     * @param      $haystack
+     * @param      $needle
+     * @param int  $offset
+     * @param null $charset
+     * @return bool|false|int
+     */
     public function str_pos($haystack, $needle, $offset = 0, $charset = null)
     {
         if (function_exists('iconv_strpos')) {
@@ -271,9 +389,17 @@ class webmap3_lib_multibyte
         if (function_exists('mb_strpos')) {
             return $this->m_mb_strpos($haystack, $needle, $offset, $charset);
         }
-        return strpos($haystack, $needle, $offset);
+
+        return mb_strpos($haystack, $needle, $offset);
     }
 
+    /**
+     * @param      $haystack
+     * @param      $needle
+     * @param int  $offset
+     * @param null $charset
+     * @return bool|int
+     */
     public function i_iconv_strpos($haystack, $needle, $offset = 0, $charset = null)
     {
         if (function_exists('iconv_strpos')) {
@@ -281,13 +407,21 @@ class webmap3_lib_multibyte
                 return iconv_strpos($haystack, $needle, $offset, $charset);
             } elseif ($offset) {
                 return iconv_strpos($haystack, $needle, $offset);
-            } else {
-                return iconv_strpos($haystack, $needle);
             }
+
+            return iconv_strpos($haystack, $needle);
         }
-        return strpos($haystack, $needle, $offset);
+
+        return mb_strpos($haystack, $needle, $offset);
     }
 
+    /**
+     * @param      $haystack
+     * @param      $needle
+     * @param int  $offset
+     * @param null $encoding
+     * @return bool|false|int
+     */
     public function m_mb_strpos($haystack, $needle, $offset = 0, $encoding = null)
     {
         if (function_exists('mb_strpos')) {
@@ -295,16 +429,25 @@ class webmap3_lib_multibyte
                 return mb_strpos($haystack, $needle, $offset, $encoding);
             } elseif ($offset) {
                 return mb_strpos($haystack, $needle, $offset);
-            } else {
-                return mb_strpos($haystack, $needle);
             }
+
+            return mb_strpos($haystack, $needle);
         }
-        return strpos($haystack, $needle, $offset);
+
+        return mb_strpos($haystack, $needle, $offset);
     }
 
     //---------------------------------------------------------
     // strrpos
     //---------------------------------------------------------
+
+    /**
+     * @param      $haystack
+     * @param      $needle
+     * @param int  $offset
+     * @param null $charset
+     * @return bool|false|int
+     */
     public function str_rpos($haystack, $needle, $offset = 0, $charset = null)
     {
         if (function_exists('iconv_strrpos')) {
@@ -313,36 +456,61 @@ class webmap3_lib_multibyte
         if (function_exists('mb_strrpos')) {
             return $this->m_mb_strrpos($haystack, $needle, $offset, $charset);
         }
-        return strrpos($haystack, $needle, $offset);
+
+        return mb_strrpos($haystack, $needle, $offset);
     }
 
+    /**
+     * @param      $haystack
+     * @param      $needle
+     * @param int  $offset
+     * @param null $charset
+     * @return bool|int
+     */
     public function i_iconv_strrpos($haystack, $needle, $offset = 0, $charset = null)
     {
         if (function_exists('iconv_strrpos')) {
             if ($charset) {
                 return iconv_strrpos($haystack, $needle, $offset, $charset);
-            } else {
-                return iconv_strrpos($haystack, $needle, $offset);
             }
+
+            return iconv_strrpos($haystack, $needle, $offset);
         }
-        return strrpos($haystack, $needle, $offset);
+
+        return mb_strrpos($haystack, $needle, $offset);
     }
 
+    /**
+     * @param      $haystack
+     * @param      $needle
+     * @param int  $offset
+     * @param null $encoding
+     * @return bool|false|int
+     */
     public function m_mb_strrpos($haystack, $needle, $offset = 0, $encoding = null)
     {
         if (function_exists('mb_strrpos')) {
             if ($encoding) {
                 return mb_strrpos($haystack, $needle, $offset, $encoding);
-            } else {
-                return mb_strrpos($haystack, $needle, $offset);
             }
+
+            return mb_strrpos($haystack, $needle, $offset);
         }
-        return strrpos($haystack, $needle, $offset);
+
+        return mb_strrpos($haystack, $needle, $offset);
     }
 
     //---------------------------------------------------------
     // substr
     //---------------------------------------------------------
+
+    /**
+     * @param      $str
+     * @param      $start
+     * @param int  $length
+     * @param null $charset
+     * @return bool|string
+     */
     public function sub_str($str, $start, $length = 0, $charset = null)
     {
         if (function_exists('iconv_substr')) {
@@ -351,48 +519,79 @@ class webmap3_lib_multibyte
         if (function_exists('mb_substr')) {
             return $this->m_mb_substr($str, $start, $length, $charset);
         }
-        return substr($str, $start, $length);
+
+        return mb_substr($str, $start, $length);
     }
 
+    /**
+     * @param      $str
+     * @param      $start
+     * @param int  $length
+     * @param null $charset
+     * @return bool|string
+     */
     public function i_iconv_substr($str, $start, $length = 0, $charset = null)
     {
         if (function_exists('iconv_substr')) {
             if ($charset) {
                 return iconv_substr($str, $start, $length, $charset);
-            } else {
-                return iconv_substr($str, $start, $length);
             }
+
+            return iconv_substr($str, $start, $length);
         }
-        return substr($str, $start, $length);
+
+        return mb_substr($str, $start, $length);
     }
 
+    /**
+     * @param      $str
+     * @param      $start
+     * @param int  $length
+     * @param null $encoding
+     * @return bool|string
+     */
     public function m_mb_substr($str, $start, $length = 0, $encoding = null)
     {
         if (function_exists('mb_substr')) {
             if ($encoding) {
                 return mb_substr($str, $start, $length, $encoding);
-            } else {
-                return mb_substr($str, $start, $length);
             }
+
+            return mb_substr($str, $start, $length);
         }
-        return substr($str, $start, $length);
+
+        return mb_substr($str, $start, $length);
     }
 
     //---------------------------------------------------------
     // other
     //---------------------------------------------------------
+
+    /**
+     * @param null $encoding
+     * @return bool|string
+     */
     public function m_mb_http_output($encoding = null)
     {
         if (function_exists('mb_http_output')) {
             if ($encoding) {
                 return mb_http_output($encoding);
-            } else {
-                return mb_http_output();
             }
+
+            return mb_http_output();
         }
+
         return false;
     }
 
+    /**
+     * @param      $mailto
+     * @param      $subject
+     * @param      $message
+     * @param null $headers
+     * @param null $parameter
+     * @return bool
+     */
     public function m_mb_send_mail($mailto, $subject, $message, $headers = null, $parameter = null)
     {
         if (function_exists('mb_send_mail')) {
@@ -400,26 +599,34 @@ class webmap3_lib_multibyte
                 return mb_send_mail($mailto, $subject, $message, $headers, $parameter);
             } elseif ($headers) {
                 return mb_send_mail($mailto, $subject, $message, $headers);
-            } else {
-                return mb_send_mail($mailto, $subject, $message);
             }
+
+            return mb_send_mail($mailto, $subject, $message);
         }
         if ($parameter) {
             return mail($mailto, $subject, $message, $headers, $parameter);
         } elseif ($headers) {
             return mail($mailto, $subject, $message, $headers);
         }
+
         return mail($mailto, $subject, $message);
     }
 
+    /**
+     * @param      $pattern
+     * @param      $replace
+     * @param      $string
+     * @param null $option
+     * @return false|string
+     */
     public function m_mb_ereg_replace($pattern, $replace, $string, $option = null)
     {
         if (function_exists('mb_ereg_replace')) {
             if ($option) {
                 return mb_ereg_replace($pattern, $replace, $string, $option);
-            } else {
-                return mb_ereg_replace($pattern, $replace, $string);
             }
+
+            return mb_ereg_replace($pattern, $replace, $string);
         }
     }
 
@@ -427,20 +634,35 @@ class webmap3_lib_multibyte
     // shorten strings
     // max: plus=shorten, 0=null, -1=unlimited
     //---------------------------------------------------------
+
+    /**
+     * @param        $str
+     * @param        $max
+     * @param string $tail
+     * @return null|string
+     */
     public function shorten($str, $max, $tail = ' ...')
     {
         $text = $str;
-        if (($max > 0) && (strlen($str) > $max)) {
+        if (($max > 0) && (mb_strlen($str) > $max)) {
             $text = $this->sub_str($str, 0, $max) . $tail;
-        } elseif ($max == 0) {
+        } elseif (0 == $max) {
             $text = null;
         }
+
         return $text;
     }
 
     //---------------------------------------------------------
     // build summary
     //---------------------------------------------------------
+
+    /**
+     * @param        $str
+     * @param        $max
+     * @param string $tail
+     * @return false|mixed|null|string|string[]
+     */
     public function build_summary($str, $max, $tail = ' ...')
     {
         $str = $this->build_plane_text($str);
@@ -448,9 +670,14 @@ class webmap3_lib_multibyte
         $str = $this->str_replace_continuous_space_code($str);
         $str = $this->str_set_empty_if_only_space($str);
         $str = $this->shorten($str, $max, $tail);
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return false|mixed|null|string|string[]
+     */
     public function build_plane_text($str)
     {
         if ($this->_is_japanese) {
@@ -467,32 +694,52 @@ class webmap3_lib_multibyte
         $str = $this->str_replace_continuous_space_code($str);
         $str = $this->str_replace_space_return_code($str);
         $str = $this->str_replace_continuous_return_code($str);
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function str_add_space_after_tag($str)
     {
         return $this->str_add_space_after_str('>', $str);
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function str_add_space_after_punctuation($str)
     {
         $str = $this->str_add_space_after_str(',', $str);
         $str = $this->str_add_space_after_str('.', $str);
+
         return $str;
     }
 
+    /**
+     * @param $word
+     * @param $string
+     * @return mixed
+     */
     public function str_add_space_after_str($word, $string)
     {
         return str_replace($word, $word . ' ', $string);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function str_set_empty_if_only_space($str)
     {
         $temp = $this->str_replace_space_code($str, '');
-        if (strlen($temp) == 0) {
+        if (0 == mb_strlen($temp)) {
             $str = '';
         }
+
         return $str;
     }
 
@@ -501,53 +748,102 @@ class webmap3_lib_multibyte
     // LF  \xOA \n
     // CR  \xOD \r
     //---------------------------------------------------------
+
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_control_code($str, $replace = ' ')
     {
         $str = preg_replace('/[\x00-\x08]/', $replace, $str);
         $str = preg_replace('/[\x0B-\x0C]/', $replace, $str);
         $str = preg_replace('/[\x0E-\x1F]/', $replace, $str);
         $str = preg_replace('/[\x7F]/', $replace, $str);
+
         return $str;
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_tab_code($str, $replace = ' ')
     {
         return preg_replace("/\t/", $replace, $str);
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_return_code($str, $replace = ' ')
     {
         $str = preg_replace("/\n/", $replace, $str);
         $str = preg_replace("/\r/", $replace, $str);
+
         return $str;
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_return_to_nl_code($str, $replace = "\n")
     {
         $str = preg_replace("/\r/", $replace, $str);
+
         return $str;
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_continuous_return_code($str, $replace = "\n")
     {
         return preg_replace("/[\n|\r]+/", $replace, $str);
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_space_return_code($str, $replace = "\n")
     {
         return preg_replace("/[\x20][\n|\r]/", $replace, $str);
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_html_space_code($str, $replace = ' ')
     {
         return preg_replace('/&nbsp;/i', $replace, $str);
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_space_code($str, $replace = ' ')
     {
         return preg_replace("/[\x20]/", $replace, $str);
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_continuous_space_code($str, $replace = ' ')
     {
         return preg_replace("/[\x20]+/", $replace, $str);
@@ -556,10 +852,18 @@ class webmap3_lib_multibyte
     //---------------------------------------------------------
     // summary
     //---------------------------------------------------------
+
+    /**
+     * @param        $text
+     * @param        $words
+     * @param int    $l
+     * @param string $tail
+     * @return string
+     */
     public function build_summary_with_search($text, $words, $l = 255, $tail = ' ...')
     {
         if (!is_array($words)) {
-            $words = array();
+            $words = [];
         }
 
         $ret    = '';
@@ -569,12 +873,12 @@ class webmap3_lib_multibyte
             $ret = ltrim(preg_replace('/\s+/', ' ', $text));
             list($pre, $aft) = preg_split("/$q_word/i", $ret, 2);
             $m   = (int)($l / 2);
-            $ret = (strlen($pre) > $m) ? $tail : '';
-            $ret .= $this->sub_str($pre, max(strlen($pre) - $m + 1, 0), $m);
+            $ret = (mb_strlen($pre) > $m) ? $tail : '';
+            $ret .= $this->sub_str($pre, max(mb_strlen($pre) - $m + 1, 0), $m);
             $ret .= $match[0];
-            $m = $l - strlen($ret);
-            $ret .= $this->sub_str($aft, 0, min(strlen($aft), $m));
-            if (strlen($aft) > $m) {
+            $m   = $l - mb_strlen($ret);
+            $ret .= $this->sub_str($aft, 0, min(mb_strlen($aft), $m));
+            if (mb_strlen($aft) > $m) {
                 $ret .= $tail;
             }
         }
@@ -589,6 +893,15 @@ class webmap3_lib_multibyte
     //---------------------------------------------------------
     // wordwrap
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @param $max
+     * @param $width
+     * @param $break
+     * @param $flag_sanitize
+     * @return string
+     */
     public function build_summary_with_wordwrap($str, $max, $width, $break, $flag_sanitize)
     {
         $str = $this->build_plane_text($str);
@@ -598,14 +911,22 @@ class webmap3_lib_multibyte
         $ret = '';
         foreach ($arr as $line) {
             $line = trim($line);
-            if ($line === '') {
+            if ('' === $line) {
                 continue;
             }
             $ret .= $this->mb_wordwrap($line, $width, $break, $flag_sanitize);
         }
+
         return $ret;
     }
 
+    /**
+     * @param $str
+     * @param $width
+     * @param $break
+     * @param $flag_sanitize
+     * @return string
+     */
     public function mb_wordwrap($str, $width, $break, $flag_sanitize)
     {
         if (!function_exists('mb_strlen')) {
@@ -616,12 +937,12 @@ class webmap3_lib_multibyte
         }
 
         if (($width <= 0)
-            || (mb_strlen($str) <= $width)
-        ) {
+            || (mb_strlen($str) <= $width)) {
             if ($flag_sanitize) {
                 $str = $this->sanitize($str);
             }
             $ret = $str . $break;
+
             return $ret;
         }
 
@@ -639,10 +960,16 @@ class webmap3_lib_multibyte
             }
             $ret .= $wk . $break;
         }
+
         return $ret;
     }
 
     // single quote (') -> &#039;
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
@@ -651,58 +978,92 @@ class webmap3_lib_multibyte
     //---------------------------------------------------------
     // config
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return bool
+     */
     public function get_config_by_name($name)
     {
         global $xoopsConfig;
         if (isset($xoopsConfig[$name])) {
             return $xoopsConfig[$name];
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function is_japanese()
     {
         if (in_array($this->_language, $this->_JPAPANESE_ARRAY)) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // for japanese
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return false|string
+     */
     public function str_add_space_after_punctuation_ja($str)
     {
         $str = $this->add_space_after_str_ja($str, $this->_JA_KUTEN);
         $str = $this->add_space_after_str_ja($str, $this->_JA_DOKUTEN);
         $str = $this->add_space_after_str_ja($str, $this->_JA_PERIOD);
         $str = $this->add_space_after_str_ja($str, $this->_JA_COMMA);
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @param $word
+     * @return false|string
+     */
     public function add_space_after_str_ja($str, $word)
     {
         if ($word) {
             return $this->m_mb_ereg_replace($word, $word . ' ', $str);
         }
+
         return $str;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ja_kuten($val)
     {
         $this->_JA_KUTEN = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ja_dokuten($val)
     {
         $this->_JA_DOKUTEN = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ja_period($val)
     {
         $this->_JA_PERIOD = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ja_comma($val)
     {
         $this->_JA_COMMA = $val;

@@ -11,59 +11,57 @@ if (!defined('_AM_WEBMAP3_LANG_LOADED')) {
     define('_AM_WEBMAP3_LANG_LOADED', 1);
 
     // menu
-    define('_AM_WEBMAP3_MYMENU_TPLSADMIN', '¥Æ¥ó¥×¥ì¡¼¥È´ÉÍý');
-    define('_AM_WEBMAP3_MYMENU_BLOCKSADMIN', '¥Ö¥í¥Ã¥¯´ÉÍý/¥¢¥¯¥»¥¹¸¢¸Â');
-    define('_AM_WEBMAP3_MYMENU_GOTO_MODULE', '¥â¥¸¥å¡¼¥ë¤Ø');
+    define('_AM_WEBMAP3_MYMENU_TPLSADMIN', 'ï¿½Æ¥ï¿½×¥ì¡¼ï¿½È´ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_MYMENU_BLOCKSADMIN', 'ï¿½Ö¥ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_MYMENU_GOTO_MODULE', 'ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½');
 
     // index
-    define('_AM_WEBMAP3_CHK_SERVER', '¥µ¡¼¥Ð¡¼´Ä¶­');
-    define('_AM_WEBMAP3_CHK_PHP', 'PHPÀßÄê');
-    define('_AM_WEBMAP3_CHK_DIR', '¥Ç¥£¥ì¥¯¥È¥êÀßÄê');
-    define('_AM_WEBMAP3_CHK_BOTH_OK', 'Î¾Êý ok');
-    define('_AM_WEBMAP3_CHK_NEED_ON', 'Í× on');
-    define('_AM_WEBMAP3_CHK_RECOMMEND_OFF', '¿ä¾© off');
-    define('_AM_WEBMAP3_CHK_MB_LINK', 'Ê¸»ú¥³¡¼¥ÉÊÑ´¹¤¬Æ°¤¯¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯');
-    define('_AM_WEBMAP3_CHK_MB_DSC', '¡Ê¤³¤Î¥ê¥ó¥¯Àè¤¬Àµ¾ï¤ËÉ½¼¨¤µ¤ì¤Ê¤±¤ì¤Ð¡¢Ê¸»ú¥³¡¼¥ÉÊÑ´¹¤¬Æ°¤«¤Ê¤¤¤è¤¦¤Ç¤¹¡Ë');
-    define('_AM_WEBMAP3_CHK_MB_SUCCESS', '¤³¤ÎÊ¸¤¬Ê¸»ú²½¤±¤»¤º¤ËÉ½¼¨¤µ¤ì¤Æ¤¤¤Þ¤¹¤«¡©');
-    define('_AM_WEBMAP3_CHK_GD_LINK', 'GD2(truecolor)¥â¡¼¥É¤¬Æ°¤¯¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯');
-    define('_AM_WEBMAP3_CHK_GD_DSC', '¡Ê¤³¤Î¥ê¥ó¥¯Àè¤¬Àµ¾ï¤ËÉ½¼¨¤µ¤ì¤Ê¤±¤ì¤Ð¡¢GD2¥â¡¼¥É¤Ç¤ÏÆ°¤«¤Ê¤¤¤â¤Î¤ÈÄü¤á¤Æ¤¯¤À¤µ¤¤¡Ë');
-    define('_AM_WEBMAP3_CHK_GD_SUCCESS', 'À®¸ù¤·¤Þ¤·¤¿!<br />¤ª¤½¤é¤¯¡¢¤³¤Î¥µ¡¼¥Ð¤ÎPHP¤Ç¤Ï¡¢GD2(true color)¥â¡¼¥É¤Ç²èÁü¤òÀ¸À®²ÄÇ½¤Ç¤¹¡£');
-    define('_AM_WEBMAP3_CHK_GD_FAILED', '¼ºÇÔ¤·¤Þ¤·¤¿!<br />¤ª¤½¤é¤¯¡¢¤³¤Î¥µ¡¼¥Ð¤ÎPHP¤Ç¤Ï¡¢GD2¥â¡¼¥É¤ÏÆ°ºî¤·¤Þ¤»¤ó¡£');
-    define('_AM_WEBMAP3_CHK_ERR_CHAR_FIRST_NEED', "¥¨¥é¡¼: ºÇ½é¤ÎÊ¸»ú¤Ï'/'¤Ç¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó");
-    define('_AM_WEBMAP3_CHK_ERR_CHAR_FIRST_NOT', "¥¨¥é¡¼: ºÇ½é¤ÎÊ¸»ú¤Ï'/'¤ÏÉ¬Í×¤¢¤ê¤Þ¤»¤ó");
-    define('_AM_WEBMAP3_CHK_ERR_CHAR_LAST_NEED', "¥¨¥é¡¼: ºÇ¸å¤ÎÊ¸»ú¤Ï'/'¤Ç¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó");
-    define('_AM_WEBMAP3_CHK_ERR_CHAR_LAST_NOT', "¥¨¥é¡¼: ºÇ¸å¤ÎÊ¸»ú¤Î'/'¤ÏÉ¬Í×¤¢¤ê¤Þ¤»¤ó");
-    define('_AM_WEBMAP3_CHK_ERR_DIR_PERM', '¥¨¥é¡¼: ¤Þ¤º¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ò¤Ä¤¯¤Ã¤Æ²¼¤µ¤¤¡£¤½¤Î¾å¤Ç¡¢½ñ¹þ²ÄÇ½¤ËÀßÄê¤·¤Æ²¼¤µ¤¤¡£Unix¤Ç¤Ïchmod 777¡¢Windows¤Ç¤ÏÆÉ¤ß¼è¤êÀìÍÑÂ°À­¤ò³°¤·¤Þ¤¹');
-    define('_AM_WEBMAP3_CHK_ERR_DIR_NOT', '¥¨¥é¡¼: »ØÄê¤µ¤ì¤¿¥Ç¥£¥ì¥¯¥È¥ê¤¬¤¢¤ê¤Þ¤»¤ó.');
-    define('_AM_WEBMAP3_CHK_ERR_DIR_WRITE',
-           '¥¨¥é¡¼: »ØÄê¤µ¤ì¤¿¥Ç¥£¥ì¥¯¥È¥ê¤ÏÆÉ¤ß½Ð¤»¤Ê¤¤¤«½ñ¤­¹þ¤á¤Ê¤¤¤«¤Î¤¤¤º¤ì¤«¤Ç¤¹¡£¤½¤ÎÎ¾Êý¤òµö²Ä¤¹¤ëÀßÄê¤Ë¤·¤Æ²¼¤µ¤¤¡£Unix¤Ç¤Ïchmod 777¡¢Windows¤Ç¤ÏÆÉ¤ß¼è¤êÀìÍÑÂ°À­¤ò³°¤·¤Þ¤¹');
-    define('_AM_WEBMAP3_CHK_WARN_DIR_GEUST', '¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Ï¥²¥¹¥È¤âÆÉ¤à¤³¤È¤¬½ÐÍè¤Þ¤¹');
-    define('_AM_WEBMAP3_CHK_WARN_DIR_RECOMMEND', '¥É¥­¥å¥á¥ó¥È¡¦¥ë¡¼¥È°Ê³°¤ËÀßÄê¤¹¤ë¤³¤È¤ò¤ª´«¤á¤·¤Þ¤¹');
+    define('_AM_WEBMAP3_CHK_SERVER', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Ä¶ï¿½');
+    define('_AM_WEBMAP3_CHK_PHP', 'PHPï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_DIR', 'ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_BOTH_OK', 'Î¾ï¿½ï¿½ ok');
+    define('_AM_WEBMAP3_CHK_NEED_ON', 'ï¿½ï¿½ on');
+    define('_AM_WEBMAP3_CHK_RECOMMEND_OFF', 'ï¿½ä¾© off');
+    define('_AM_WEBMAP3_CHK_MB_LINK', 'Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBMAP3_CHK_MB_DSC', 'ï¿½Ê¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½è¤¬ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ð¡ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½è¤¦ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_MB_SUCCESS', 'ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_GD_LINK', 'GD2(truecolor)ï¿½â¡¼ï¿½É¤ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBMAP3_CHK_GD_DSC', 'ï¿½Ê¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½è¤¬ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ð¡ï¿½GD2ï¿½â¡¼ï¿½É¤Ç¤ï¿½Æ°ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_GD_SUCCESS', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½!<br >ï¿½ï¿½ï¿½ï¿½ï¿½é¤¯ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ð¤ï¿½PHPï¿½Ç¤Ï¡ï¿½GD2(true color)ï¿½â¡¼ï¿½É¤Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_GD_FAILED', 'ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½!<br >ï¿½ï¿½ï¿½ï¿½ï¿½é¤¯ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ð¤ï¿½PHPï¿½Ç¤Ï¡ï¿½GD2ï¿½â¡¼ï¿½É¤ï¿½Æ°ï¿½î¤·ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CHK_ERR_CHAR_FIRST_NEED', "ï¿½ï¿½ï¿½é¡¼: ï¿½Ç½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½'/'ï¿½Ç¤Ê¤ï¿½ï¿½ï¿½Ð¤Ê¤ï¿½Þ¤ï¿½ï¿½ï¿½");
+    define('_AM_WEBMAP3_CHK_ERR_CHAR_FIRST_NOT', "ï¿½ï¿½ï¿½é¡¼: ï¿½Ç½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½'/'ï¿½ï¿½É¬ï¿½×¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½");
+    define('_AM_WEBMAP3_CHK_ERR_CHAR_LAST_NEED', "ï¿½ï¿½ï¿½é¡¼: ï¿½Ç¸ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½'/'ï¿½Ç¤Ê¤ï¿½ï¿½ï¿½Ð¤Ê¤ï¿½Þ¤ï¿½ï¿½ï¿½");
+    define('_AM_WEBMAP3_CHK_ERR_CHAR_LAST_NOT', "ï¿½ï¿½ï¿½é¡¼: ï¿½Ç¸ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½'/'ï¿½ï¿½É¬ï¿½×¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½");
+    define('_AM_WEBMAP3_CHK_ERR_DIR_PERM', 'ï¿½ï¿½ï¿½é¡¼: ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Ä¤ï¿½ï¿½Ã¤Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤·ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Unixï¿½Ç¤ï¿½chmod 777ï¿½ï¿½Windowsï¿½Ç¤ï¿½ï¿½É¤ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ò³°¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBMAP3_CHK_ERR_DIR_NOT', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ê¤¬ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½.');
+    define('_AM_WEBMAP3_CHK_ERR_DIR_WRITE', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½ï¿½É¤ß½Ð¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ñ¤­¹ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ì¤«ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Unixï¿½Ç¤ï¿½chmod 777ï¿½ï¿½Windowsï¿½Ç¤ï¿½ï¿½É¤ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ò³°¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBMAP3_CHK_WARN_DIR_GEUST', 'ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ï¥ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½É¤à¤³ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBMAP3_CHK_WARN_DIR_RECOMMEND', 'ï¿½É¥ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ë¡¼ï¿½È°Ê³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ë¤³ï¿½È¤ò¤ª´ï¿½ï¿½á¤·ï¿½Þ¤ï¿½');
 
     // location
-    define('_AM_WEBMAP3_LOCATION', '°ÞÅÙ¡¦·ÐÅÙ¤ÎÀßÄê');
-    define('_AM_WEBMAP3_ADDRESS', '½»½ê¤ÎÀßÄê');
-    define('_AM_WEBMAP3_ICON', '¥Þ¡¼¥«¡¼¤Î¥¢¥¤¥³¥ó');
-    define('_AM_WEBMAP3_ICON_SELECT', '¥¢¥¤¥³¥ó¤ÎÁªÂò');
+    define('_AM_WEBMAP3_LOCATION', 'ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_ADDRESS', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_ICON', 'ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_ICON_SELECT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // gicon list
-    define('_AM_WEBMAP3_GICON_ADD', '¥¢¥¤¥³¥ó¤ò¿·µ¬ÄÉ²Ã');
-    define('_AM_WEBMAP3_GICON_LIST_IMAGE', '¥¢¥¤¥³¥ó');
-    define('_AM_WEBMAP3_GICON_LIST_SHADOW', '¥·¥ã¥É¡¼');
-    define('_AM_WEBMAP3_GICON_ANCHOR', '¥¢¥ó¥«¡¼¥Ý¥¤¥ó¥È');
-    define('_AM_WEBMAP3_GICON_WINANC', '¥¦¥£¥ó¥É¥¦¥¢¥ó¥«¡¼');
-    define('_AM_WEBMAP3_GICON_LIST_EDIT', '¥¢¥¤¥³¥ó¤ÎÊÔ½¸');
+    define('_AM_WEBMAP3_GICON_ADD', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¿·µï¿½ï¿½É²ï¿½');
+    define('_AM_WEBMAP3_GICON_LIST_IMAGE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_GICON_LIST_SHADOW', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½');
+    define('_AM_WEBMAP3_GICON_ANCHOR', 'ï¿½ï¿½ï¿½ó¥«¡ï¿½ï¿½Ý¥ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_GICON_WINANC', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¥ï¿½ï¿½ï¿½ï¿½ó¥«¡ï¿½');
+    define('_AM_WEBMAP3_GICON_LIST_EDIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½');
 
     // gicon form
-    define('_AM_WEBMAP3_GICON_MENU_NEW', '¥¢¥¤¥³¥ó¤Î¿·µ¬ºîÀ®');
-    define('_AM_WEBMAP3_GICON_MENU_EDIT', '¥¢¥¤¥³¥ó¤ÎÊÔ½¸');
-    define('_AM_WEBMAP3_GICON_IMAGE_SEL', '¥¢¥¤¥³¥ó²èÁü¤ÎÁªÂò');
-    define('_AM_WEBMAP3_GICON_SHADOW_SEL', '¥¢¥¤¥³¥ó¥·¥ã¥É¡¼¤ÎÁªÂò');
-    define('_AM_WEBMAP3_GICON_SHADOW_DEL', '¥¢¥¤¥³¥ó¥·¥ã¥É¡¼¤òºï½ü');
-    define('_AM_WEBMAP3_GICON_DELCONFIRM', '¥¢¥¤¥³¥ó %s ¤òºï½ü¤·¤Æ¤è¤í¤·¤¤¤Ç¤¹¤«¡© ');
-    define('_AM_WEBMAP3_CAP_MAXPIXEL', '²èÁü¥µ¥¤¥º¾å¸Â');
-    define('_AM_WEBMAP3_CAP_MAXSIZE', '¥Õ¥¡¥¤¥ë¥µ¥¤¥º¾å¸Â (byte)');
-    define('_AM_WEBMAP3_DSC_RESIZE', '¤³¤ì°Ê¾åÂç¤­¤¤²èÁü¤Ï¥ê¥µ¥¤¥º¤·¤Þ¤¹');
-
+    define('_AM_WEBMAP3_GICON_MENU_NEW', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_GICON_MENU_EDIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½');
+    define('_AM_WEBMAP3_GICON_IMAGE_SEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_GICON_SHADOW_SEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¥·¥ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_GICON_SHADOW_DEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¥·¥ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_GICON_DELCONFIRM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ %s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ ');
+    define('_AM_WEBMAP3_CAP_MAXPIXEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBMAP3_CAP_MAXSIZE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¥µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (byte)');
+    define('_AM_WEBMAP3_DSC_RESIZE', 'ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¥ê¥µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
     // === define end ===
 }

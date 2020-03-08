@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_mb_check_base
 //=========================================================
+
+/**
+ * Class webmap3_admin_mb_check_base
+ */
 class webmap3_admin_mb_check_base
 {
     public $_multibyte_class;
@@ -28,12 +32,16 @@ class webmap3_admin_mb_check_base
         $this->_multibyte_class = webmap3_lib_multibyte::getInstance();
     }
 
+    /**
+     * @return \webmap3_lib_multibyte
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
             $instance = new webmap3_lib_multibyte();
         }
+
         return $instance;
     }
 
@@ -52,20 +60,26 @@ class webmap3_admin_mb_check_base
 
         $str = $this->build_head($this->_lang_title, $charset);
         $str .= $this->build_body_begin();
-        $str .= 'charset : ' . $charset . "<br />\n";
+        $str .= 'charset : ' . $charset . "<br >\n";
         $str .= $this->_lang_success;
-        $str .= "<br /><br />\n";
-        $str .= '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" />';
+        $str .= "<br ><br >\n";
+        $str .= '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" >';
         $str .= $this->build_body_end();
 
         echo $this->conv($str, $charset);
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_title($val)
     {
         $this->_lang_title = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_success($val)
     {
         $this->_lang_success = $val;
@@ -74,6 +88,12 @@ class webmap3_admin_mb_check_base
     //---------------------------------------------------------
     // head
     //---------------------------------------------------------
+
+    /**
+     * @param null $title
+     * @param null $charset
+     * @return string
+     */
     public function build_head($title = null, $charset = null)
     {
         if (empty($charset)) {
@@ -81,24 +101,37 @@ class webmap3_admin_mb_check_base
         }
 
         $str = '<html><head>' . "\n";
-        $str .= '<meta http-equiv="Content-Type" content="text/html; charset=' . $this->sanitize($charset) . '" />' . "\n";
+        $str .= '<meta http-equiv="Content-Type" content="text/html; charset=' . $this->sanitize($charset) . '" >' . "\n";
         $str .= '<title>' . $this->sanitize($title) . '</title>' . "\n";
         $str .= '</head>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_body_begin()
     {
         $str = '<body>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_body_end()
     {
         $str = '</body></html>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
@@ -107,11 +140,21 @@ class webmap3_admin_mb_check_base
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @param $encoding
+     * @return bool|string
+     */
     public function http_output($encoding)
     {
         return $this->_multibyte_class->m_mb_http_output($encoding);
     }
 
+    /**
+     * @param $str
+     * @param $charset
+     * @return null|string|string[]
+     */
     public function conv($str, $charset)
     {
         return $this->_multibyte_class->convert_encoding($str, $charset, _CHARSET);

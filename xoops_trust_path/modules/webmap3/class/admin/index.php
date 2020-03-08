@@ -13,12 +13,21 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_index
 //=========================================================
+
+/**
+ * Class webmap3_admin_index
+ */
 class webmap3_admin_index extends webmap3_admin_base
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_admin_index constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -27,12 +36,18 @@ class webmap3_admin_index extends webmap3_admin_base
         $this->_check_class = webmap3_admin_server_check::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_admin_base|\webmap3_admin_index|\webmap3_lib_admin_base
+     */
     public static function getInstance($dirname, $trust_dirname)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_admin_index($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -46,7 +61,7 @@ class webmap3_admin_index extends webmap3_admin_base
         echo $this->build_admin_menu();
         echo $this->build_admin_title('INDEX');
         echo _MI_WEBMAP3_DESC;
-        echo "<br /><br />\n";
+        echo "<br ><br >\n";
 
         $this->_make_dir();
 
@@ -58,27 +73,27 @@ class webmap3_admin_index extends webmap3_admin_base
         echo $this->_check_class->build_php_upload();
         echo $this->_check_class->build_php_etc();
         echo $this->_check_class->build_php_iconv();
-        echo "<br />\n";
+        echo "<br >\n";
 
-        echo "<b>mbstring</b><br />\n";
+        echo "<b>mbstring</b><br >\n";
         echo $this->_check_class->build_php_mbstring();
-        echo "<br />\n";
+        echo "<br >\n";
         echo $this->_check_class->build_mulitibyte_link();
-        echo "<br />\n";
+        echo "<br >\n";
         echo $this->_check_class->build_gd();
-        echo "<br />\n";
+        echo "<br >\n";
 
         echo '<h4>' . _AM_WEBMAP3_CHK_DIR . "</h4>\n";
         $this->_check_dir();
-        echo "<br />\n"
+        echo "<br >\n"
 
         ?>
-        <hr/>
+        <hr>
         <div style="text-align: right; font-size: 80%;">
             <a href="http://linux2.ohwada.net/" target="_blank">
                 Powered by Happy Linux
-            </a><br/>
-            &copy; 2007, Kenichi OHWADA<br/>
+            </a><br>
+            &copy; 2007, Kenichi OHWADA<br>
         </div>
         <?php
 
@@ -98,7 +113,7 @@ class webmap3_admin_index extends webmap3_admin_base
     {
         $path = $this->_xoops_param->get_module_config_by_name('gicon_path');
 
-        echo "<b>GICON Path</b><br />\n";
+        echo "<b>GICON Path</b><br >\n";
         echo XOOPS_ROOT_PATH . '/' . $path . ' : ';
         echo $this->_check_class->build_path($path);
     }

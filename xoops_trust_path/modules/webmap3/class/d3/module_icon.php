@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_d3_module_icon
 //=========================================================
+
+/**
+ * Class webmap3_d3_module_icon
+ */
 class webmap3_d3_module_icon
 {
     public $_DIRNAME;
@@ -25,6 +29,12 @@ class webmap3_d3_module_icon
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_d3_module_icon constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_DIRNAME       = $dirname;
@@ -63,11 +73,10 @@ class webmap3_d3_module_icon
             && function_exists('imagecreatefrompng')
             && function_exists('imagecolorallocate')
             && function_exists('imagestring')
-            && function_exists('imagepng')
-        ) {
+            && function_exists('imagepng')) {
             $im    = imagecreatefrompng($icon_fullpath);
             $color = imagecolorallocate($im, 0, 0, 0); // black
-            $px    = (92 - 6 * strlen($this->_DIRNAME)) / 2;
+            $px    = (92 - 6 * mb_strlen($this->_DIRNAME)) / 2;
             imagestring($im, 3, $px, 34, $this->_DIRNAME, $color);
             imagepng($im);
             imagedestroy($im);

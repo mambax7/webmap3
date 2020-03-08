@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_xoops_header
 //=========================================================
+
+/**
+ * Class webmap3_xoops_header
+ */
 class webmap3_xoops_header extends webmap3_xoops_header_base
 {
     public $_MAP_JS   = 'map';
@@ -21,23 +25,38 @@ class webmap3_xoops_header extends webmap3_xoops_header_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_xoops_header constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname, WEBMAP3_TRUST_DIRNAME);
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_xoops_header($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // assign
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_header
+     * @return array
+     */
     public function assign_or_get_default_css($flag_header = true)
     {
         $CSS_CONST = 'default_css';
@@ -56,9 +75,13 @@ class webmap3_xoops_header extends webmap3_xoops_header_base
             $show = false;
         }
 
-        return array($show, $css);
+        return [$show, $css];
     }
 
+    /**
+     * @param bool $flag_header
+     * @return array
+     */
     public function assign_or_get_google_map_js($flag_header = true)
     {
         $show = false;
@@ -74,9 +97,14 @@ class webmap3_xoops_header extends webmap3_xoops_header_base
             $show = false;
         }
 
-        return array($show, $js);
+        return [$show, $js];
     }
 
+    /**
+     * @param      $key
+     * @param bool $flag_header
+     * @return array
+     */
     public function assign_or_get_js($key, $flag_header = true)
     {
         $show = false;
@@ -92,20 +120,30 @@ class webmap3_xoops_header extends webmap3_xoops_header_base
             $show = false;
         }
 
-        return array($show, $js);
+        return [$show, $js];
     }
 
     //--------------------------------------------------------
     // google map js
     //--------------------------------------------------------
+
+    /**
+     * @param null $langcode
+     * @return null|string
+     */
     public function build_once_gmap_api($langcode = null)
     {
         if ($this->check_gmap_api()) {
             return $this->build_gmap_api($langcode);
         }
+
         return null;
     }
 
+    /**
+     * @param null $langcode
+     * @return string
+     */
     public function build_gmap_api($langcode = null)
     {
         if (empty($langcode)) {
@@ -114,9 +152,13 @@ class webmap3_xoops_header extends webmap3_xoops_header_base
 
         $src = 'http://maps.google.com/maps/api/js?sensor=false&amp;language=' . $langcode;
         $str = '<script src="' . $src . '" type="text/javascript" charset="utf-8"></script>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return bool
+     */
     public function check_gmap_api()
     {
         return $this->check_once_name('GMAP_API_V3');

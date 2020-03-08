@@ -1,0 +1,34 @@
+<{* $Id: main_georss.html,v 1.2 2012/04/09 11:52:19 ohwada Exp $ *}>
+
+<script type="text/javascript">
+    //<![CDATA[
+    window.onload = <{$map_func}>;
+    //]]>
+</script>
+
+<h3 align='center'><{$module_name}></h3>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php">[<{$lang_title_search}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=location">[<{$lang_title_location}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=georss">[<{$lang_title_georss}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=geocoding">[<{$lang_title_geocoding}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/demo.php">[<{$lang_title_demo}>]</a>
+
+<h4><{$lang_title_georss}></h4>
+<{$lang_title_georss_desc}><br><br>
+
+<noscript>
+    <div class="webmap3_error"><{$lang_js_invalid}></div>
+</noscript>
+
+<a href="<{$geo_url_s}>" target="_blank">
+    <img src="<{$xoops_url}>/modules/<{$xoops_dirname}>/images/rss.png" alt="<{$geo_title_s}>"></a>
+<b><{$geo_title_s}></b> <br><br>
+
+<div id="<{$map_div_id}>" class="webmap3_map">Loading ...</div>
+<br>
+
+<{if $is_module_admin }>
+    <br>
+    <hr>
+    <a href="./admin/index.php">go to admin cp</a>
+<{/if}>

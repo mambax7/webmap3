@@ -9,22 +9,19 @@
 // test
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $MY_DIRNAME = 'webmap3';
-
     // normal
 } elseif (isset($GLOBALS['MY_DIRNAME'])) {
     $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
-
     // call by altsys/mytplsadmin.php
 } elseif ($mydirname) {
     $MY_DIRNAME = $mydirname;
-
     // probably error
 } else {
-    echo 'not set dirname in ' . __FILE__ . " <br />\n";
+    echo 'not set dirname in ' . __FILE__ . " <br >\n";
     $MY_DIRNAME = 'webmap3';
 }
 
-$constpref = strtoupper('_L_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_L_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (!defined($constpref . 'LANG_LOADED')) {
@@ -33,4 +30,3 @@ if (!defined($constpref . 'LANG_LOADED')) {
     // geocoding: Japan
     define($constpref . 'REGION', 'jp');
 }// === define begin ===
-;

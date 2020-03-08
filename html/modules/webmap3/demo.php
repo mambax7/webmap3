@@ -14,7 +14,7 @@ require '../../mainfile.php';
 include XOOPS_ROOT_PATH . '/header.php';
 echo "<h3 align='center'>Google Maps V3</h3>\n";
 echo "<a href='index.php'>[Webmap3 Top]</a>\n";
-echo "<h4>Demonstration of Fucntion Call</h4>\n";
+echo "<h4>Demonstration of Function Call</h4>\n";
 
 // === map start ===
 $MY_DIRNAME = basename(__DIR__);

@@ -9,6 +9,10 @@
 //=========================================================
 // class webmap3_api_gicon
 //=========================================================
+
+/**
+ * Class webmap3_api_gicon
+ */
 class webmap3_api_gicon
 {
     public $_gicon_handler;
@@ -20,6 +24,11 @@ class webmap3_api_gicon
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_api_gicon constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME       = $dirname;
@@ -29,21 +38,31 @@ class webmap3_api_gicon
         $this->_URL_ICON_DEFAULT = XOOPS_URL . '/modules/' . $dirname . '/images/markers/marker.png';
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_api_gicon($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // get_image_url
     //---------------------------------------------------------
+
+    /**
+     * @param $id
+     * @return string
+     */
     public function get_image_url($id)
     {
-        if ($id == 0) {
+        if (0 == $id) {
             return $this->_URL_ICON_DEFAULT;
         }
 
@@ -51,63 +70,91 @@ class webmap3_api_gicon
         if (!isset($row['gicon_image_path'])) {
             return '';
         }
+
         return $this->_gicon_handler->build_icon_url($row['gicon_image_path']);
     }
 
     //---------------------------------------------------------
     // get_sel_options
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_none
+     * @param bool $flag_flip
+     * @return array|null
+     */
     public function get_sel_options($flag_none = false, $flag_flip = false)
     {
         $arr = $this->_gicon_handler->get_sel_options($flag_none);
         if ($flag_flip && is_array($arr)) {
             $arr = array_flip($arr);
         }
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // get gicons js
     //---------------------------------------------------------
+
+    /**
+     * @param int $id
+     * @return mixed|string|void
+     */
     public function get_gicons_js($id = 0)
     {
         $param = $this->build_gicons($id);
+
         return $this->fetch_gicons($param);
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function build_gicons($id = 0)
     {
         $show_gicon_js = false;
         $gicon_js      = null;
 
-        $icon_0 = array(
+        $icon_0 = [
             'id'        => 0,
             'image_url' => $this->_URL_ICON_DEFAULT,
-        );
+        ];
 
         $gicon_icons   = $this->_gicon_handler->get_icons();
         $gicon_icons[] = $icon_0;
 
-        $arr = array(
+        $arr = [
             'xoops_dirname' => $this->_DIRNAME,
             'id'            => $id,
             'gicon_icons'   => $gicon_icons,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @param $param
+     * @return mixed|string|void
+     */
     public function fetch_gicons($param)
     {
-        $tmplate = 'db:' . $this->_DIRNAME . '_inc_gicon_js.html';
+        $tmplate = 'db:' . $this->_DIRNAME . '_inc_gicon_js.tpl';
         $tpl     = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($tmplate);
     }
 
     //---------------------------------------------------------
     // header
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_header
+     * @return mixed
+     */
     public function assign_gicon_js_to_head($flag_header = true)
     {
         return $this->_header_class->assign_or_get_js('gicon', $flag_header);

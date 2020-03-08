@@ -11,9 +11,9 @@
 //---------------------------------------------------------
 
 $MY_DIRNAME = basename(dirname(__DIR__));
-$constpref  = strtoupper('_P_' . $MY_DIRNAME . '_');
+$constpref  = mb_strtoupper('_P_' . $MY_DIRNAME . '_');
 
-// === á define begin ===
+// === ï¿½ define begin ===
 if (!defined('_' . $constpref . 'DEBUG_LOADED')) {
     define('_' . $constpref . 'DEBUG_LOADED', 1);
 
@@ -28,6 +28,5 @@ if (!defined('_' . $constpref . 'DEBUG_LOADED')) {
 
     define($constpref . 'TIME_SUCCESS', 1000);
     define($constpref . 'TIME_FAIL', 1000);
-
     // === define end ===
 }

@@ -9,6 +9,10 @@
 //=========================================================
 // class webmap3_lib_admin_manage
 //=========================================================
+
+/**
+ * Class webmap3_lib_admin_manage
+ */
 class webmap3_lib_admin_manage extends webmap3_lib_form_lang
 {
     public $_base_class;
@@ -24,7 +28,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     public $_manage_menu       = null;
 
     public $_manage_sub_title_array         = null;
-    public $_MANAGE_SUB_TITLE_ARRAY_DEFAULT = array('ID ascent', 'ID descent');
+    public $_MANAGE_SUB_TITLE_ARRAY_DEFAULT = ['ID ascent', 'ID descent'];
 
     public $_manage_list_column_array = null;
 
@@ -44,6 +48,12 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_lib_admin_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -57,38 +67,53 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
 
         $this->set_manage_sub_title_array($this->_MANAGE_SUB_TITLE_ARRAY_DEFAULT);
 
-        $const_name = strtoupper('_AM_' . $trust_dirname . '_MANAGE_DESC');
+        $const_name = mb_strtoupper('_AM_' . $trust_dirname . '_MANAGE_DESC');
         if (defined($const_name)) {
             $this->set_manage_desc(constant($const_name));
         }
 
-        $const_name = strtoupper($trust_dirname . '_TIME_START');
+        $const_name = mb_strtoupper($trust_dirname . '_TIME_START');
         if (defined($const_name)) {
             $this->set_manage_start_time(constant($const_name));
         }
     }
 
-    public function set_manage_handler(&$handler)
+    /**
+     * @param $handler
+     */
+    public function set_manage_handler($handler)
     {
         $this->_manage_handler = $handler;
         $this->_manage_id_name = $handler->get_id_name();
     }
 
+    /**
+     * @param $val
+     */
     public function set_manage_title($val)
     {
         $this->_manage_title = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_manage_desc($val)
     {
         $this->_manage_desc = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_manage_start_time($val)
     {
         $this->_manage_start_time = (float)$val;
     }
 
+    /**
+     * @param $arr
+     */
     public function set_manage_sub_title_array($arr)
     {
         if (is_array($arr)) {
@@ -97,6 +122,9 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         }
     }
 
+    /**
+     * @param $arr
+     */
     public function set_manage_list_column_array($arr)
     {
         if (is_array($arr)) {
@@ -104,31 +132,49 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         }
     }
 
+    /**
+     * @param $name
+     */
     public function set_manage_title_by_name($name)
     {
         $this->set_manage_title($this->get_admin_title($name));
     }
 
+    /**
+     * @param $val
+     */
     public function set_manage_menu($val)
     {
         $this->_manage_menu = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_show_list($val)
     {
         $this->_LANG_SHOW_LIST = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_add_record($val)
     {
         $this->_LANG_ADD_RECORD = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_no_record($val)
     {
         $this->_LANG_NO_RECORD = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_there_are($val)
     {
         $this->_LANG_THERE_ARE = $val;
@@ -137,6 +183,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // id
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function get_post_id()
     {
         $id = $this->get_post_get_int($this->_manage_id_name);
@@ -147,6 +197,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         return $this->get_post_get_int('id');
     }
 
+    /**
+     * @param null $row
+     * @return bool|int
+     */
     public function get_manage_id($row = null)
     {
         if (empty($row)) {
@@ -155,12 +209,17 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         if (isset($row[$this->_manage_id_name])) {
             return (int)$row[$this->_manage_id_name];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // list
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function manage_list()
     {
         $this->_pagenavi_class->set_page_by_get();
@@ -173,10 +232,11 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         echo $this->build_show_desc();
 
         $total_all = $this->get_total_all();
-        if ($total_all == 0) {
+        if (0 == $total_all) {
             echo $this->build_show_no_record(true);
-            echo "<br /><br />\n";
+            echo "<br ><br >\n";
             echo $this->build_show_add_record();
+
             return false;
         }
 
@@ -187,7 +247,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         echo $this->build_sub_title();
         echo $this->build_show_there_are($total);
 
-        if ($total == 0) {
+        if (0 == $total) {
             return true;
         }
 
@@ -201,6 +261,9 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         return true;
     }
 
+    /**
+     * @return string
+     */
     public function build_sub_title()
     {
         $title = $this->get_sub_title_by_num($this->pagenavi_get_sortid());
@@ -209,9 +272,13 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         } else {
             $text = '<h4 style="color:#ff0000">' . 'unknown' . "</h4>\n";
         }
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_sub_title_list()
     {
         $text = '<ul>' . "\n";
@@ -226,41 +293,65 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         }
 
         $text .= '</ul>' . "\n";
-        $text .= "<br />\n";
+        $text .= "<br >\n";
+
         return $text;
     }
 
+    /**
+     * @return int
+     */
     public function get_sub_title_count()
     {
         if (is_array($this->_manage_sub_title_array)) {
             return count($this->_manage_sub_title_array);
         }
+
         return 0;
     }
 
+    /**
+     * @param $num
+     * @return bool
+     */
     public function get_sub_title_by_num($num)
     {
         if (isset($this->_manage_sub_title_array[$num])) {
             return $this->_manage_sub_title_array[$num];
         }
+
         return false;
     }
 
+    /**
+     * @return mixed
+     */
     public function get_total_all()
     {
         return $this->_manage_handler->get_count_all();
     }
 
+    /**
+     * @return mixed
+     */
     public function get_list_total()
     {
         return $this->_get_list_total();
     }
 
+    /**
+     * @param $limit
+     * @param $start
+     * @return mixed
+     */
     public function get_list_rows($limit, $start)
     {
         return $this->_get_list_rows($limit, $start);
     }
 
+    /**
+     * @param $rows
+     */
     public function print_list($rows)
     {
         $get_fct = $this->get_post_get_text('fct');
@@ -287,12 +378,12 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
 
         echo '<tr>';
         echo '<td class="head">';
-        echo '<input type="submit" name="delete_all" value="' . _DELETE . '" />';
+        echo '<input type="submit" name="delete_all" value="' . _DELETE . '" >';
         echo '</td>';
         echo '<td class="head" colspan="' . $this->get_manage_list_submit_colspan() . '"></td>';
         echo "</tr>\n";
         echo "</table></form>\n";
-        echo "<br />\n";
+        echo "<br >\n";
 
         echo $this->build_form_pagenavi_perpage();
         echo $this->build_manage_pagenavi();
@@ -303,6 +394,9 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         return $this->_manage_menu;
     }
 
+    /**
+     * @return string
+     */
     public function build_manage_list_headers()
     {
         $arr = $this->get_manage_list_column_array();
@@ -313,9 +407,14 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         foreach ($arr as $name) {
             $text .= $this->build_comp_td($name);
         }
+
         return $text;
     }
 
+    /**
+     * @param $row
+     * @return string
+     */
     public function build_manage_list_columns($row)
     {
         $arr = $this->get_manage_list_column_array();
@@ -327,20 +426,29 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         foreach ($arr as $name) {
             $text .= $this->build_manage_line_value($row[$name]);
         }
+
         return $text;
     }
 
+    /**
+     * @return int
+     */
     public function get_manage_list_submit_colspan()
     {
         $ret = $this->get_manage_list_column_count() + 1;
+
         return $ret;
     }
 
+    /**
+     * @return int
+     */
     public function get_manage_list_column_count()
     {
         if (is_array($this->_manage_list_column_array)) {
             return count($this->_manage_list_column_array);
         }
+
         return 0;
     }
 
@@ -357,6 +465,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $this->manage_print_form();
     }
 
+    /**
+     * @param null $msg
+     * @return bool
+     */
     public function manage_form_with_error($msg = null)
     {
         // show error if noo record
@@ -374,6 +486,9 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $this->_manage_print_title_and_form($row);
     }
 
+    /**
+     * @return bool
+     */
     public function manage_print_form()
     {
         // show error if no record
@@ -387,6 +502,9 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $this->_manage_print_title_and_form($row);
     }
 
+    /**
+     * @param $row
+     */
     public function _manage_print_title_and_form($row)
     {
         echo $this->build_show_title();
@@ -407,7 +525,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
 
         $newid = $this->_manage_handler->insert($row_insert);
         if (!$newid) {
-            $msg = 'DB error <br />';
+            $msg = 'DB error <br >';
             $msg .= $this->_manage_handler->get_format_error();
             redirect_header($this->build_manage_form_url(), $this->_MANAGE_TIME_FAIL, $msg);
             exit();
@@ -417,12 +535,17 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         exit();
     }
 
+    /**
+     * @param int $id
+     * @return string
+     */
     public function build_manage_form_url($id = 0)
     {
         if (empty($id)) {
             $id = $this->get_post_id();
         }
         $url = $this->_THIS_FCT_URL . '&amp;op=form&amp;id=' . (int)$id;
+
         return $url;
     }
 
@@ -444,11 +567,19 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         exit();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function _manage_edit_get_row($id)
     {
         return $this->_manage_get_row_or_exit($id);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function _manage_get_row_or_exit($id)
     {
         $row = $this->_manage_handler->get_row_by_id($id);
@@ -461,11 +592,15 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function _manage_edit_exec($row)
     {
         $ret = $this->_manage_handler->update($row);
         if (!$ret) {
-            $msg = 'DB error <br />';
+            $msg = 'DB error <br >';
             $msg .= $this->_manage_handler->get_format_error();
             redirect_header($this->build_manage_form_url($id), $this->_MANAGE_TIME_FAIL, $msg);
             exit();
@@ -489,17 +624,24 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         exit();
     }
 
+    /**
+     * @return mixed
+     */
     public function _manage_delete_get_row()
     {
         return $this->_manage_get_row_or_exit($this->get_post_id());
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function _manage_delete_exec($row)
     {
         $id  = $this->get_manage_id($row);
         $ret = $this->_manage_handler->delete($row);
         if (!$ret) {
-            $msg = 'DB error <br />';
+            $msg = 'DB error <br >';
             $msg .= $this->_manage_handler->get_format_error();
             redirect_header($this->build_manage_form_url($id), $this->_MANAGE_TIME_FAIL, $msg);
             exit();
@@ -523,7 +665,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         }
 
         if ($flag_error) {
-            $msg = 'DB error <br />';
+            $msg = 'DB error <br >';
             $msg .= $this->get_format_error();
             redirect_header($url, $this->_MANAGE_TIME_FAIL, $msg);
             exit();
@@ -533,6 +675,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         exit();
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function _manage_delete_all_each($id)
     {
         $row = $this->_manage_handler->get_row_by_id($id);
@@ -545,6 +691,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $ret = $this->_manage_handler->delete($row);
         if (!$ret) {
             $this->_set_error($this->_manage_handler->get_errors());
+
             return false;
         }
 
@@ -554,30 +701,47 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // manage title
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function build_manage_title()
     {
         $text = $this->build_manage_bread_crumb();
         $text .= $this->build_show_title();
         $text .= $this->build_show_list();
         $text .= $this->build_show_add_record();
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_show_title()
     {
         $text = '<h3>' . $this->_manage_title . "</h3>\n";
+
         return $text;
     }
 
+    /**
+     * @return null|string
+     */
     public function build_show_desc()
     {
         if ($this->_manage_desc) {
-            $text = $this->_manage_desc . "<br /><br />\n";
+            $text = $this->_manage_desc . "<br ><br >\n";
+
             return $text;
         }
+
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function build_manage_bread_crumb()
     {
         $text = '<a href="index.php">';
@@ -587,73 +751,110 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $text .= '<a href="' . $this->_THIS_FCT_URL . '">';
         $text .= $this->sanitize($this->_manage_title);
         $text .= '</a>';
-        $text .= "<br /><br />\n";
+        $text .= "<br ><br >\n";
+
         return $text;
     }
 
     //---------------------------------------------------------
     // manage list
     //---------------------------------------------------------
+
+    /**
+     * @return int|mixed
+     */
     public function get_manage_total_print_error()
     {
         $total = $this->get_manage_total();
-        if ($total == 0) {
+        if (0 == $total) {
             echo $this->build_manage_bread_crumb();
             echo $this->build_show_no_record(true);
+
             return 0;
         }
 
         return $total;
     }
 
+    /**
+     * @param bool $flag_highlight
+     * @return string
+     */
     public function build_show_no_record($flag_highlight = false)
     {
         $text = $this->_LANG_NO_RECORD;
         if ($flag_highlight) {
             $text = $this->highlight($text);
         }
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_show_list()
     {
         $text = '<a href="' . $this->_THIS_FCT_URL . '">';
         $text .= $this->_LANG_SHOW_LIST;
         $text .= '</a>';
-        $text .= "<br /><br >\n";
+        $text .= "<br ><br >\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_show_add_record()
     {
         $text = '<a href="' . $this->_THIS_FCT_URL . '&amp;op=form">';
         $text .= $this->_LANG_ADD_RECORD;
         $text .= '</a>';
-        $text .= "<br /><br />\n";
+        $text .= "<br ><br >\n";
+
         return $text;
     }
 
+    /**
+     * @param $total
+     * @return string
+     */
     public function build_show_there_are($total)
     {
-        $text = sprintf($this->_LANG_THERE_ARE, $total) . "<br /><br />\n";
+        $text = sprintf($this->_LANG_THERE_ARE, $total) . "<br ><br >\n";
+
         return $text;
     }
 
+    /**
+     * @return mixed
+     */
     public function get_manage_total()
     {
         $total               = $this->_manage_handler->get_count_all();
         $this->_manage_total = $total;
+
         return $total;
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function build_manage_line_js_checkbox($id)
     {
         $text = '<td class="' . $this->_alternate_class . '">';
         $text .= $this->build_js_checkbox($id);
         $text .= '</td>';
+
         return $text;
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function build_manage_line_id($id)
     {
         $id  = (int)$id;
@@ -663,9 +864,15 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $text .= '<a href="' . $url . '">';
         $text .= sprintf('%04d', $id) . '</a>';
         $text .= '</td>';
+
         return $text;
     }
 
+    /**
+     * @param      $value
+     * @param bool $flag
+     * @return string
+     */
     public function build_manage_line_value($value, $flag = true)
     {
         if ($flag) {
@@ -674,12 +881,17 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $text = '<td class="' . $this->_alternate_class . '">';
         $text .= $value;
         $text .= '</td>';
+
         return $text;
     }
 
     //---------------------------------------------------------
     // manage navi
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function build_manage_pagenavi()
     {
         $script = $this->_THIS_FCT_URL;
@@ -692,7 +904,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         if ($navi) {
             $text .= '<div align="center">';
             $text .= $navi;
-            $text .= "</div><br />\n";
+            $text .= "</div><br >\n";
         }
 
         return $text;
@@ -701,6 +913,11 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // manage form
     //---------------------------------------------------------
+
+    /**
+     * @param null $id
+     * @return array|bool
+     */
     public function get_manage_row_by_id($id = null)
     {
         $false = false;
@@ -715,6 +932,7 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
             if (!is_array($row)) {
                 echo $this->build_manage_bread_crumb();
                 echo $this->build_show_no_record(true);
+
                 return $false;
             }
             $op = 'edit';
@@ -728,6 +946,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return string
+     */
     public function build_manage_form_begin($row)
     {
         $this->set_row($row);
@@ -746,14 +968,22 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         if ($id > 0) {
             $text .= $this->build_input_hidden($this->_manage_id_name, $id);
         }
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function build_manage_header()
     {
         return $this->build_line_title($this->_manage_title);
     }
 
+    /**
+     * @param null $row
+     * @return string
+     */
     public function build_manage_id($row = null)
     {
         $title = $this->get_lang($this->_manage_id_name);
@@ -761,46 +991,71 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
             $title = $this->_MANAGE_TITLE_ID_DEFAULT;
         }
         $id = $this->substitute_empty($this->get_manage_id($row));
+
         return $this->build_line_ele($title, $id);
     }
 
+    /**
+     * @param null $row
+     * @return string
+     */
     public function build_manage_submit($row = null)
     {
         $id = $this->get_manage_id($row);
         if ($id) {
             return $this->build_line_edit();
         }
+
         return $this->build_line_add();
     }
 
     //---------------------------------------------------------
     // complement caption by name
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_comp_td($name)
     {
         $str = '<th>' . $this->get_lang($name) . '</th>';
+
         return $str;
     }
 
     //---------------------------------------------------------
     // footer
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function build_admin_footer()
     {
-        $text = "<br /><hr />\n";
+        $text = "<br ><hr>\n";
         $text .= $this->build_execution_time($this->_manage_start_time);
         $text .= $this->build_memory_usage();
+
         return $text;
     }
 
     //---------------------------------------------------------
     // footer
     //---------------------------------------------------------
+
+    /**
+     * @param int $time_start
+     * @return string
+     */
     public function build_execution_time($time_start = 0)
     {
         return $this->_footer_class->build_execution_time($time_start);
     }
 
+    /**
+     * @return null|string
+     */
     public function build_memory_usage()
     {
         return $this->_footer_class->build_memory_usage();
@@ -809,11 +1064,21 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // base
     //---------------------------------------------------------
+
+    /**
+     * @param      $name
+     * @param bool $format
+     * @return mixed|string
+     */
     public function build_admin_title($name, $format = true)
     {
         return $this->_base_class->build_admin_title($name, $format);
     }
 
+    /**
+     * @param $name
+     * @return mixed|string
+     */
     public function get_admin_title($name)
     {
         return $this->_base_class->get_admin_title($name);
@@ -822,16 +1087,26 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // paginavi
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function pagenavi_get_sortid()
     {
         return $this->_pagenavi_class->get_sortid();
     }
 
+    /**
+     * @return int
+     */
     public function pagenavi_get_perpage()
     {
         return $this->_pagenavi_class->get_perpage();
     }
 
+    /**
+     * @return string
+     */
     public function build_form_pagenavi_perpage()
     {
         $form_name = $this->_FORM_NAME . '_perpage';
@@ -845,23 +1120,37 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         $text .= ' ';
         $text .= $this->build_input_submit('submit', 'SET');
         $text .= $this->build_form_end();
-        $text .= "</div><br />\n";
+        $text .= "</div><br >\n";
+
         return $text;
     }
 
     //---------------------------------------------------------
     // post
     //---------------------------------------------------------
+
+    /**
+     * @param $key
+     * @return int
+     */
     public function get_post_get_int($key)
     {
         return $this->_post_class->get_post_get_int($key);
     }
 
+    /**
+     * @param $key
+     * @return array|string
+     */
     public function get_post_get_text($key)
     {
         return $this->_post_class->get_post_get_text($key);
     }
 
+    /**
+     * @param $key
+     * @return array|string
+     */
     public function get_post_text($key)
     {
         return $this->_post_class->get_post_text($key);
@@ -886,12 +1175,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
                 }
                 $this->_execute();
                 break;
-
             case 'form':
                 xoops_cp_header();
                 $this->manage_form();
                 break;
-
             case 'list':
             default:
                 xoops_cp_header();
@@ -910,21 +1197,21 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
             case 'add':
                 $this->manage_add();
                 break;
-
             case 'edit':
                 $this->manage_edit();
                 break;
-
             case 'delete':
                 $this->manage_delete();
                 break;
-
             case 'delete_all':
                 $this->manage_delete_all();
                 break;
         }
     }
 
+    /**
+     * @return array|string
+     */
     public function _get_op()
     {
         if ($this->get_post_text('add')) {
@@ -943,13 +1230,22 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return mixed
+     */
     public function _get_list_total()
     {
         $total               = $this->_get_count_by_sortid($this->pagenavi_get_sortid());
         $this->_manage_total = $total;
+
         return $total;
     }
 
+    /**
+     * @param $sortid
+     * @return mixed
+     */
     public function _get_count_by_sortid($sortid)
     {
         switch ($sortid) {
@@ -963,13 +1259,17 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         return $count;
     }
 
+    /**
+     * @param $limit
+     * @param $start
+     * @return mixed
+     */
     public function _get_list_rows($limit, $start)
     {
         switch ($this->pagenavi_get_sortid()) {
             case 1:
                 $rows = $this->_manage_handler->get_rows_all_desc($limit, $start);
                 break;
-
             case 0:
             default:
                 $rows = $this->_manage_handler->get_rows_all_asc($limit, $start);
@@ -999,6 +1299,10 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         // dummy
     }
 
+    /**
+     * @param $total
+     * @param $rows
+     */
     public function _print_list($total, $rows)
     {
         // dummy
@@ -1009,11 +1313,17 @@ class webmap3_lib_admin_manage extends webmap3_lib_form_lang
         // dummy;
     }
 
+    /**
+     * @param $row
+     */
     public function _manage_delete_option($row)
     {
         // dummy
     }
 
+    /**
+     * @param $row
+     */
     public function _manage_delete_all_each_option($row)
     {
         // dummy

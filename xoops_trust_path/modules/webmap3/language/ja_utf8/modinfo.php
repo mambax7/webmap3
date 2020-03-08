@@ -9,22 +9,19 @@
 // test
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $MY_DIRNAME = 'webmap3';
-
     // normal
 } elseif (isset($GLOBALS['MY_DIRNAME'])) {
     $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
-
     // call by altsys/mytplsadmin.php
 } elseif ($mydirname) {
     $MY_DIRNAME = $mydirname;
-
     // probably error
 } else {
-    echo 'not set dirname in ' . __FILE__ . " <br />\n";
+    echo 'not set dirname in ' . __FILE__ . " <br >\n";
     $MY_DIRNAME = 'webmap3';
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
@@ -95,13 +92,13 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_GICON_PATH', 'アップロード・ファイルのディレクトリ');
 
     // icon
-    define($constpref . 'CFG_GICON_PATH_DSC', "[Googleアイコン] アップロード時の保存先ディレクトリ<br />XOOPSインストール先からの相対パスを指定する<br />最初と最後の'/'は不要<br />Unixではこのディレクトリへの書込属性をONにして下さい");
+    define($constpref . 'CFG_GICON_PATH_DSC', "[Googleアイコン] アップロード時の保存先ディレクトリ<br >XOOPSインストール先からの相対パスを指定する<br >最初と最後の'/'は不要<br >Unixではこのディレクトリへの書込属性をONにして下さい");
     define($constpref . 'CFG_GICON_FSIZE', '最大ファイル容量');
     define($constpref . 'CFG_GICON_FSIZE_DSC', '[Googleアイコン] アップロード時のファイル容量制限(byte)');
     define($constpref . 'CFG_GICON_WIDTH', '最大の横幅と高さ');
     define($constpref . 'CFG_GICON_WIDTH_DSC', '[Googleアイコン] アップロード時の横幅と高さの最大');
     define($constpref . 'CFG_GICON_QUALITY', 'JPEG 品質');
-    define($constpref . 'CFG_GICON_QUALITY_DSC', '[Googleアイコン] アップロード時のサイズ変更したときに品質<br />1 - 100');
+    define($constpref . 'CFG_GICON_QUALITY_DSC', '[Googleアイコン] アップロード時のサイズ変更したときに品質<br >1 - 100');
 
     define($constpref . 'ADMENU_INDEX', '目次');
     define($constpref . 'ADMENU_LOCATION', '緯度・経度を取得する');
@@ -120,4 +117,3 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_REGION', '国コード');
     define($constpref . 'CFG_REGION_DSC', '[Geocoding]');
 }// === define begin ===
-;

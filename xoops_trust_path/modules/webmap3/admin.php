@@ -33,14 +33,14 @@ global $xoopsUser;
 
 // environment
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-$module_handler    = xoops_getHandler('module');
-$xoopsModule       = $module_handler->getByDirname($MY_DIRNAME);
-$config_handler    = xoops_getHandler('config');
-$xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+$moduleHandler     = xoops_getHandler('module');
+$xoopsModule       = $moduleHandler->getByDirname($MY_DIRNAME);
+$configHandler     = xoops_getHandler('config');
+$xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
 // check permission of 'module_admin' of this module
-$moduleperm_handler = xoops_getHandler('groupperm');
-if (!is_object(@$xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+$modulepermHandler = xoops_getHandler('groupperm');
+if (!is_object(@$xoopsUser) || !$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
     die('only admin can access this area');
 }
 
@@ -56,14 +56,13 @@ $mydirname      = $MY_DIRNAME;
 $mydirpath      = XOOPS_ROOT_PATH . '/modules/' . $MY_DIRNAME;
 
 if (!empty($_GET['lib'])) {
-
     // initialize language manager
     $langmanpath = XOOPS_TRUST_PATH . '/libs/altsys/class/D3LanguageManager.class.php';
     if (!file_exists($langmanpath)) {
         die('install the latest altsys');
     }
 
-    require_once($langmanpath);
+    require_once $langmanpath;
     $langman = D3LanguageManager::getInstance();
 
     // common libs (eg. altsys)
@@ -71,7 +70,7 @@ if (!empty($_GET['lib'])) {
     $page = preg_replace('/[^a-zA-Z0-9_-]/', '', @$_GET['page']);
 
     // check the page can be accessed (make controllers.php just under the lib)
-    $controllers = array();
+    $controllers = [];
     if (file_exists(XOOPS_TRUST_PATH . '/libs/' . $lib . '/controllers.php')) {
         require XOOPS_TRUST_PATH . '/libs/' . $lib . '/controllers.php';
         if (!in_array($page, $controllers)) {

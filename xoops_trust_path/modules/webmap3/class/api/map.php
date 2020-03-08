@@ -12,6 +12,10 @@
 //=========================================================
 // class webmap3_api_map
 //=========================================================
+
+/**
+ * Class webmap3_api_map
+ */
 class webmap3_api_map
 {
     public $_gicon_handler;
@@ -61,7 +65,7 @@ class webmap3_api_map
 
     public $_map_width  = '';
     public $_map_height = '';
-    public $_markers    = array();
+    public $_markers    = [];
 
     // info window
     public $_title_lengh      = 0;
@@ -110,6 +114,11 @@ class webmap3_api_map
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_api_map constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_WEBMAP3_DIRNAME = $dirname;
@@ -124,12 +133,17 @@ class webmap3_api_map
         $this->_REGION_DEFAULT = $config_class->get_by_name('region');
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_api_map($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -138,7 +152,6 @@ class webmap3_api_map
     //---------------------------------------------------------
     public function init()
     {
-
         // MUST set by caller
         $this->_map_div_id = '';
         $this->_map_func   = '';
@@ -172,7 +185,7 @@ class webmap3_api_map
         $this->_use_parent_location  = false;
 
         $this->_opener_mode = '';
-        $this->_markers     = array();
+        $this->_markers     = [];
 
         $this->_map_width  = _C_WEBMAP3_MAP_WIDTH;
         $this->_map_height = _C_WEBMAP3_MAP_HEIGHT;
@@ -218,18 +231,22 @@ class webmap3_api_map
         $this->_ele_id_parent_address   = $dirname . '_map_parentt_address';
 
         // tmplate
-        $this->_tmplate_gicon_array_js       = 'db:' . $dirname . '_inc_gicon_array_js.html';
-        $this->_tmplate_geoxml_head_js       = 'db:' . $dirname . '_inc_geoxml_head_js.html';
-        $this->_tmplate_markers_head_js      = 'db:' . $dirname . '_inc_markers_head_js.html';
-        $this->_tmplate_search_head_js       = 'db:' . $dirname . '_inc_search_head_js.html';
-        $this->_tmplate_body_common_js       = 'db:' . $dirname . '_inc_body_common_js.html';
-        $this->_tmplate_block_common_js      = 'db:' . $dirname . '_inc_block_common_js.html';
-        $this->_tmplate_get_location_head_js = 'db:' . $dirname . '_inc_get_location_head_js.html';
+        $this->_tmplate_gicon_array_js       = 'db:' . $dirname . '_inc_gicon_array_js.tpl';
+        $this->_tmplate_geoxml_head_js       = 'db:' . $dirname . '_inc_geoxml_head_js.tpl';
+        $this->_tmplate_markers_head_js      = 'db:' . $dirname . '_inc_markers_head_js.tpl';
+        $this->_tmplate_search_head_js       = 'db:' . $dirname . '_inc_search_head_js.tpl';
+        $this->_tmplate_body_common_js       = 'db:' . $dirname . '_inc_body_common_js.tpl';
+        $this->_tmplate_block_common_js      = 'db:' . $dirname . '_inc_block_common_js.tpl';
+        $this->_tmplate_get_location_head_js = 'db:' . $dirname . '_inc_get_location_head_js.tpl';
     }
 
     //---------------------------------------------------------
     // simple map
     //---------------------------------------------------------
+
+    /**
+     * @return mixed|string|void
+     */
     public function build_simple_map()
     {
         $this->assign_google_map_js_to_head();
@@ -250,89 +267,146 @@ class webmap3_api_map
         return $str;
     }
 
+    /**
+     * @param $id
+     * @param $width
+     * @param $height
+     * @return string
+     */
     public function build_map_div($id, $width, $height)
     {
         $str = '<div id="' . $id . '" style="width:' . $width . ';height:' . $height . ';">Loading ...</div>';
+
         return $str;
     }
 
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_head
+     * @return mixed|null|string|void
+     */
     public function assign_gicon_array_to_head($flag_head = true)
     {
         if ($this->check_once_name($this->_gicon_name)) {
             $gicons = $this->get_gicons();
             $param  = $this->build_gicons($gicons);
             $js     = $this->fetch_gicon_array_head($param, $flag_head);
+
             return $js;
         }
+
         return null;
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
     public function get_gicons($limit = 0, $offset = 0)
     {
         return $this->_gicon_handler->get_icons($limit, $offset);
     }
 
+    /**
+     * @param $gicns
+     * @return array
+     */
     public function build_gicons($gicns)
     {
-        $arr = array(
+        $arr = [
             'gicon_func' => $this->_gicon_func,
             'map_gicons' => $gicns,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $xml_url
+     * @return array
+     */
     public function build_geoxml($xml_url)
     {
         $arr            = $this->build_param_common();
         $arr['xml_url'] = $xml_url;
+
         return $arr;
     }
 
+    /**
+     * @param $markers
+     * @return array
+     */
     public function build_markers($markers)
     {
         $arr                = $this->build_param_common();
         $arr['map_markers'] = $this->escape_markers($markers);
+
         return $arr;
     }
 
+    /**
+     * @param $markers
+     * @return array
+     */
     public function escape_markers($markers)
     {
         if (!is_array($markers) || !count($markers)) {
             return $markers;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($markers as $marker) {
             if (isset($marker['info'])) {
                 $marker['info'] = $this->escape_single_quote($marker['info']);
             }
             $arr[] = $marker;
         }
+
         return $arr;
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function escape_single_quote($str)
     {
         $str = str_replace("\'", "'", $str);
         $str = str_replace("'", "\'", $str);
+
         return $str;
     }
 
+    /**
+     * @return array
+     */
     public function build_search()
     {
         $arr = $this->build_param_common();
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function build_get_location()
     {
         $arr = $this->build_param_common(false);
+
         return $arr;
     }
 
+    /**
+     * @param      $param
+     * @param bool $flag_head
+     * @return mixed|string|void
+     */
     public function fetch_gicon_array_head($param, $flag_head = true)
     {
         $tpl = new XoopsTpl();
@@ -346,6 +420,11 @@ class webmap3_api_map
         return $js;
     }
 
+    /**
+     * @param      $param
+     * @param bool $flag_head
+     * @return mixed|string|void
+     */
     public function fetch_geoxml_head($param, $flag_head = true)
     {
         $tpl = new XoopsTpl();
@@ -359,6 +438,11 @@ class webmap3_api_map
         return $js;
     }
 
+    /**
+     * @param      $param
+     * @param bool $flag_head
+     * @return mixed|string|void
+     */
     public function fetch_markers_head($param, $flag_head = true)
     {
         $tpl = new XoopsTpl();
@@ -372,6 +456,11 @@ class webmap3_api_map
         return $js;
     }
 
+    /**
+     * @param      $param
+     * @param bool $flag_head
+     * @return mixed|string|void
+     */
     public function fetch_search_head($param, $flag_head = true)
     {
         $tpl = new XoopsTpl();
@@ -385,6 +474,11 @@ class webmap3_api_map
         return $js;
     }
 
+    /**
+     * @param      $param
+     * @param bool $flag_head
+     * @return mixed|string|void
+     */
     public function fetch_get_location_head($param, $flag_head = false)
     {
         $tpl = new XoopsTpl();
@@ -398,23 +492,37 @@ class webmap3_api_map
         return $js;
     }
 
+    /**
+     * @param $param
+     * @return mixed|string|void
+     */
     public function fetch_body_common($param)
     {
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_tmplate_body_common_js);
     }
 
+    /**
+     * @param $param
+     * @return mixed|string|void
+     */
     public function fetch_block_common($param)
     {
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_tmplate_block_common_js);
     }
 
+    /**
+     * @param bool $flag_header
+     * @return array
+     */
     public function build_param_common($flag_header = true)
     {
-        $arr = array(
+        $arr = [
             'map_div_id' => $this->_map_div_id,
             'map_func'   => $this->_map_func,
             'gicon_func' => $this->_gicon_func,
@@ -470,16 +578,21 @@ class webmap3_api_map
             'lang_no_match_place'     => $this->_lang_no_match_place,
             'lang_not_compatible'     => $this->_lang_not_compatible,
             'lang_not_successful'     => $this->_lang_not_successful,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @param $bool
+     * @return string
+     */
     public function bool_to_str($bool)
     {
         if ($bool) {
             return 'true';
         }
+
         return 'false';
     }
 
@@ -488,28 +601,48 @@ class webmap3_api_map
     //---------------------------------------------------------
     public function clear_marker()
     {
-        $this->_markers[] = array();
+        $this->_markers[] = [];
     }
 
+    /**
+     * @param        $lat
+     * @param        $lng
+     * @param string $info
+     * @param int    $id
+     */
     public function add_marker($lat, $lng, $info = '', $id = 0)
     {
         $this->_markers[] = $this->build_single_marker($lat, $lng, $info, $id);
     }
 
+    /**
+     * @param        $lat
+     * @param        $lng
+     * @param string $info
+     * @param int    $id
+     * @return array
+     */
     public function build_single_marker($lat, $lng, $info = '', $id = 0)
     {
-        $marker = array(
+        $marker = [
             'latitude'  => (float)$lat,
             'longitude' => (float)$lng,
             'info'      => $info,
             'icon_id'   => (int)$id,
-        );
+        ];
+
         return $marker;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $width
+     * @param $height
+     * @return array
+     */
     public function adjust_image_size($width, $height)
     {
         return $this->_utility_class->adjust_image_size($width, $height, $this->_image_max_width, $this->_image_max_height, $this->_image_flag_zero);
@@ -518,20 +651,34 @@ class webmap3_api_map
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return null|string
+     */
     public function build_title_short($str)
     {
         $str = $this->_multibyte_class->shorten($str, $this->_title_lengh);
         if ($this->_title_sanitize) {
             $str = $this->sanitize($str);
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function build_summary($str)
     {
         return $this->_multibyte_class->build_summary_with_wordwrap($str, $this->_info_max, $this->_info_width, $this->_info_break, $this->_info_sanitize);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return $this->_multibyte_class->sanitize($str);
@@ -540,26 +687,46 @@ class webmap3_api_map
     //---------------------------------------------------------
     // header
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_header
+     * @return mixed
+     */
     public function assign_google_map_js_to_head($flag_header = true)
     {
         return $this->_header_class->assign_or_get_google_map_js($flag_header);
     }
 
+    /**
+     * @param bool $flag_header
+     * @return mixed
+     */
     public function assign_map_js_to_head($flag_header = true)
     {
         return $this->_header_class->assign_or_get_js('map', $flag_header);
     }
 
+    /**
+     * @param bool $flag_header
+     * @return mixed
+     */
     public function assign_search_js_to_head($flag_header = true)
     {
         return $this->_header_class->assign_or_get_js('search', $flag_header);
     }
 
+    /**
+     * @param $var
+     */
     public function assign_to_head($var)
     {
         $this->_header_class->assign_xoops_module_header($var);
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function check_once_name($name)
     {
         return $this->_header_class->check_once_name($name);
@@ -568,6 +735,11 @@ class webmap3_api_map
     //---------------------------------------------------------
     // language
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_lang($name)
     {
         return $this->_language_class->get_constant($name);
@@ -576,262 +748,424 @@ class webmap3_api_map
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_dirname($val)
     {
         $this->_dirname = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_div_id($val)
     {
         $this->_map_div_id = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_func($val)
     {
         $this->_map_func = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_timeout($val)
     {
         $this->_timeout = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_region($val)
     {
         $this->_region = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_opener_mode($val)
     {
         $this->_opener_mode = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_latitude($val)
     {
         $this->_latitude = (float)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_longitude($val)
     {
         $this->_longitude = (float)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_zoom($val)
     {
         $this->_zoom = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_element($val)
     {
         $this->_element = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_type_control($val)
     {
         $this->_map_type_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_zoom_control($val)
     {
         $this->_zoom_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_pan_control($val)
     {
         $this->_pan_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_street_view_control($val)
     {
         $this->_street_view_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_scale_control($val)
     {
         $this->_scale_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_overview_map_control($val)
     {
         $this->_overview_map_control = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_overview_map_control_opened($val)
     {
         $this->_overview_map_control_opened = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_type_control_style($val)
     {
         $this->_map_type_control_style = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_zoom_control_style($val)
     {
         $this->_zoom_control_style = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_map_type($val)
     {
         $this->_map_type = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_draggable_marker($val)
     {
         $this->_use_draggable_marker = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_center_marker($val)
     {
         $this->_use_center_marker = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_search_marker($val)
     {
         $this->_use_search_marker = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_list($val)
     {
         $this->_ele_id_list = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_search($val)
     {
         $this->_ele_id_search = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_current_location($val)
     {
         $this->_ele_id_current_location = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_current_address($val)
     {
         $this->_ele_id_current_address = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_latitude($val)
     {
         $this->_ele_id_parent_latitude = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_longitude($val)
     {
         $this->_ele_id_parent_longitude = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_zoom($val)
     {
         $this->_ele_id_parent_zoom = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_ele_id_parent_address($val)
     {
         $this->_ele_id_parent_address = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_current_location($val)
     {
         $this->_use_current_location = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_current_address($val)
     {
         $this->_use_current_address = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_use_parent_location($val)
     {
         $this->_use_parent_location = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_latitude($val)
     {
         $this->_lang_latitude = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_longitude($val)
     {
         $this->_lang_longitude = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_zoom($val)
     {
         $this->_lang_zoom = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_not_compatible($val)
     {
         $this->_lang_not_compatible = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_no_match_place($val)
     {
         $this->_lang_no_match_place = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_not_successful($val)
     {
         $this->_lang_not_successful = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_title_length($val)
     {
         $this->_title_length = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_title_sanitize($val)
     {
         $this->_title_sanitize = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_info_sanitize($val)
     {
         $this->_info_sanitize = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_info_max($val)
     {
         $this->_info_max = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_info_width($val)
     {
         $this->_info_width = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_info_break($val)
     {
         $this->_info_break = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_image_max_width($val)
     {
         $this->_image_max_width = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_image_max_height($val)
     {
         $this->_image_max_height = (int)$val;
     }
 
+    /**
+     * @param $w
+     * @param $h
+     */
     public function set_map_size($w, $h)
     {
         $this->set_map_width($w);
         $this->set_map_height($h);
     }
 
+    /**
+     * @param        $v
+     * @param string $u
+     */
     public function set_map_width($v, $u = 'px')
     {
         $this->_map_width = (int)$v . $u;
     }
 
+    /**
+     * @param        $v
+     * @param string $u
+     */
     public function set_map_height($v, $u = 'px')
     {
         $this->_map_height = (int)$v . $u;
     }
 
+    /**
+     * @param $lat
+     * @param $lng
+     * @param $zoom
+     */
     public function set_map_center($lat, $lng, $zoom)
     {
         $this->set_latitude($lat);
@@ -839,41 +1173,65 @@ class webmap3_api_map
         $this->set_zoom($zoom);
     }
 
+    /**
+     * @param $val
+     */
     public function set_gicon_name($val)
     {
         $this->_gicon_name = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_gicon_func($val)
     {
         $this->_gicon_func = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_tmplate_geoxml_head_js($val)
     {
         $this->_tmplate_geoxml_head_js = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_tmplate_markers_head_js($val)
     {
         $this->_tmplate_markers_head_js = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_tmplate_search_head_js($val)
     {
         $this->_tmplate_search_head_js = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_tmplate_get_location_head_js($val)
     {
         $this->_tmplate_get_location_head_js = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_tmplate_body_common_js($val)
     {
         $this->_tmplate_body_common_js = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_tmplate_block_common_js($val)
     {
         $this->_tmplate_block_common_js = $val;

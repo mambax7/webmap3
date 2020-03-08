@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_lib_form_lang
 //=========================================================
+
+/**
+ * Class webmap3_lib_form_lang
+ */
 class webmap3_lib_form_lang extends webmap3_lib_form
 {
     public $_post_class;
@@ -49,6 +53,12 @@ class webmap3_lib_form_lang extends webmap3_lib_form
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_lib_form_lang constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_DIRNAME       = $dirname;
@@ -92,26 +102,52 @@ class webmap3_lib_form_lang extends webmap3_lib_form
     //---------------------------------------------------------
     // build comp
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_comp_label($name)
     {
         return $this->build_row_label($this->get_lang($name), $name);
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_comp_label_time($name)
     {
         return $this->build_row_label_time($this->get_lang($name), $name);
     }
 
+    /**
+     * @param     $name
+     * @param int $size
+     * @return string
+     */
     public function build_comp_text($name, $size = 50)
     {
         return $this->build_row_text($this->get_lang($name), $name, $size);
     }
 
+    /**
+     * @param      $name
+     * @param int  $size
+     * @param bool $flag_link
+     * @return string
+     */
     public function build_comp_url($name, $size = 50, $flag_link = false)
     {
         return $this->build_row_url($this->get_lang($name), $name, $size, $flag_link);
     }
 
+    /**
+     * @param     $name
+     * @param int $rows
+     * @param int $cols
+     * @return string
+     */
     public function build_comp_textarea($name, $rows = 5, $cols = 50)
     {
         return $this->build_row_textarea($this->get_lang($name), $name, $rows, $cols);
@@ -120,45 +156,79 @@ class webmap3_lib_form_lang extends webmap3_lib_form
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
     public function get_post_js_checkbox_array()
     {
         $name = $this->_FORM_NAME . '_id';
+
         return $this->_post_class->get_post($name);
     }
 
     //---------------------------------------------------------
     // utility class
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @param $pattern
+     * @return array
+     */
     public function str_to_array($str, $pattern)
     {
         return $this->_utility_class->str_to_array($str, $pattern);
     }
 
+    /**
+     * @param $arr
+     * @param $glue
+     * @return bool|string
+     */
     public function array_to_str($arr, $glue)
     {
         return $this->_utility_class->array_to_str($arr, $glue);
     }
 
+    /**
+     * @param $size
+     * @return string
+     */
     public function format_filesize($size)
     {
         return $this->_utility_class->format_filesize($size);
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
         return $this->_utility_class->parse_ext($file);
     }
 
+    /**
+     * @param $datetime
+     * @return mixed
+     */
     public function mysql_datetime_to_str($datetime)
     {
         return $this->_utility_class->mysql_datetime_to_str($datetime);
     }
 
+    /**
+     * @return false|string
+     */
     public function get_mysql_date_today()
     {
         return $this->_utility_class->get_mysql_date_today();
     }
 
+    /**
+     * @param        $msg
+     * @param string $title
+     * @param bool   $flag_sanitize
+     * @return string
+     */
     public function build_error_msg($msg, $title = '', $flag_sanitize = true)
     {
         return $this->_utility_class->build_error_msg($msg, $title, $flag_sanitize);
@@ -167,6 +237,13 @@ class webmap3_lib_form_lang extends webmap3_lib_form
     //---------------------------------------------------------
     // xoops timestamp
     //---------------------------------------------------------
+
+    /**
+     * @param        $time
+     * @param string $format
+     * @param string $timeoffset
+     * @return string
+     */
     public function format_timestamp($time, $format = 'l', $timeoffset = '')
     {
         return formatTimestamp($time, $format, $timeoffset);
@@ -175,26 +252,48 @@ class webmap3_lib_form_lang extends webmap3_lib_form
     //---------------------------------------------------------
     // xoops
     //---------------------------------------------------------
+
+    /**
+     * @return mixed
+     */
     public function get_xoops_group_objs()
     {
         return $this->_xoops_class->get_group_obj();
     }
 
+    /**
+     * @return mixed
+     */
     public function get_cached_xoops_db_groups()
     {
         return $this->_xoops_class->get_cached_groups();
     }
 
+    /**
+     * @param     $uid
+     * @param int $usereal
+     * @return mixed
+     */
     public function get_xoops_user_name($uid, $usereal = 0)
     {
         return $this->_xoops_class->get_user_uname_from_id($uid, $usereal);
     }
 
+    /**
+     * @param     $uid
+     * @param int $usereal
+     * @return mixed
+     */
     public function build_xoops_userinfo($uid, $usereal = 0)
     {
         return $this->_xoops_class->build_userinfo($uid, $usereal);
     }
 
+    /**
+     * @param int $limit
+     * @param int $start
+     * @return mixed
+     */
     public function get_xoops_user_list($limit = 0, $start = 0)
     {
         return $this->_xoops_class->get_member_user_list($limit, $start);
@@ -203,11 +302,19 @@ class webmap3_lib_form_lang extends webmap3_lib_form
     //---------------------------------------------------------
     // d3 language
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_lang_array()
     {
         return $this->_language_class->get_lang_array();
     }
 
+    /**
+     * @param $name
+     * @return mixed|string
+     */
     public function get_lang($name)
     {
         return $this->_language_class->get_constant($name);

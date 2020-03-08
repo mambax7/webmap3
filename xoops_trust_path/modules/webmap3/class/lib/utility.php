@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_lib_utility
 //=========================================================
+
+/**
+ * Class webmap3_lib_utility
+ */
 class webmap3_lib_utility
 {
     public $_MYSQL_FMT_DATE     = 'Y-m-d';
@@ -34,51 +38,80 @@ class webmap3_lib_utility
         // dummy
     }
 
+    /**
+     * @return \webmap3_lib_utility
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_lib_utility();
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @param $pattern
+     * @return array
+     */
     public function str_to_array($str, $pattern)
     {
         $arr1 = explode($pattern, $str);
-        $arr2 = array();
+        $arr2 = [];
         foreach ($arr1 as $v) {
             $v = trim($v);
-            if ($v == '') {
+            if ('' == $v) {
                 continue;
             }
             $arr2[] = $v;
         }
+
         return $arr2;
     }
 
+    /**
+     * @param $arr
+     * @param $glue
+     * @return bool|string
+     */
     public function array_to_str($arr, $glue)
     {
         $val = false;
         if (is_array($arr) && count($arr)) {
             $val = implode($glue, $arr);
         }
+
         return $val;
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
-        return strtolower(substr(strrchr($file, '.'), 1));
+        return mb_strtolower(mb_substr(mb_strrchr($file, '.'), 1));
     }
 
+    /**
+     * @param $file
+     * @return mixed
+     */
     public function strip_ext($file)
     {
-        return str_replace(strrchr($file, '.'), '', $file);
+        return str_replace(mb_strrchr($file, '.'), '', $file);
     }
 
+    /**
+     * @param $url
+     * @return mixed|null
+     */
     public function parse_url_to_filename($url)
     {
         $parsed = parse_url($url);
@@ -88,97 +121,152 @@ class webmap3_lib_utility
                 return array_pop($arr);
             }
         }
+
         return null;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function add_slash_to_head($str)
     {
         // ord : the ASCII value of the first character of string
         // 0x2f slash
 
-        if (ord($str) != 0x2f) {
+        if (0x2f != ord($str)) {
             $str = '/' . $str;
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function strip_slash_from_head($str)
     {
         // ord : the ASCII value of the first character of string
         // 0x2f slash
 
-        if (ord($str) == 0x2f) {
-            $str = substr($str, 1);
+        if (0x2f == ord($str)) {
+            $str = mb_substr($str, 1);
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function add_separator_to_tail($str)
     {
         // Check the path to binaries of imaging packages
         // DIRECTORY_SEPARATOR is defined by PHP
 
-        if (trim($str) != '' && substr($str, -1) != DIRECTORY_SEPARATOR) {
+        if ('' != trim($str) && DIRECTORY_SEPARATOR != mb_substr($str, -1)) {
             $str .= DIRECTORY_SEPARATOR;
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function strip_slash_from_tail($str)
     {
-        if (substr($str, -1, 1) == '/') {
-            $str = substr($str, 0, -1);
+        if ('/' == mb_substr($str, -1, 1)) {
+            $str = mb_substr($str, 0, -1);
         }
+
         return $str;
     }
 
     // Checks if string is started from HTTP
+
+    /**
+     * @param $str
+     * @return bool
+     */
     public function check_http_start($str)
     {
         if (preg_match('|^https?://|', $str)) {
             return true;    // include HTTP
         }
+
         return false;
     }
 
     // Checks if string is HTTP only
+
+    /**
+     * @param $str
+     * @return bool
+     */
     public function check_http_only($str)
     {
-        if (($str == 'http://') || ($str == 'https://')) {
+        if (('http://' == $str) || ('https://' == $str)) {
             return true;    // http only
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public function check_http_null($str)
     {
-        if (($str == '') || ($str == 'http://') || ($str == 'https://')) {
+        if (('' == $str) || ('http://' == $str) || ('https://' == $str)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public function check_http_fill($str)
     {
         $ret = !$this->check_http_null($str);
+
         return $ret;
     }
 
+    /**
+     * @param      $array
+     * @param      $key
+     * @param null $default
+     */
     public function get_array_value_by_key($array, $key, $default = null)
     {
         if (isset($array[$key])) {
             return $array[$key];
         }
+
         return $default;
     }
 
     //---------------------------------------------------------
     // format
     //---------------------------------------------------------
+
+    /**
+     * @param     $size
+     * @param int $precision
+     * @return string
+     */
     public function format_filesize($size, $precision = 2)
     {
         $format = '%.' . (int)$precision . 'f';
-        $bytes  = array('B', 'KB', 'MB', 'GB', 'TB');
+        $bytes  = ['B', 'KB', 'MB', 'GB', 'TB'];
         foreach ($bytes as $unit) {
             if ($size > 1000) {
                 $size = $size / 1024;
@@ -187,14 +275,31 @@ class webmap3_lib_utility
             }
         }
         $str = sprintf($format, $size) . ' ' . $unit;
+
         return $str;
     }
 
+    /**
+     * @param      $time
+     * @param      $str_hour
+     * @param      $str_min
+     * @param      $str_sec
+     * @param bool $flag_zero
+     * @return null|string
+     */
     public function format_time($time, $str_hour, $str_min, $str_sec, $flag_zero = false)
     {
         return $this->build_time($this->parse_time($time), $str_hour, $str_min, $str_sec, $flag_zero);
     }
 
+    /**
+     * @param      $time_array
+     * @param      $str_hour
+     * @param      $str_min
+     * @param      $str_sec
+     * @param bool $flag_zero
+     * @return null|string
+     */
     public function build_time($time_array, $str_hour, $str_min, $str_sec, $flag_zero = false)
     {
         list($hour, $min, $sec) = $time_array;
@@ -207,28 +312,46 @@ class webmap3_lib_utility
         } elseif (($sec > 0) || $flag_zero) {
             $str = "$sec $str_sec";
         }
+
         return $str;
     }
 
+    /**
+     * @param $time
+     * @return array
+     */
     public function parse_time($time)
     {
         $hour = (int)($time / 3600);
-        $min  = (int)($time - 3600 * $hour);
+        $min  = ($time - 3600 * $hour);
         $sec  = $time - 3600 * $hour - 60 * $min;
-        return array($hour, $min, $sec);
+
+        return [$hour, $min, $sec];
     }
 
     //---------------------------------------------------------
     // file
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @return bool
+     */
     public function unlink_file($file)
     {
         if ($this->check_file($file)) {
             return unlink($file);
         }
+
         return false;
     }
 
+    /**
+     * @param      $src
+     * @param      $dst
+     * @param bool $flag_chmod
+     * @return bool
+     */
     public function copy_file($src, $dst, $flag_chmod = false)
     {
         if ($this->check_file($src)) {
@@ -241,25 +364,42 @@ class webmap3_lib_utility
 
             return $ret;
         }
+
         return false;
     }
 
+    /**
+     * @param $old
+     * @param $new
+     * @return bool
+     */
     public function rename_file($old, $new)
     {
         if ($this->check_file($old)) {
             return rename($old, $new);
         }
+
         return false;
     }
 
+    /**
+     * @param $file
+     * @return bool
+     */
     public function check_file($file)
     {
         if ($file && file_exists($file) && is_file($file) && !is_dir($file)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param        $file
+     * @param string $mode
+     * @return bool|string
+     */
     public function read_file($file, $mode = 'r')
     {
         $fp = fopen($file, $mode);
@@ -269,12 +409,18 @@ class webmap3_lib_utility
 
         $date = fread($fp, filesize($file));
         fclose($fp);
+
         return $date;
     }
 
+    /**
+     * @param        $file
+     * @param string $mode
+     * @return array|bool
+     */
     public function read_file_cvs($file, $mode = 'r')
     {
-        $lines = array();
+        $lines = [];
 
         $fp = fopen($file, $mode);
         if (!$fp) {
@@ -286,9 +432,17 @@ class webmap3_lib_utility
         }
 
         fclose($fp);
+
         return $lines;
     }
 
+    /**
+     * @param        $file
+     * @param        $data
+     * @param string $mode
+     * @param bool   $flag_chmod
+     * @return bool|int
+     */
     public function write_file($file, $data, $mode = 'w', $flag_chmod = false)
     {
         $fp = fopen($file, $mode);
@@ -307,17 +461,20 @@ class webmap3_lib_utility
         return $byte;
     }
 
+    /**
+     * @param $file
+     * @param $interval
+     * @return bool
+     */
     public function check_file_time($file, $interval)
     {
         // if passing interval time
         if (file_exists($file)) {
             $time = (int)trim(file_get_contents($file));
             if (($time > 0)
-                && (time() > ($time + $interval))
-            ) {
+                && (time() > ($time + $interval))) {
                 return true;
             }
-
             // if not exists file ( at first time )
         } else {
             return true;
@@ -326,6 +483,10 @@ class webmap3_lib_utility
         return false;
     }
 
+    /**
+     * @param $file
+     * @param $chmod
+     */
     public function renew_file_time($file, $chmod)
     {
         $this->write_file($file, time(), 'w', $chmod);
@@ -334,10 +495,19 @@ class webmap3_lib_utility
     //---------------------------------------------------------
     // image
     //---------------------------------------------------------
+
+    /**
+     * @param      $width
+     * @param      $height
+     * @param      $max_width
+     * @param      $max_height
+     * @param bool $flag_zero
+     * @return array
+     */
     public function adjust_image_size($width, $height, $max_width, $max_height, $flag_zero = false)
     {
-        if ($flag_zero && (($width == 0) || ($height == 0))) {
-            return array($max_width, 0);
+        if ($flag_zero && ((0 == $width) || (0 == $height))) {
+            return [$max_width, 0];
         }
 
         if ($width > $max_width) {
@@ -352,27 +522,44 @@ class webmap3_lib_utility
             $width  = $width * $mag;
         }
 
-        return array((int)$width, (int)$height);
+        return [(int)$width, (int)$height];
     }
 
     //---------------------------------------------------------
     // encode
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function encode_slash($str)
     {
         return str_replace('/', $this->_HTML_SLASH, $str);
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function encode_colon($str)
     {
         return str_replace(':', $this->_HTML_COLON, $str);
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function decode_slash($str)
     {
         return str_replace($this->_HTML_SLASH, '/', $str);
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function decode_colon($str)
     {
         return str_replace($this->_HTML_COLON, ':', $str);
@@ -381,19 +568,30 @@ class webmap3_lib_utility
     //---------------------------------------------------------
     // group perms
     //---------------------------------------------------------
+
+    /**
+     * @param        $perms
+     * @param string $glue
+     * @return bool|string
+     */
     public function convert_group_perms_array_to_str($perms, $glue = '&')
     {
         $arr = $this->arrenge_group_perms_array($perms);
+
         return $this->array_to_perm($arr, $glue);
     }
 
+    /**
+     * @param $perms
+     * @return array|null
+     */
     public function arrenge_group_perms_array($perms)
     {
         if (!is_array($perms) || !count($perms)) {
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($perms as $k => $v) {
             if ($v == $this->_C_YES) {
                 $arr[] = (int)$k;
@@ -403,18 +601,29 @@ class webmap3_lib_utility
         return $arr;
     }
 
+    /**
+     * @param $arr
+     * @param $glue
+     * @return bool|string
+     */
     public function array_to_perm($arr, $glue)
     {
         $val = $this->array_to_str($arr, $glue);
         if ($val) {
             $val = $glue . $val . $glue;
         }
+
         return $val;
     }
 
     //---------------------------------------------------------
     // time
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return false|int
+     */
     public function str_to_time($str)
     {
         $str = trim($str);
@@ -423,24 +632,38 @@ class webmap3_lib_utility
             if ($time > 0) {
                 return $time;
             }
+
             return -1;  // failed to convert
         }
+
         return 0;
     }
 
     //---------------------------------------------------------
     // mysql date
     //---------------------------------------------------------
+
+    /**
+     * @return false|string
+     */
     public function get_mysql_date_today()
     {
         return date($this->_MYSQL_FMT_DATE);
     }
 
+    /**
+     * @param $time
+     * @return false|string
+     */
     public function time_to_mysql_datetime($time)
     {
         return date($this->_MYSQL_FMT_DATETIME, $time);
     }
 
+    /**
+     * @param $datetime
+     * @return mixed|null
+     */
     public function mysql_datetime_to_day_or_month_or_year($datetime)
     {
         $val = $this->mysql_datetime_to_year_month_day($datetime);
@@ -450,44 +673,62 @@ class webmap3_lib_utility
         if (empty($val)) {
             $val = $this->mysql_datetime_to_year($datetime);
         }
+
         return $val;
     }
 
+    /**
+     * @param $datetime
+     * @return mixed|null
+     */
     public function mysql_datetime_to_year_month_day($datetime)
     {
         // like yyyy-mm-dd
         if (preg_match("/^(\d{4}\-\d{2}\-\d{2})/", $datetime, $match)) {
-
             // yyyy-00-00 -> yyyy
             $str = str_replace('-00-00', '', $match[1]);
 
             // yyyy-mm-00 -> yyyy-mm
             $str = str_replace('-00', '', $str);
+
             return $str;
         }
+
         return null;
     }
 
+    /**
+     * @param $datetime
+     * @return mixed|null
+     */
     public function mysql_datetime_to_year_month($datetime)
     {
         // like yyyy-mm
         if (preg_match("/^(\d{4}\-\d{2})/", $datetime, $match)) {
-
             // yyyy-00 -> yyyy
             return str_replace('-00', '', $match[1]);
         }
+
         return null;
     }
 
+    /**
+     * @param $datetime
+     */
     public function mysql_datetime_to_year($datetime)
     {
         // like yyyy
         if (preg_match("/^(\d{4})/", $datetime, $match)) {
             return $match[1];
         }
+
         return null;
     }
 
+    /**
+     * @param $date
+     * @return mixed
+     */
     public function mysql_datetime_to_str($date)
     {
         $date = str_replace('0000-00-00 00:00:00', '', $date);
@@ -503,12 +744,17 @@ class webmap3_lib_utility
         // 01:00:00 -> 01:00
         $date = preg_replace('/(.*\d+:\d+):00/', '$1', $date);
 
-        if ($date == ' ') {
+        if (' ' == $date) {
             $date = '';
         }
+
         return $date;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_datetime($str)
     {
         $date = '';
@@ -524,13 +770,19 @@ class webmap3_lib_utility
 
         if ($date && $time) {
             $val = $date . ' ' . $time;
+
             return $val;
         } elseif ($date) {
             return $date;
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_date($str)
     {
         // 2008-01-01
@@ -556,14 +808,12 @@ class webmap3_lib_utility
             $mysql_year  = $year;
             $mysql_month = $month;
             $mysql_day   = $day;
-
             // ex) 2008-02 -> 2008-02-00
         } elseif (isset($arr[0]) && isset($arr[1])) {
             $year        = (int)trim($arr[0]);
             $month       = (int)trim($arr[1]);
             $mysql_year  = $year;
             $mysql_month = $month;
-
             // ex) 2008 -> 2008-00-00
         } elseif (isset($arr[0])) {
             $year       = (int)trim($arr[0]);
@@ -575,9 +825,14 @@ class webmap3_lib_utility
         if (checkdate($month, $day, $year)) {
             return $this->build_mysql_date($mysql_year, $mysql_month, $mysql_day);
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_time($str)
     {
         // 0000-00-00
@@ -592,12 +847,10 @@ class webmap3_lib_utility
             $mysql_hour = (int)trim($arr[0]);
             $mysql_min  = (int)trim($arr[1]);
             $mysql_sec  = (int)trim($arr[2]);
-
             // ex) 01:02 -> 01:02:00
         } elseif (isset($arr[0]) && isset($arr[1])) {
             $mysql_hour = (int)trim($arr[0]);
             $mysql_min  = (int)trim($arr[1]);
-
             // ex) 01 -> 01:00:00
         } elseif (isset($arr[0])) {
             $mysql_hour = (int)trim($arr[0]);
@@ -608,9 +861,16 @@ class webmap3_lib_utility
         if ($this->check_time($mysql_hour, $mysql_min, $mysql_sec)) {
             return $this->build_mysql_time($mysql_hour, $mysql_min, $mysql_sec);
         }
+
         return false;
     }
 
+    /**
+     * @param $hour
+     * @param $min
+     * @param $sec
+     * @return bool
+     */
     public function check_time($hour, $min, $sec)
     {
         $hour = (int)$hour;
@@ -621,22 +881,36 @@ class webmap3_lib_utility
             && ($min >= 0)
             && ($min <= 60)
             && ($sec >= 0)
-            && ($sec <= 60)
-        ) {
+            && ($sec <= 60)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $year
+     * @param $month
+     * @param $day
+     * @return string
+     */
     public function build_mysql_date($year, $month, $day)
     {
         $str = $year . '-' . $month . '-' . $day;
+
         return $str;
     }
 
+    /**
+     * @param $hour
+     * @param $min
+     * @param $sec
+     * @return string
+     */
     public function build_mysql_time($hour, $min, $sec)
     {
         $str = $hour . ':' . $min . ':' . $sec;
+
         return $str;
     }
 
@@ -644,10 +918,17 @@ class webmap3_lib_utility
     // base on core's xoops_error
     // XLC do not support 'errorMsg' style class in admin cp
     //---------------------------------------------------------
+
+    /**
+     * @param        $msg
+     * @param string $title
+     * @param bool   $flag_sanitize
+     * @return string
+     */
     public function build_error_msg($msg, $title = '', $flag_sanitize = true)
     {
         $str = '<div style="' . $this->_STYLE_ERROR_MSG . '">';
-        if ($title != '') {
+        if ('' != $title) {
             if ($flag_sanitize) {
                 $title = $this->sanitize($title);
             }
@@ -658,7 +939,7 @@ class webmap3_lib_utility
                 if ($flag_sanitize) {
                     $m = $this->sanitize($msg);
                 }
-                $str .= $m . "<br />\n";
+                $str .= $m . "<br >\n";
             }
         } else {
             if ($flag_sanitize) {
@@ -667,12 +948,18 @@ class webmap3_lib_utility
             $str .= $msg;
         }
         $str .= "</div>\n";
+
         return $str;
     }
 
     //---------------------------------------------------------
     // sanitize
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
@@ -688,9 +975,14 @@ class webmap3_lib_utility
     //   &#039;  =>  '
     //   &apos;  =>  ' (xml format)
     // --------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function undo_htmlspecialchars($str)
     {
-        $arr = array(
+        $arr = [
             '&amp;'  => '&',
             '&lt;'   => '<',
             '&gt;'   => '>',
@@ -698,7 +990,8 @@ class webmap3_lib_utility
             '&#39;'  => "'",
             '&#039;' => "'",
             '&apos;' => "'",
-        );
+        ];
+
         return strtr($str, $arr);
     }
 

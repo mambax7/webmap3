@@ -9,22 +9,19 @@
 // test
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $MY_DIRNAME = 'webmap3';
-
     // normal
 } elseif (isset($GLOBALS['MY_DIRNAME'])) {
     $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
-
     // call by altsys/mytplsadmin.php
 } elseif ($mydirname) {
     $MY_DIRNAME = $mydirname;
-
     // probably error
 } else {
-    echo 'not set dirname in ' . __FILE__ . " <br />\n";
+    echo 'not set dirname in ' . __FILE__ . " <br >\n";
     $MY_DIRNAME = 'webmap3';
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
@@ -43,7 +40,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_LONGITUDE', 'Longitude');
     define($constpref . 'CFG_ZOOM', 'Zoom');
     define($constpref . 'CFG_MARKER_GICON', 'Icon of Marker');
-    define($constpref . 'CFG_CONFIG_DSC', 'You can change in<br />[Latitude and Longitude Setting]');
+    define($constpref . 'CFG_CONFIG_DSC', 'You can change in<br >[Latitude and Longitude Setting]');
 
     // map param
     define($constpref . 'CFG_MAP_TYPE_CONTROL', 'Use MapType');
@@ -98,14 +95,13 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_GICON_PATH', 'Path to uploads');
 
     // icon
-    define($constpref . 'CFG_GICON_PATH_DSC',
-           "[Google Icon] Directory for uploaded files<br />Relative path from the directory installed XOOPS.<br />The first character should not  '/'. <br />The last character should not be '/' <br />This directory's permission is 777 or 707 in unix.");
+    define($constpref . 'CFG_GICON_PATH_DSC', "[Google Icon] Directory for uploaded files<br >Relative path from the directory installed XOOPS.<br >The first character should not  '/'. <br >The last character should not be '/' <br >This directory's permission is 777 or 707 in unix.");
     define($constpref . 'CFG_GICON_FSIZE', 'Max of file size');
     define($constpref . 'CFG_GICON_FSIZE_DSC', '[Google Icon] The limitation of the size of uploading file.(bytes)');
     define($constpref . 'CFG_GICON_WIDTH', 'Max of image width and height');
     define($constpref . 'CFG_GICON_WIDTH_DSC', "[Google Icon] This means the images's width and height to be resized.");
     define($constpref . 'CFG_GICON_QUALITY', 'JPEG Quality');
-    define($constpref . 'CFG_GICON_QUALITY_DSC', '[Google Icon] The quality if resizing when upload<br />1 - 100');
+    define($constpref . 'CFG_GICON_QUALITY_DSC', '[Google Icon] The quality if resizing when upload<br >1 - 100');
 
     define($constpref . 'ADMENU_INDEX', 'Index');
     define($constpref . 'ADMENU_LOCATION', 'Get Latitude and Longitude');
@@ -124,4 +120,3 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_REGION', 'Region code');
     define($constpref . 'CFG_REGION_DSC', '[Geocoding]');
 }// === define begin ===
-;

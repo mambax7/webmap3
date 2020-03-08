@@ -1,6 +1,6 @@
 /* ========================================================
  * $Id: search.js,v 1.2 2012/04/09 12:09:43 ohwada Exp $
- * http://code.google.com/intl/en/apis/maps/documentation/javascript/
+ * https://code.google.com/intl/en/apis/maps/documentation/javascript/
  * ========================================================
  */
 
@@ -547,7 +547,7 @@ function webmap3_addSearchMarker(index, position, content) {
     webmap3_marker_list.push(marker);
 }
 
-/* http://googlemaps.googlermania.com/google_maps_api_v3/map_example_remove_all_markers.html */
+/* https://googlemaps.googlermania.com/google_maps_api_v3/map_example_remove_all_markers.html */
 function webmap3_removeSearchMarkers() {
     webmap3_marker_list.forEach(function (marker, idx) {
         marker.setMap(null);

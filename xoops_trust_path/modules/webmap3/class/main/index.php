@@ -16,6 +16,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_main_index
 //=========================================================
+
+/**
+ * Class webmap3_main_index
+ */
 class webmap3_main_index extends webmap3_view_map
 {
     public $_ZOOM_GEOCODE_DEFAULT = 13;
@@ -26,6 +30,11 @@ class webmap3_main_index extends webmap3_view_map
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_main_index constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
@@ -34,18 +43,27 @@ class webmap3_main_index extends webmap3_view_map
         $this->_ELE_ID_SEARCH = $dirname . 'webmap3_map_search';
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_main_index
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_main_index($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         $addr = $this->get_config('address');
@@ -73,6 +91,11 @@ class webmap3_main_index extends webmap3_view_map
         return $param;
     }
 
+    /**
+     * @param $lat
+     * @param $lng
+     * @param $zoom
+     */
     public function build_map($lat, $lng, $zoom)
     {
         $this->init_map();

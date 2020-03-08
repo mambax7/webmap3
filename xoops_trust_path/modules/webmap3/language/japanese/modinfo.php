@@ -9,22 +9,19 @@
 // test
 if (defined('FOR_XOOPS_LANG_CHECKER')) {
     $MY_DIRNAME = 'webmap3';
-
     // normal
 } elseif (isset($GLOBALS['MY_DIRNAME'])) {
     $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
-
     // call by altsys/mytplsadmin.php
 } elseif ($mydirname) {
     $MY_DIRNAME = $mydirname;
-
     // probably error
 } else {
-    echo 'not set dirname in ' . __FILE__ . " <br />\n";
+    echo 'not set dirname in ' . __FILE__ . " <br >\n";
     $MY_DIRNAME = 'webmap3';
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
@@ -35,93 +32,91 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
 
     // module name
     define($constpref . 'NAME', 'Google Maps V3');
-    define($constpref . 'DESC', 'Google Maps API ¤òÍøÍÑ¤·¤ÆÃÏ¿Þ¤òÉ½¼¨¤¹¤ë');
+    define($constpref . 'DESC', 'Google Maps API ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½ï¿½Ï¿Þ¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // module config
-    define($constpref . 'CFG_ADDRESS', '½»½ê');
-    define($constpref . 'CFG_LATITUDE', '°ÞÅÙ');
-    define($constpref . 'CFG_LONGITUDE', '·ÐÅÙ');
-    define($constpref . 'CFG_ZOOM', '¥º¡¼¥à');
-    define($constpref . 'CFG_MARKER_GICON', '¥Þ¡¼¥«¡¼¤Î¥¢¥¤¥³¥ó');
-    define($constpref . 'CFG_CONFIG_DSC', '[°ÞÅÙ¡¦·ÐÅÙ¤ÎÀßÄê] ¤Ë¤ÆÊÑ¹¹²ÄÇ½');
+    define($constpref . 'CFG_ADDRESS', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_LATITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_LONGITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_ZOOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_MARKER_GICON', 'ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_CONFIG_DSC', '[ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½Ë¤ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½Ç½');
 
     // map param
-    define($constpref . 'CFG_MAP_TYPE_CONTROL', 'ÃÏ¿Þ·Á¼°¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_MAP_TYPE_CONTROL', 'ï¿½Ï¿Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_MAP_TYPE_CONTROL_DSC', 'mapTypeControl');
-    define($constpref . 'CFG_MAP_TYPE_CONTROL_STYLE', 'ÃÏ¿Þ·Á¼°¤Î¥¹¥¿¥¤¥ë');
+    define($constpref . 'CFG_MAP_TYPE_CONTROL_STYLE', 'ï¿½Ï¿Þ·ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
     define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_DSC', 'google.maps.MapTypeControlStyle');
-    define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_DEFAULT', 'É¸½à: Default');
-    define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_HORIZONTAL', '¿åÊ¿¥Ð¡¼: Horizontal bar');
-    define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_DROPDOWN', '¥É¥í¥Ã¥×¥À¥¦¥ó¡¦¥á¥Ë¥å¡¼: Dropdown menu');
-    define($constpref . 'CFG_MAP_TYPE', 'ÃÏ¿Þ·Á¼°');
+    define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_DEFAULT', 'É¸ï¿½ï¿½: Default');
+    define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_HORIZONTAL', 'ï¿½ï¿½Ê¿ï¿½Ð¡ï¿½: Horizontal bar');
+    define($constpref . 'OPT_MAP_TYPE_CONTROL_STYLE_DROPDOWN', 'ï¿½É¥ï¿½Ã¥×¥ï¿½ï¿½ï¿½ï¿½ó¡¦¥ï¿½Ë¥å¡¼: Dropdown menu');
+    define($constpref . 'CFG_MAP_TYPE', 'ï¿½Ï¿Þ·ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_MAP_TYPE_DSC', 'google.maps.MapTypeId');
-    define($constpref . 'OPT_MAP_TYPE_ROADMAP', 'ÃÏ¿Þ: Roadmap');
-    define($constpref . 'OPT_MAP_TYPE_SATELLITE', '¹Ò¶õ¼Ì¿¿: Satellite');
-    define($constpref . 'OPT_MAP_TYPE_HYBRID', 'ÃÏ¿Þ+¼Ì¿¿: Hybrid');
-    define($constpref . 'OPT_MAP_TYPE_TERRAIN', 'ÃÏ·Á: Terrain');
-    define($constpref . 'CFG_ZOOM_CONTROL', '¥º¡¼¥à¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'OPT_MAP_TYPE_ROADMAP', 'ï¿½Ï¿ï¿½: Roadmap');
+    define($constpref . 'OPT_MAP_TYPE_SATELLITE', 'ï¿½Ò¶ï¿½ï¿½Ì¿ï¿½: Satellite');
+    define($constpref . 'OPT_MAP_TYPE_HYBRID', 'ï¿½Ï¿ï¿½+ï¿½Ì¿ï¿½: Hybrid');
+    define($constpref . 'OPT_MAP_TYPE_TERRAIN', 'ï¿½Ï·ï¿½: Terrain');
+    define($constpref . 'CFG_ZOOM_CONTROL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_ZOOM_CONTROL_DSC', 'zoomControl');
-    define($constpref . 'CFG_ZOOM_CONTROL_STYLE', '¥º¡¼¥à¤Î¥¹¥¿¥¤¥ë');
+    define($constpref . 'CFG_ZOOM_CONTROL_STYLE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_ZOOM_CONTROL_STYLE_DSC', 'google.maps.ZoomControlStyle');
-    define($constpref . 'OPT_ZOOM_CONTROL_STYLE_DEFAULT', 'É¸½à: Default');
-    define($constpref . 'OPT_ZOOM_CONTROL_STYLE_SMALL', '¾®¤µ¤¤: Small');
-    define($constpref . 'OPT_ZOOM_CONTROL_STYLE_LARGE', 'Âç¤­¤¤: Large');
-    define($constpref . 'CFG_OVERVIEW_MAP_CONTROL', '±¦²¼¤Î¾®¤µ¤¤ÃÏ¿Þ¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'OPT_ZOOM_CONTROL_STYLE_DEFAULT', 'É¸ï¿½ï¿½: Default');
+    define($constpref . 'OPT_ZOOM_CONTROL_STYLE_SMALL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: Small');
+    define($constpref . 'OPT_ZOOM_CONTROL_STYLE_LARGE', 'ï¿½ç¤­ï¿½ï¿½: Large');
+    define($constpref . 'CFG_OVERVIEW_MAP_CONTROL', 'ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿Þ¤ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_OVERVIEW_MAP_CONTROL_DSC', 'overviewMapControl');
-    define($constpref . 'CFG_OVERVIEW_MAP_CONTROL_OPENED', '¾®¤µ¤¤ÃÏ¿Þ¤òÅ¸³«¥â¡¼¥É¤Ë¤¹¤ë');
+    define($constpref . 'CFG_OVERVIEW_MAP_CONTROL_OPENED', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿Þ¤ï¿½Å¸ï¿½ï¿½ï¿½â¡¼ï¿½É¤Ë¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_OVERVIEW_MAP_CONTROL_OPENED_DSC', 'google.maps.OverviewMapControlOptions');
-    define($constpref . 'CFG_PAN_CONTROL', '°ÜÆ°¤Î¥³¥ó¥È¥í¡¼¥ë');
+    define($constpref . 'CFG_PAN_CONTROL', 'ï¿½ï¿½Æ°ï¿½Î¥ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_PAN_CONTROL_DSC', 'panControl');
-    define($constpref . 'CFG_STREET_VIEW_CONTROL', '¥¹¥È¥ê¡¼¥È¥Ó¥å¡¼¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_STREET_VIEW_CONTROL', 'ï¿½ï¿½ï¿½È¥ê¡¼ï¿½È¥Ó¥å¡¼ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_STREET_VIEW_CONTROL_DSC', 'streetViewControl');
-    define($constpref . 'CFG_SCALE_CONTROL', 'µ÷Î¥É½¼¨¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_SCALE_CONTROL', 'ï¿½ï¿½Î¥É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_SCALE_CONTROL_DSC', 'scaleControl');
 
     // search
-    define($constpref . 'CFG_USE_DRAGGABLE_MARKER', '[¸¡º÷] ¥É¥é¥Ã¥°¡¦¥Þ¡¼¥«¡¼¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_DRAGGABLE_MARKER', '[ï¿½ï¿½ï¿½ï¿½] ï¿½É¥ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_USE_DRAGGABLE_MARKER_DSC', 'google.maps.MarkerOptions - draggable');
-    define($constpref . 'CFG_USE_SEARCH_MARKER', '[¸¡º÷] ¸¡º÷·ë²Ì¤Î¥Þ¡¼¥«¡¼¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_SEARCH_MARKER', '[ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¤Î¥Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_USE_SEARCH_MARKER_DSC', 'google.maps.MarkerOptions - icon');
 
     // location
-    define($constpref . 'CFG_USE_LOC_MARKER', '[¾ì½ê] ¥Þ¡¼¥«¡¼¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_LOC_MARKER', '[ï¿½ï¿½ï¿½] ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_USE_LOC_MARKER_DSC', 'google.maps.MarkerOptions');
-    define($constpref . 'CFG_USE_LOC_MARKER_CLICK', '[¾ì½ê] ¥Þ¡¼¥«¡¼¤Î¥¯¥ê¥Ã¥¯¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_LOC_MARKER_CLICK', '[ï¿½ï¿½ï¿½] ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_USE_LOC_MARKER_CLICK_DSC', 'google.maps.InfoWindow - addListener');
-    define($constpref . 'CFG_LOC_MARKER_INFO', '[¾ì½ê] ¥Þ¡¼¥«¡¼¤ò¥¯¥ê¥Ã¥¯¤·¤¿¤È¤­¤ÎÆâÍÆ');
+    define($constpref . 'CFG_LOC_MARKER_INFO', '[ï¿½ï¿½ï¿½] ï¿½Þ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¥¯¥ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_LOC_MARKER_INFO_DSC', 'google.maps.InfoWindowOptions - content');
 
     // georss
-    define($constpref . 'CFG_GEO_URL', '[GeoRSS] RSS ¤Î URL');
+    define($constpref . 'CFG_GEO_URL', '[GeoRSS] RSS ï¿½ï¿½ URL');
     define($constpref . 'CFG_GEO_URL_DSC', 'google.maps.KmlLayer');
-    define($constpref . 'CFG_GEO_TITLE', '[GeoRSS] ¥¿¥¤¥È¥ë');
-    define($constpref . 'CFG_GICON_PATH', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Õ¥¡¥¤¥ë¤Î¥Ç¥£¥ì¥¯¥È¥ê');
+    define($constpref . 'CFG_GEO_TITLE', '[GeoRSS] ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½');
+    define($constpref . 'CFG_GICON_PATH', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
 
     // icon
-    define($constpref . 'CFG_GICON_PATH_DSC',
-           "[Google¥¢¥¤¥³¥ó] ¥¢¥Ã¥×¥í¡¼¥É»þ¤ÎÊÝÂ¸Àè¥Ç¥£¥ì¥¯¥È¥ê<br />XOOPS¥¤¥ó¥¹¥È¡¼¥ëÀè¤«¤é¤ÎÁêÂÐ¥Ñ¥¹¤ò»ØÄê¤¹¤ë<br />ºÇ½é¤ÈºÇ¸å¤Î'/'¤ÏÉÔÍ×<br />Unix¤Ç¤Ï¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Ø¤Î½ñ¹þÂ°À­¤òON¤Ë¤·¤Æ²¼¤µ¤¤");
-    define($constpref . 'CFG_GICON_FSIZE', 'ºÇÂç¥Õ¥¡¥¤¥ëÍÆÎÌ');
-    define($constpref . 'CFG_GICON_FSIZE_DSC', '[Google¥¢¥¤¥³¥ó] ¥¢¥Ã¥×¥í¡¼¥É»þ¤Î¥Õ¥¡¥¤¥ëÍÆÎÌÀ©¸Â(byte)');
-    define($constpref . 'CFG_GICON_WIDTH', 'ºÇÂç¤Î²£Éý¤È¹â¤µ');
-    define($constpref . 'CFG_GICON_WIDTH_DSC', '[Google¥¢¥¤¥³¥ó] ¥¢¥Ã¥×¥í¡¼¥É»þ¤Î²£Éý¤È¹â¤µ¤ÎºÇÂç');
-    define($constpref . 'CFG_GICON_QUALITY', 'JPEG ÉÊ¼Á');
-    define($constpref . 'CFG_GICON_QUALITY_DSC', '[Google¥¢¥¤¥³¥ó] ¥¢¥Ã¥×¥í¡¼¥É»þ¤Î¥µ¥¤¥ºÊÑ¹¹¤·¤¿¤È¤­¤ËÉÊ¼Á<br />1 - 100');
+    define($constpref . 'CFG_GICON_PATH_DSC', "[Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É»ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½<br >XOOPSï¿½ï¿½ï¿½ó¥¹¥È¡ï¿½ï¿½ï¿½ï¿½è¤«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ï¿½<br >ï¿½Ç½ï¿½ÈºÇ¸ï¿½ï¿½'/'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br >Unixï¿½Ç¤Ï¤ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ø¤Î½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ONï¿½Ë¤ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½");
+    define($constpref . 'CFG_GICON_FSIZE', 'ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_GICON_FSIZE_DSC', '[Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É»ï¿½ï¿½Î¥Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(byte)');
+    define($constpref . 'CFG_GICON_WIDTH', 'ï¿½ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½È¹â¤µ');
+    define($constpref . 'CFG_GICON_WIDTH_DSC', '[Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É»ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½È¹â¤µï¿½Îºï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_GICON_QUALITY', 'JPEG ï¿½Ê¼ï¿½');
+    define($constpref . 'CFG_GICON_QUALITY_DSC', '[Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É»ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½<br >1 - 100');
 
-    define($constpref . 'ADMENU_INDEX', 'ÌÜ¼¡');
-    define($constpref . 'ADMENU_LOCATION', '°ÞÅÙ¡¦·ÐÅÙ¤ò¼èÆÀ¤¹¤ë');
-    define($constpref . 'ADMENU_KML', 'KML¤Î¥Ç¥Ð¥Ã¥°É½¼¨');
-    define($constpref . 'ADMENU_GICON_MANAGER', 'Google¥¢¥¤¥³¥ó´ÉÍý');
-    define($constpref . 'ADMENU_GICON_TABLE_MANAGE', 'Google¥¢¥¤¥³¥ó¥Æ¡¼¥Ö¥ë´ÉÍý');
+    define($constpref . 'ADMENU_INDEX', 'ï¿½Ü¼ï¿½');
+    define($constpref . 'ADMENU_LOCATION', 'ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_KML', 'KMLï¿½Î¥Ç¥Ð¥Ã¥ï¿½É½ï¿½ï¿½');
+    define($constpref . 'ADMENU_GICON_MANAGER', 'Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_GICON_TABLE_MANAGE', 'Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
 
-    define($constpref . 'BNAME_LOCATION', 'Webmap3 ÃÏ¿Þ');
+    define($constpref . 'BNAME_LOCATION', 'Webmap3 ï¿½Ï¿ï¿½');
 
     //---------------------------------------------------------
     // v1.10
     //---------------------------------------------------------
     // geocoding
-    define($constpref . 'CFG_LANGUAGE', '¸À¸ì¥³¡¼¥É');
+    define($constpref . 'CFG_LANGUAGE', 'ï¿½ï¿½ï¿½ì¥³ï¿½ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_LANGUAGE_DSC', '[Geocoding]');
-    define($constpref . 'CFG_REGION', '¹ñ¥³¡¼¥É');
+    define($constpref . 'CFG_REGION', 'ï¿½ñ¥³¡ï¿½ï¿½ï¿½');
     define($constpref . 'CFG_REGION_DSC', '[Geocoding]');
 }// === define begin ===
-;

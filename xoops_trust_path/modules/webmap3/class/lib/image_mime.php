@@ -13,36 +13,50 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_lib_image_mime
 //=========================================================
+
+/**
+ * Class webmap3_lib_image_mime
+ */
 class webmap3_lib_image_mime
 {
-    public $_EXTS  = array('gif', 'jpg', 'jpeg', 'png');
-    public $_MIMES = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+    public $_EXTS  = ['gif', 'jpg', 'jpeg', 'png'];
+    public $_MIMES = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png'];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
     public function __construct()
     {
-        //
     }
 
+    /**
+     * @return \webmap3_lib_image_mime
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_lib_image_mime();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // get param
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_exts()
     {
         return $this->_EXTS;
     }
 
+    /**
+     * @return array
+     */
     public function get_mimes()
     {
         return $this->_MIMES;

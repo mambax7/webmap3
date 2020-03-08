@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_handler_gicon
 //=========================================================
+
+/**
+ * Class webmap3_handler_gicon
+ */
 class webmap3_handler_gicon extends webmap3_lib_handler_dirname
 {
     public $_utility_class;
@@ -20,6 +24,11 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_handler_gicon constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
@@ -28,23 +37,33 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
 
         $this->_utility_class = webmap3_lib_utility::getInstance();
 
-        $constpref = strtoupper('_P_' . $dirname . '_');
+        $constpref = mb_strtoupper('_P_' . $dirname . '_');
         $this->set_debug_sql_by_const_name($constpref . 'DEBUG_SQL');
         $this->set_debug_error_by_const_name($constpref . 'DEBUG_ERROR');
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_handler_gicon($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
@@ -56,7 +75,7 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
             $time_update = $time;
         }
 
-        $arr = array(
+        $arr = [
             'gicon_id'            => 0,
             'gicon_time_create'   => $time_create,
             'gicon_time_update'   => $time_update,
@@ -75,7 +94,7 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
             'gicon_anchor_y'      => 0,
             'gicon_info_x'        => 0,
             'gicon_info_y'        => 0,
-        );
+        ];
 
         return $arr;
     }
@@ -83,6 +102,11 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -140,6 +164,11 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -172,6 +201,11 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
     //---------------------------------------------------------
     // get rows
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_none
+     * @return array|null
+     */
     public function get_sel_options($flag_none = false)
     {
         $rows = $this->get_rows_all_asc();
@@ -179,7 +213,7 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         if ($flag_none) {
             $arr[0] = '(default)';
         }
@@ -187,9 +221,15 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
         foreach ($rows as $row) {
             $arr[$row['gicon_id']] = $row['gicon_title'];
         }
+
         return $arr;
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|null
+     */
     public function get_icons($limit = 0, $offset = 0)
     {
         $rows = $this->get_rows_all_asc($limit, $offset);
@@ -197,19 +237,24 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($rows as $row) {
             $arr[] = $this->build_single_icon($row);
         }
+
         return $arr;
     }
 
+    /**
+     * @param $row
+     * @return array
+     */
     public function build_single_icon($row)
     {
         $image_url  = $this->build_icon_url($row['gicon_image_path']);
         $shadow_url = $this->build_icon_url($row['gicon_shadow_path']);
 
-        $arr = array(
+        $arr = [
             'id'            => $row['gicon_id'],
             'image_url'     => $image_url,
             'image_width'   => $row['gicon_image_width'],
@@ -221,10 +266,16 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
             'shadow_url'    => $shadow_url,
             'shadow_width'  => $row['gicon_shadow_width'],
             'shadow_height' => $row['gicon_shadow_height'],
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param      $path
+     * @param bool $flag_sanitize
+     * @return string
+     */
     public function build_icon_url($path, $flag_sanitize = false)
     {
         if (empty($path)) {
@@ -241,6 +292,10 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
         return $url;
     }
 
+    /**
+     * @param $path
+     * @return string
+     */
     public function build_icon_full_path($path)
     {
         if (empty($path)) {
@@ -249,9 +304,14 @@ class webmap3_handler_gicon extends webmap3_lib_handler_dirname
 
         $path = $this->_utility_class->strip_slash_from_head($path);
         $full = XOOPS_ROOT_PATH . '/' . $path;
+
         return $full;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);

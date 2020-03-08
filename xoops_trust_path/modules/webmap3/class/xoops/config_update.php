@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_xoops_config_update
 //=========================================================
+
+/**
+ * Class webmap3_xoops_config_update
+ */
 class webmap3_xoops_config_update extends webmap3_lib_handler_basic
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -24,12 +27,16 @@ class webmap3_xoops_config_update extends webmap3_lib_handler_basic
         parent::__construct();
     }
 
+    /**
+     * @return \webmap3_xoops_config_update
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_xoops_config_update();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -39,6 +46,10 @@ class webmap3_xoops_config_update extends webmap3_lib_handler_basic
     // conf_title: 32 -> 255
     // conf_desc:  32 -> 255
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function update()
     {
         // configs (Though I know it is not a recommended way...)
@@ -60,6 +71,11 @@ class webmap3_xoops_config_update extends webmap3_lib_handler_basic
         return $this->query($sql);
     }
 
+    /**
+     * @param $field_name
+     * @param $length
+     * @return bool
+     */
     public function check_type_length($field_name, $length)
     {
         $check_sql = 'SHOW COLUMNS FROM ' . $this->_table_config . " LIKE '" . $field_name . "'";

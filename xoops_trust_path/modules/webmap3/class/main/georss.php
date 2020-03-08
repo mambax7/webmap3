@@ -16,29 +16,46 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_main_georss
 //=========================================================
+
+/**
+ * Class webmap3_main_georss
+ */
 class webmap3_main_georss extends webmap3_view_map
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_main_georss constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_main_georss
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_main_georss($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         $param                = $this->build_main();

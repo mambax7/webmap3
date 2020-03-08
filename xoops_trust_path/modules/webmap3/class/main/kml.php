@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_main_kml
 //=========================================================
+
+/**
+ * Class webmap3_main_kml
+ */
 class webmap3_main_kml
 {
     public $_builder;
@@ -20,17 +24,27 @@ class webmap3_main_kml
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_main_kml constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_builder = webmap3_view_kml::getInstance($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_main_kml
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_main_kml($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 

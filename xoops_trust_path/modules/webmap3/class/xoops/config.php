@@ -13,23 +13,36 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_xoops_config
 //=========================================================
+
+/**
+ * Class webmap3_xoops_config
+ */
 class webmap3_xoops_config extends webmap3_xoops_config_dirname
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_xoops_config constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_xoops_config($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 

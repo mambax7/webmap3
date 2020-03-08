@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_base
 //=========================================================
+
+/**
+ * Class webmap3_admin_base
+ */
 class webmap3_admin_base extends webmap3_lib_admin_base
 {
     public $_dir_class;
@@ -33,6 +37,12 @@ class webmap3_admin_base extends webmap3_lib_admin_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_admin_base constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -49,18 +59,28 @@ class webmap3_admin_base extends webmap3_lib_admin_base
         $this->_TMP_DIR      = $this->_UPLOADS_DIR . '/' . $this->_SUB_DIR_TMP;
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_admin_base|\webmap3_lib_admin_base
+     */
     public static function getInstance($dirname, $trust_dirname)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_admin_base($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // admin_menu
     //---------------------------------------------------------
+
+    /**
+     * @return null|string
+     */
     public function build_admin_menu()
     {
         return $this->_menu_class->build_menu();
@@ -69,28 +89,46 @@ class webmap3_admin_base extends webmap3_lib_admin_base
     //---------------------------------------------------------
     // dir
     //---------------------------------------------------------
+
+    /**
+     * @param $dir
+     * @return string
+     */
     public function make_dir($dir)
     {
         return $this->_dir_class->make_dir($dir);
     }
 
+    /**
+     * @param $dir
+     * @return int
+     */
     public function check_dir($dir)
     {
         if ($this->_dir_class->check_dir($dir)) {
             return 0;
         }
         $this->set_error('dir error : ' . $dir);
+
         return _C_WEBMAP3_ERR_CHECK_DIR;
     }
 
     //---------------------------------------------------------
     // config
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function get_config($name)
     {
         return $this->_xoops_param->get_module_config_by_name($name);
     }
 
+    /**
+     * @param $name
+     * @return mixed|null|string
+     */
     public function get_config_text($name)
     {
         return $this->_xoops_param->get_module_config_text_by_name($name);
@@ -99,6 +137,11 @@ class webmap3_admin_base extends webmap3_lib_admin_base
     //---------------------------------------------------------
     // language
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_lang($name)
     {
         return $this->_language_class->get_constant($name);

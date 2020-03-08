@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_gd_check_base
 //=========================================================
+
+/**
+ * Class webmap3_admin_gd_check_base
+ */
 class webmap3_admin_gd_check_base
 {
     public $_lang_success = 'Success';
@@ -42,17 +46,23 @@ class webmap3_admin_gd_check_base
             echo $this->_lang_failed;
         }
 
-        echo "<br /><br />\n";
-        echo '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" />';
+        echo "<br ><br >\n";
+        echo '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" >';
 
         xoops_cp_footer();
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_success($val)
     {
         $this->_lang_success = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_lang_failed($val)
     {
         $this->_lang_failed = $val;

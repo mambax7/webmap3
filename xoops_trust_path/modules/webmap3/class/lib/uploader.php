@@ -21,7 +21,7 @@ if (!defined('XOOPS_TRUST_PATH')) {
 /*!
 Example
 
-  include_once 'myuploader.php';
+  include_once __DIR__ . '/myuploader.php';
   $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
   $maxfilesize = 50000;
   $maxfilewidth = 120;
@@ -32,7 +32,7 @@ Example
        echo $uploader->getErrors();
     } else {
        echo '<h4>File uploaded successfully!</h4>'
-       echo 'Saved as: ' . $uploader->getSavedFileName() . '<br />';
+       echo 'Saved as: ' . $uploader->getSavedFileName() . '<br >';
        echo 'Full path: ' . $uploader->getSavedDestination();
     }
   } else {
@@ -41,6 +41,9 @@ Example
 
 */
 
+/**
+ * Class webmap3_lib_uploader
+ */
 class webmap3_lib_uploader
 {
     public $mediaName;
@@ -51,8 +54,8 @@ class webmap3_lib_uploader
 
     // set param
     public $uploadDir         = '';
-    public $allowedMimeTypes  = array();
-    public $allowedExtensions = array();
+    public $allowedMimeTypes  = [];
+    public $allowedExtensions = [];
     public $maxFileSize       = 0;
     public $maxWidth          = 0;
     public $maxHeight         = 0;
@@ -67,10 +70,10 @@ class webmap3_lib_uploader
     public $mediaHeight      = 0;
 
     // error
-    public $errors     = array();
-    public $errorCodes = array();
+    public $errors     = [];
+    public $errorCodes = [];
 
-    public $errorMsgs = array(
+    public $errorMsgs = [
         1  => 'Uploaded File not found',
         2  => 'Invalid File Size',
         3  => 'Filename Is Empty',
@@ -85,33 +88,30 @@ class webmap3_lib_uploader
         12 => 'File width must be smaller than ', // maxWidth
         13 => 'File height must be smaller than ', // maxHeight
         14 => 'Failed uploading file: ', // mediaName
-    );
+    ];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
     /**
      * Constructor
-     *
-     * @param   string $uploadDir
-     * @param   array  $allowedMimeTypes
-     * @param   int    $maxFileSize
-     * @param   int    $maxWidth
-     * @param   int    $maxHeight
-     * @param   int    $cmodvalue
-     * @param   array  $allowedExtensions
-     **/
+     */
     public function __construct()
     {
         // dummy
     }
 
+    /**
+     * @return \webmap3_lib_uploader
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_lib_uploader();
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -136,26 +136,42 @@ class webmap3_lib_uploader
     //---------------------------------------------------------
     // functions
     //---------------------------------------------------------
+
+    /**
+     * @param $uploadDir
+     */
     public function setUploadDir($uploadDir)
     {
         $this->uploadDir = $uploadDir;
     }
 
+    /**
+     * @param $maxFileSize
+     */
     public function setMaxFileSize($maxFileSize)
     {
         $this->maxFileSize = (int)$maxFileSize;
     }
 
+    /**
+     * @param $maxWidth
+     */
     public function setMaxWidth($maxWidth)
     {
         $this->maxWidth = (int)$maxWidth;
     }
 
+    /**
+     * @param $maxHeight
+     */
     public function setMaxHeight($maxHeight)
     {
         $this->maxHeight = (int)$maxHeight;
     }
 
+    /**
+     * @param $allowedMimeTypes
+     */
     public function setAllowedMimeTypes($allowedMimeTypes)
     {
         if (isset($allowedMimeTypes) && is_array($allowedMimeTypes)) {
@@ -163,6 +179,9 @@ class webmap3_lib_uploader
         }
     }
 
+    /**
+     * @param $allowedExtensions
+     */
     public function setAllowedExtensions($allowedExtensions)
     {
         if (isset($allowedExtensions) && is_array($allowedExtensions)) {
@@ -173,18 +192,19 @@ class webmap3_lib_uploader
     /**
      * Fetch the uploaded file
      *
-     * @param   string $media_name Name of the file field
-     * @param   int    $index      Index of the file (if more than one uploaded under that name)
+     * @param string $media_name Name of the file field
+     * @param int    $index      Index of the file (if more than one uploaded under that name)
      * @return  bool
      **/
     public function fetchMedia($media_name, $index = null)
     {
         // clear error
-        $this->errors     = array();
-        $this->errorCodes = array();
+        $this->errors     = [];
+        $this->errorCodes = [];
 
         if (!isset($_FILES[$media_name])) {
             $this->setErrorCodes(1);
+
             return false;
         } elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
             $index              = (int)$index;
@@ -204,21 +224,25 @@ class webmap3_lib_uploader
 
         if ((int)$this->mediaSize < 0) {
             $this->setErrorCodes(2);
+
             return false;
         }
 
-        if ($this->mediaName == '') {
+        if ('' == $this->mediaName) {
             $this->setErrorCodes(3);
+
             return false;
         }
 
         if ($this->mediaError > 0) {
             $this->setErrorCodes(7, $this->mediaError);
+
             return false;
         }
 
-        if ($this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName) || $this->mediaSize == 0) {
+        if ('none' == $this->mediaTmpName || !is_uploaded_file($this->mediaTmpName) || 0 == $this->mediaSize) {
             $this->setErrorCodes(4);
+
             return false;
         }
 
@@ -228,21 +252,21 @@ class webmap3_lib_uploader
     /**
      * Set the target filename
      *
-     * @param   string $value
+     * @param string $value
      **/
     public function setTargetFileName($value)
     {
-        $this->targetFileName = (string)trim($value);
+        $this->targetFileName = trim($value);
     }
 
     /**
      * Set the prefix
      *
-     * @param   string $value
+     * @param string $value
      **/
     public function setPrefix($value)
     {
-        $this->prefix = (string)trim($value);
+        $this->prefix = trim($value);
     }
 
     /**
@@ -310,78 +334,107 @@ class webmap3_lib_uploader
         return $this->mediaError;
     }
 
+    /**
+     * @return string
+     */
     public function getUploadDir()
     {
         return $this->uploadDir;
     }
 
+    /**
+     * @return int
+     */
     public function getMaxWidth()
     {
         return $this->maxWidth;
     }
 
+    /**
+     * @return int
+     */
     public function getMaxHeight()
     {
         return $this->maxHeight;
     }
 
+    /**
+     * @return int
+     */
     public function getMediaWidth()
     {
         return $this->mediaWidth;
     }
 
+    /**
+     * @return int
+     */
     public function getMediaHeight()
     {
         return $this->mediaHeight;
     }
 
+    /**
+     * @return bool
+     */
     public function isReadableSavedDestination()
     {
         $file = $this->savedDestination;
         if ($file && is_readable($file)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function unlinkSavedDestination()
     {
         $file = $this->savedDestination;
         if ($file && is_file($file)) {
             unlink($file);
         }
+
         return false;
     }
 
     /**
      * Check the file and copy it to the destination
      *
+     * @param int $chmod
      * @return  bool
-     **/
+     */
     public function upload($chmod = 0644)
     {
-        if ($this->uploadDir == '') {
+        if ('' == $this->uploadDir) {
             $this->setErrorCodes(5);
+
             return false;
         }
 
         if (!is_dir($this->uploadDir)) {
             $this->setErrorCodes(8, $this->uploadDir);
+
             return false;
         }
 
         if (!is_writable($this->uploadDir)) {
             $this->setErrorCodes(9, $this->uploadDir);
+
             return false;
         }
 
         if (!$this->checkMimeType()) {
             $this->setErrorCodes(10, $this->mediaType);
+
             return false;
         }
 
         if (!$this->checkExtension()) {
             $this->setErrorCodes(6);
+
             return false;
         }
 
@@ -404,12 +457,14 @@ class webmap3_lib_uploader
         if (!$this->_copyFile($chmod)) {
             $this->unlinkSavedDestination();
             $this->setErrorCodes(14, $this->mediaName);
+
             return false;
         }
 
         if (!$this->isReadableSavedDestination()) {
             $this->unlinkSavedDestination();
             $this->setErrorCodes(14, $this->mediaName);
+
             return false;
         }
 
@@ -419,26 +474,28 @@ class webmap3_lib_uploader
     /**
      * Copy the file to its destination
      *
+     * @param $chmod
      * @return  bool
-     **/
+     */
     public function _copyFile($chmod)
     {
-        $matched = array();
+        $matched = [];
         if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
             return false;
         }
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix) . '.' . strtolower($matched[1]);
+            $this->savedFileName = uniqid($this->prefix) . '.' . mb_strtolower($matched[1]);
         } else {
-            $this->savedFileName = strtolower($this->mediaName);
+            $this->savedFileName = mb_strtolower($this->mediaName);
         }
         $this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
         if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
             return false;
         }
         @chmod($this->savedDestination, $chmod);
+
         return true;
     }
 
@@ -449,12 +506,13 @@ class webmap3_lib_uploader
      **/
     public function checkMaxFileSize()
     {
-        if ($this->maxFileSize == 0) {
+        if (0 == $this->maxFileSize) {
             return true;    // no check
         }
         if ($this->mediaSize > $this->maxFileSize) {
             return false;
         }
+
         return true;
     }
 
@@ -465,7 +523,7 @@ class webmap3_lib_uploader
      **/
     public function checkMaxWidth()
     {
-        if ($this->maxWidth == 0) {
+        if (0 == $this->maxWidth) {
             return true;    // no check
         }
 
@@ -478,6 +536,7 @@ class webmap3_lib_uploader
         } else {
             trigger_error(sprintf('Failed fetching image size of %s, skipping max width check..', $this->mediaTmpName), E_USER_WARNING);
         }
+
         return true;
     }
 
@@ -488,7 +547,7 @@ class webmap3_lib_uploader
      **/
     public function checkMaxHeight()
     {
-        if ($this->maxHeight == 0) {
+        if (0 == $this->maxHeight) {
             return true;    // no check
         }
 
@@ -502,6 +561,7 @@ class webmap3_lib_uploader
         } else {
             trigger_error(sprintf('Failed fetching image size of %s, skipping max height check..', $this->mediaTmpName), E_USER_WARNING);
         }
+
         return true;
     }
 
@@ -516,9 +576,9 @@ class webmap3_lib_uploader
     {
         if (count($this->allowedMimeTypes) > 0 && !in_array($this->mediaType, $this->allowedMimeTypes)) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -528,20 +588,27 @@ class webmap3_lib_uploader
      **/
     public function checkExtension()
     {
-        $ext = substr(strrchr($this->mediaName, '.'), 1);
-        if (!empty($this->allowedExtensions) && !in_array(strtolower($ext), $this->allowedExtensions)) {
+        $ext = mb_substr(mb_strrchr($this->mediaName, '.'), 1);
+        if (!empty($this->allowedExtensions) && !in_array(mb_strtolower($ext), $this->allowedExtensions)) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
+    /**
+     * @param      $code
+     * @param null $msg
+     */
     public function setErrorCodes($code, $msg = null)
     {
         $this->setErrors($this->errorMsgs[$code] . $msg);
         $this->errorCodes[] = $code;
     }
 
+    /**
+     * @return array
+     */
     public function getErrorCodes()
     {
         return $this->errorCodes;
@@ -550,7 +617,7 @@ class webmap3_lib_uploader
     /**
      * Add an error
      *
-     * @param   string $error
+     * @param string $error
      **/
     public function setErrors($error)
     {
@@ -560,7 +627,7 @@ class webmap3_lib_uploader
     /**
      * Get generated errors
      *
-     * @param   bool $ashtml Format using HTML?
+     * @param bool $ashtml Format using HTML?
      *
      * @return  array|string    Array of array messages OR HTML string
      */
@@ -568,16 +635,16 @@ class webmap3_lib_uploader
     {
         if (!$ashtml) {
             return $this->errors;
-        } else {
-            $ret = '';
-            if (count($this->errors) > 0) {
-                $ret = '<h4>Errors Returned While Uploading</h4>';
-                foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
-                }
-            }
-            return $ret;
         }
+        $ret = '';
+        if (count($this->errors) > 0) {
+            $ret = '<h4>Errors Returned While Uploading</h4>';
+            foreach ($this->errors as $error) {
+                $ret .= $error . '<br >';
+            }
+        }
+
+        return $ret;
     }
 
     // --- class end ---

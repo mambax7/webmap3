@@ -75,7 +75,7 @@ if (!defined('_MB_WEBMAP3_LANG_LOADED')) {
 
     // form
     define('_WEBMAP3_DBUPDATED', 'Database Updated Successfully');
-    define('_WEBMAP3_DELETED', 'Deleted¤¿');
+    define('_WEBMAP3_DELETED', 'Deletedï¿½ï¿½');
     define('_WEBMAP3_ERR_NOIMAGESPECIFIED', 'No image was uploaded');
     define('_WEBMAP3_ERR_FILE', 'Image is too big or there is a problem with the configuration');
     define('_WEBMAP3_ERR_FILEREAD', 'Image is not readable.');
@@ -113,6 +113,5 @@ if (!defined('_MB_WEBMAP3_LANG_LOADED')) {
     define('_WEBMAP3_TITLE_GEOCODING', 'Geocoding');
     define('_WEBMAP3_TITLE_GEOCODING_DESC', 'Search Latitude and Longitude from address using Google Geocoding API');
     define('_WEBMAP3_LOOK_GOOGLE_MAP', 'Look with large map');
-
     // === define end ===
 }

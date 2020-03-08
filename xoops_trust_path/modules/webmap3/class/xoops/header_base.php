@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_xoops_header_base
 //=========================================================
+
+/**
+ * Class webmap3_xoops_header_base
+ */
 class webmap3_xoops_header_base
 {
     public $_prefix;
@@ -29,6 +33,12 @@ class webmap3_xoops_header_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_xoops_header_base constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_DIRNAME       = $dirname;
@@ -54,48 +64,86 @@ class webmap3_xoops_header_base
     //--------------------------------------------------------
     // utility
     //--------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return bool
+     */
     public function check_once_name($name)
     {
         return $this->check_once($this->build_const_name($name));
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_const_name($name)
     {
-        $str = strtoupper($this->_prefix . $name);
+        $str = mb_strtoupper($this->_prefix . $name);
+
         return $str;
     }
 
+    /**
+     * @param $const_name
+     * @return bool
+     */
     public function check_once($const_name)
     {
         if (!defined($const_name)) {
             define($const_name, 1);
+
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $css
+     * @return string
+     */
     public function build_link_css_libs($css)
     {
         return $this->build_link_css($this->_LIBS_URL . '/' . $css);
     }
 
+    /**
+     * @param $herf
+     * @return string
+     */
     public function build_link_css($herf)
     {
-        $str = '<link id="lnkStyleSheet" rel="stylesheet" type="text/css" href="' . $herf . '" />' . "\n";
+        $str = '<link id="lnkStyleSheet" rel="stylesheet" type="text/css" href="' . $herf . '" >' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $js
+     * @return string
+     */
     public function build_script_js_libs($js)
     {
         return $this->build_script_js($this->_LIBS_URL . '/' . $js);
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function build_script_js($src)
     {
         $str = '<script src="' . $src . '" type="text/javascript"></script>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $text
+     * @return string
+     */
     public function build_envelop_js($text)
     {
         $str = '<script type="text/javascript">' . "\n";
@@ -103,20 +151,34 @@ class webmap3_xoops_header_base
         $str .= $text . "\n";
         $str .= '//]]>' . "\n";
         $str .= '</script>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $url
+     * @return string
+     */
     public function build_link_rss($url)
     {
-        $str = '<link rel="alternate" type="application/rss+xml" title="RSS" href="' . $url . '" />' . "\n";
+        $str = '<link rel="alternate" type="application/rss+xml" title="RSS" href="' . $url . '" >' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function check_name_js($name)
     {
         return $this->check_once_name($name . '_js');
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_name_js($name)
     {
         return $this->build_script_js_libs($name . '.js');
@@ -125,6 +187,10 @@ class webmap3_xoops_header_base
     //--------------------------------------------------------
     // template
     //--------------------------------------------------------
+
+    /**
+     * @param $var
+     */
     public function assign_xoops_module_header($var)
     {
         global $xoopsTpl;
@@ -133,9 +199,13 @@ class webmap3_xoops_header_base
         }
     }
 
+    /**
+     * @return array
+     */
     public function get_xoops_module_header()
     {
         global $xoopsTpl;
+
         return $xoopsTpl->get_template_vars($this->_XOOPS_MODULE_HADER);
     }
 

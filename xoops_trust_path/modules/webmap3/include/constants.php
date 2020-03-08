@@ -25,8 +25,7 @@ if (!defined('_C_WEBMAP3_LOADED')) {
     define('_C_WEBMAP3_CFG_LATITUDE', '35.443924694026');
     define('_C_WEBMAP3_CFG_LONGITUDE', '139.63738918304');
     define('_C_WEBMAP3_CFG_ZOOM', '10');
-    define('_C_WEBMAP3_CFG_LOC_MARKER_INFO',
-           '<b>Example</b><br/><a href="http://www.city.yokohama.lg.jp/en/" target="_blank"><img src="http://www.city.yokohama.lg.jp/bunka/outline/brand/open-yokohama.jpg" width="70" border="0" /><br />Yokohama City Office</a>');
+    define('_C_WEBMAP3_CFG_LOC_MARKER_INFO', '<b>Example</b><br><a href="http://www.city.yokohama.lg.jp/en/" target="_blank"><img src="http://www.city.yokohama.lg.jp/bunka/outline/brand/open-yokohama.jpg" width="70" border="0" ><br >Yokohama City Office</a>');
     define('_C_WEBMAP3_CFG_GEO_URL', 'http://api.flickr.com/services/feeds/geo/?id=8645522@N06&format=rss_200');
     define('_C_WEBMAP3_CFG_GEO_TITLE', 'Flickr : ken.ohwada');
     define('_C_WEBMAP3_CFG_GICON_FSIZE', '102400');   // 100 KB
@@ -43,7 +42,7 @@ if (!defined('_C_WEBMAP3_LOADED')) {
     define('_C_WEBMAP3_MAP_TITLE_LENGH', 100);
     define('_C_WEBMAP3_MAP_INFO_MAX', 100);
     define('_C_WEBMAP3_MAP_INFO_WIDTH', 20);
-    define('_C_WEBMAP3_MAP_INFO_BREAK', '<br />');
+    define('_C_WEBMAP3_MAP_INFO_BREAK', '<br >');
     define('_C_WEBMAP3_MAP_IMAGE_MAX_WIDTH', 120);
     define('_C_WEBMAP3_MAP_IMAGE_MAX_HEIGHT', 120);
 
@@ -78,6 +77,5 @@ if (!defined('_C_WEBMAP3_LOADED')) {
     define('_C_WEBMAP3_ERR_VOTE_OWN', -125);
     define('_C_WEBMAP3_ERR_VOTE_ONCE', -126);
     define('_C_WEBMAP3_ERR_NO_RATING', -127);
-
     // === define end ===
 }

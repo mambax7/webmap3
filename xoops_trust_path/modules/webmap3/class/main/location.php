@@ -16,29 +16,46 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_main_location
 //=========================================================
+
+/**
+ * Class webmap3_main_location
+ */
 class webmap3_main_location extends webmap3_view_map
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_main_location constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_main_location
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_main_location($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         $param              = $this->build_main();
@@ -54,14 +71,14 @@ class webmap3_main_location extends webmap3_view_map
 
     public function build_map()
     {
-        $marker = array(
+        $marker = [
             'latitude'  => $this->get_config('latitude'),
             'longitude' => $this->get_config('longitude'),
             'info'      => $this->get_config_text('loc_marker_info', 'textarea'),
             'icon_id'   => $this->get_config('marker_gicon'),
-        );
+        ];
 
-        $markers = array($marker);
+        $markers = [$marker];
 
         $this->init_map();
         $this->_map_class->assign_gicon_array_to_head();

@@ -10,11 +10,15 @@
 // class webmap3_api_geocoding
 // https://developers.google.com/maps/documentation/geocoding/
 //=========================================================
+
+/**
+ * Class webmap3_api_geocoding
+ */
 class webmap3_api_geocoding
 {
     public $_multibyte_class;
 
-    public $_BASE_URL = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false';
+    public $_BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false';
 
     public $_search_address = '';
     public $_language       = '';
@@ -26,6 +30,11 @@ class webmap3_api_geocoding
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_api_geocoding constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME = $dirname;
@@ -37,27 +46,40 @@ class webmap3_api_geocoding
         $this->_region   = $config_class->get_by_name('region');
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_api_geocoding($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function build_url()
     {
         $url = $this->_BASE_URL;
         $url .= '&region=' . $this->_region;
         $url .= '&language=' . $this->_language;
         $url .= '&address=' . $this->to_utf8_rawurlencode($this->_search_address);
+
         return $url;
     }
 
+    /**
+     * @return bool
+     */
     public function fetch()
     {
         $snoopy        = new Snoopy();
@@ -65,28 +87,32 @@ class webmap3_api_geocoding
         $response_code = $snoopy->response_code;
         if (!$ret) {
             $this->_error = 'code: ' . $response_code . ' error: ' . $snoopy->error;
+
             return false;
         }
 
         $json = json_decode($snoopy->results);
         if (!isset($json->status)) {
             $this->_error = 'code: ' . $response_code . ' no status';
+
             return false;
         }
 
         $status = $json->status;
-        if ($status != 'OK') {
+        if ('OK' != $status) {
             $this->_error = 'status: ' . $status;
+
             return false;
         }
 
         if (!isset($json->results)) {
             $this->_error = 'parse error 1';
+
             return false;
         }
 
         $results = $json->results;
-        $arr     = array();
+        $arr     = [];
 
         foreach ($results as $r) {
             if (!isset($r->geometry)) {
@@ -115,25 +141,35 @@ class webmap3_api_geocoding
             $lat = $location->lat;
             $lng = $location->lng;
 
-            $arr[] = array(
+            $arr[] = [
                 'formatted_address' => $this->from_utf8($addr),
                 'lat'               => $lat,
                 'lng'               => $lng,
-            );
+            ];
         }
 
         $this->_results = $arr;
+
         return true;
     }
 
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function to_utf8_rawurlencode($str)
     {
         return rawurlencode($this->_multibyte_class->convert_to_utf8($str));
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function from_utf8($str)
     {
         return $this->_multibyte_class->convert_from_utf8($str);
@@ -142,16 +178,26 @@ class webmap3_api_geocoding
     //---------------------------------------------------------
     // setter
     //---------------------------------------------------------
+
+    /**
+     * @param $v
+     */
     public function set_region($v)
     {
         $this->_region = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_language($v)
     {
         $this->_language = $v;
     }
 
+    /**
+     * @param $v
+     */
     public function set_search_address($v)
     {
         $this->_search_address = $v;
@@ -160,11 +206,18 @@ class webmap3_api_geocoding
     //---------------------------------------------------------
     // getter
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function get_results()
     {
         return $this->_results;
     }
 
+    /**
+     * @return string
+     */
     public function get_error()
     {
         return $this->_error;

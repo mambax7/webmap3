@@ -11,108 +11,107 @@ if (!defined('_MB_WEBMAP3_LANG_LOADED')) {
     define('_MB_WEBMAP3_LANG_LOADED', 1);
 
     // tilte
-    define('_WEBMAP3_TITLE_SEARCH', 'ÃÏ¿Þ¤Î¸¡º÷');
-    define('_WEBMAP3_TITLE_SEARCH_DESC', '½»½ê¤«¤éÃÏ¿Þ¤ò¸¡º÷¤¹¤ë');
-    define('_WEBMAP3_TITLE_LOCATION', 'ÃÏ¿Þ¤ÎÉ½¼¨');
-    define('_WEBMAP3_TITLE_LOCATION_DESC', '°ÞÅÙ·ÐÅÙ¤ò»ØÄê¤·¤ÆÆÃÄê¤Î¾ì½ê¤ÎÃÏ¿Þ¤òÉ½¼¨¤¹¤ë');
-    define('_WEBMAP3_TITLE_GEORSS', 'GeoRSS ¤ÎÉ½¼¨');
-    define('_WEBMAP3_TITLE_GEORSS_DESC', 'GeoRSS ¤ËÂÐ±þ¤·¤¿ RSS ¤«¤é°ÞÅÙ·ÐÅÙ¤ò¼èÆÀ¤·¤Æ¡¢ÃÏ¿Þ¾å¤ËÉ½¼¨¤¹¤ë');
-    define('_WEBMAP3_TITLE_DEMO', 'Function Call ¤Î¥Ç¥â');
+    define('_WEBMAP3_TITLE_SEARCH', 'ï¿½Ï¿Þ¤Î¸ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_SEARCH_DESC', 'ï¿½ï¿½ï¿½ê¤«ï¿½ï¿½ï¿½Ï¿Þ¤ò¸¡ºï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_LOCATION', 'ï¿½Ï¿Þ¤ï¿½É½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_LOCATION_DESC', 'ï¿½ï¿½ï¿½Ù·ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ê¤·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½ï¿½ï¿½ï¿½Ï¿Þ¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_GEORSS', 'GeoRSS ï¿½ï¿½É½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_GEORSS_DESC', 'GeoRSS ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ RSS ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù·ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ï¿Þ¾ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_DEMO', 'Function Call ï¿½Î¥Ç¥ï¿½');
 
     // google icon table
-    define('_WEBMAP3_GICON_TABLE', 'Google¥¢¥¤¥³¥ó¥Æ¡¼¥Ö¥ë');
-    define('_WEBMAP3_GICON_ID', '¥¢¥¤¥³¥óID');
-    define('_WEBMAP3_GICON_TIME_CREATE', 'ºîÀ®Æü»þ');
-    define('_WEBMAP3_GICON_TIME_UPDATE', '¹¹¿·Æü»þ');
-    define('_WEBMAP3_GICON_TITLE', '¥¢¥¤¥³¥óÌ¾');
-    define('_WEBMAP3_GICON_IMAGE_PATH', 'ËÜÂÎ ¥Ñ¥¹');
-    define('_WEBMAP3_GICON_IMAGE_NAME', 'ËÜÂÎ ¥Õ¥¡¥¤¥ëÌ¾');
-    define('_WEBMAP3_GICON_IMAGE_EXT', 'ËÜÂÎ ³ÈÄ¥»Ò');
-    define('_WEBMAP3_GICON_SHADOW_PATH', '¥·¥ã¥É¡¼ ¥Ñ¥¹');
-    define('_WEBMAP3_GICON_SHADOW_NAME', '¥·¥ã¥É¡¼ ¥Õ¥¡¥¤¥ëÌ¾');
-    define('_WEBMAP3_GICON_SHADOW_EXT', '¥·¥ã¥É¡¼ ³ÈÄ¥»Ò');
-    define('_WEBMAP3_GICON_IMAGE_WIDTH', 'ËÜÂÎ ²èÁü²£Éý');
-    define('_WEBMAP3_GICON_IMAGE_HEIGHT', 'ËÜÂÎ ²èÁü¹â¤µ');
-    define('_WEBMAP3_GICON_SHADOW_WIDTH', '¥·¥ã¥É¡¼ ²èÁü²£Éý');
-    define('_WEBMAP3_GICON_SHADOW_HEIGHT', '¥·¥ã¥É¡¼ ²èÁü¹â¤µ');
-    define('_WEBMAP3_GICON_ANCHOR_X', '¥¢¥ó¥«¡¼ X¥µ¥¤¥º');
-    define('_WEBMAP3_GICON_ANCHOR_Y', '¥¢¥ó¥«¡¼ Y¥µ¥¤¥º');
-    define('_WEBMAP3_GICON_INFO_X', 'WindowInfo X¥µ¥¤¥º');
-    define('_WEBMAP3_GICON_INFO_Y', 'WindowInfo Y¥µ¥¤¥º');
+    define('_WEBMAP3_GICON_TABLE', 'Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½');
+    define('_WEBMAP3_GICON_ID', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID');
+    define('_WEBMAP3_GICON_TIME_CREATE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_TIME_UPDATE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_TITLE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾');
+    define('_WEBMAP3_GICON_IMAGE_PATH', 'ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¥ï¿½');
+    define('_WEBMAP3_GICON_IMAGE_NAME', 'ï¿½ï¿½ï¿½ï¿½ ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾');
+    define('_WEBMAP3_GICON_IMAGE_EXT', 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¥ï¿½ï¿½');
+    define('_WEBMAP3_GICON_SHADOW_PATH', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½ ï¿½Ñ¥ï¿½');
+    define('_WEBMAP3_GICON_SHADOW_NAME', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½ ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾');
+    define('_WEBMAP3_GICON_SHADOW_EXT', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½ ï¿½ï¿½Ä¥ï¿½ï¿½');
+    define('_WEBMAP3_GICON_IMAGE_WIDTH', 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_IMAGE_HEIGHT', 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½â¤µ');
+    define('_WEBMAP3_GICON_SHADOW_WIDTH', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_SHADOW_HEIGHT', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½â¤µ');
+    define('_WEBMAP3_GICON_ANCHOR_X', 'ï¿½ï¿½ï¿½ó¥«¡ï¿½ Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_ANCHOR_Y', 'ï¿½ï¿½ï¿½ó¥«¡ï¿½ Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_INFO_X', 'WindowInfo Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GICON_INFO_Y', 'WindowInfo Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // google_js
-    define('_WEBMAP3_ADDRESS', '½»½ê');
-    define('_WEBMAP3_LATITUDE', '°ÞÅÙ');
-    define('_WEBMAP3_LONGITUDE', '·ÐÅÙ');
-    define('_WEBMAP3_ZOOM', '¥º¡¼¥à');
-    define('_WEBMAP3_NOT_COMPATIBLE', 'µ®Êý¤Î¥Ö¥é¥¦¥¶¤Ç¤Ï GoogleMaps ¤òÉ½¼¨¤Ç¤­¤Þ¤»¤ó');
+    define('_WEBMAP3_ADDRESS', 'ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_LATITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_LONGITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_ZOOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_NOT_COMPATIBLE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Ö¥é¥¦ï¿½ï¿½ï¿½Ç¤ï¿½ GoogleMaps ï¿½ï¿½É½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     // search
-    define('_WEBMAP3_SEARCH', '¸¡º÷');
-    define('_WEBMAP3_SEARCH_REVERSE', '°ÞÅÙ·ÐÅÙ¤«¤é½»½ê¤ò¸¡º÷¤¹¤ë');
-    define('_WEBMAP3_SEARCH_LIST', '¸¡º÷·ë²Ì¤Î°ìÍ÷');
-    define('_WEBMAP3_CURRENT_LOCATION', '¸½ºß¤Î°ÌÃÖ');
-    define('_WEBMAP3_CURRENT_ADDRESS', '¸½ºß¤Î½»½ê');
-    define('_WEBMAP3_NO_MATCH_PLACE', '³ºÅö¤¹¤ë¾ì½ê¤¬¤Ê¤¤');
-    define('_WEBMAP3_JS_INVALID', 'µ®Êý¤Î¥Ö¥é¥¦¥¶¤Ç¤Ï JavaScript ¤¬»ÈÍÑ¤Ç¤­¤Þ¤»¤ó');
-    define('_WEBMAP3_NOT_SUCCESSFUL', '¥¸¥ª¥³¡¼¥É¤Ï¼¡¤ÎÍýÍ³¤Ç¼ºÇÔ¤·¤¿');
+    define('_WEBMAP3_SEARCH', 'ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_SEARCH_REVERSE', 'ï¿½ï¿½ï¿½Ù·ï¿½ï¿½Ù¤ï¿½ï¿½é½»ï¿½ï¿½ò¸¡ºï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_SEARCH_LIST', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¤Î°ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_CURRENT_LOCATION', 'ï¿½ï¿½ï¿½ß¤Î°ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_CURRENT_ADDRESS', 'ï¿½ï¿½ï¿½ß¤Î½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_NO_MATCH_PLACE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¬ï¿½Ê¤ï¿½');
+    define('_WEBMAP3_JS_INVALID', 'ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Ö¥é¥¦ï¿½ï¿½ï¿½Ç¤ï¿½ JavaScript ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_NOT_SUCCESSFUL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤Ï¼ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Ç¼ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½');
 
     // kml
-    define('_WEBMAP3_DOWNLOAD_KML', 'KML ¤ò¥À¥¦¥ó¥í¡¼¥É¤·¤Æ¡¢GoogleEarth ¤Ç¸«¤ë');
+    define('_WEBMAP3_DOWNLOAD_KML', 'KML ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½ï¿½Æ¡ï¿½GoogleEarth ï¿½Ç¸ï¿½ï¿½ï¿½');
 
     // get_location
-    define('_WEBMAP3_TITLE_GET_LOCATION', '°ÞÅÙ¡¦·ÐÅÙ¤ò¼èÆÀ¤¹¤ë');
-    define('_WEBMAP3_GET_LOCATION', '°ÞÅÙ¡¦·ÐÅÙ¤ò¼èÆÀ¤¹¤ë');
-    define('_WEBMAP3_GET_ADDRESS', '°ÞÅÙ¡¦·ÐÅÙ¤«¤é½»½ê¤ò¼èÆÀ¤¹¤ë');
-    define('_WEBMAP3_DISPLAY_DESC', 'GoogleMaps ¤Ë¤Æ°ÌÃÖ¾ðÊó¤ò¼èÆÀ¤¹¤ë');
-    define('_WEBMAP3_DISPLAY_NEW', '¿·¤·¤¤¥¦¥£¥ó¥É¤ÇÉ½¼¨¤¹¤ë');
-    define('_WEBMAP3_DISPLAY_POPUP', '¥Ý¥Ã¥×¥¢¥Ã¥×¤ÇÉ½¼¨¤¹¤ë');
-    define('_WEBMAP3_DISPLAY_INLINE', 'ÃÏ¿Þ¤òÉ½¼¨¤¹¤ë');
-    define('_WEBMAP3_DISPLAY_HIDE', '(ÈóÉ½¼¨¤Ë¤¹¤ë)');
+    define('_WEBMAP3_TITLE_GET_LOCATION', 'ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GET_LOCATION', 'ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_GET_ADDRESS', 'ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½é½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_DISPLAY_DESC', 'GoogleMaps ï¿½Ë¤Æ°ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_DISPLAY_NEW', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_DISPLAY_POPUP', 'ï¿½Ý¥Ã¥×¥ï¿½ï¿½Ã¥×¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_DISPLAY_INLINE', 'ï¿½Ï¿Þ¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_DISPLAY_HIDE', '(ï¿½ï¿½É½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½)');
 
     // set location
-    define('_WEBMAP3_TITLE_SET_LOCATION', '°ÞÅÙ¡¦·ÐÅÙ¤ÎÀßÄê');
+    define('_WEBMAP3_TITLE_SET_LOCATION', 'ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // form
-    define('_WEBMAP3_DBUPDATED', '¥Ç¡¼¥¿¥Ù¡¼¥¹¹¹¿·¤ËÀ®¸ù¤·¤¿');
-    define('_WEBMAP3_DELETED', 'ºï½ü¤·¤Þ¤·¤¿');
-    define('_WEBMAP3_ERR_NOIMAGESPECIFIED', '²èÁüÌ¤ÁªÂò¡§¥¢¥Ã¥×¥í¡¼¥É¤¹¤Ù¤­²èÁü¥Õ¥¡¥¤¥ë¤òÁªÂò¤·¤Æ²¼¤µ¤¤¡£');
-    define('_WEBMAP3_ERR_FILE', '²èÁü¥¢¥Ã¥×¥í¡¼¥É¤Ë¼ºÇÔ¡§²èÁü¥Õ¥¡¥¤¥ë¤¬¸«¤Ä¤«¤é¤Ê¤¤¤«ÍÆÎÌÀ©¸Â¤ò±Û¤¨¤Æ¤Þ¤¹¡£');
-    define('_WEBMAP3_ERR_FILEREAD', '²èÁüÆÉ¹þ¼ºÇÔ¡§¤Ê¤ó¤é¤«¤ÎÍýÍ³¤Ç¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤¿²èÁü¥Õ¥¡¥¤¥ë¤òÆÉ¤ß½Ð¤»¤Þ¤»¤ó¡£');
+    define('_WEBMAP3_DBUPDATED', 'ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_DELETED', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_ERR_NOIMAGESPECIFIED', 'ï¿½ï¿½ï¿½ï¿½Ì¤ï¿½ï¿½ï¿½ò¡§¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½Ù¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_ERR_FILE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤Ë¼ï¿½ï¿½Ô¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¤ï¿½Û¤ï¿½ï¿½Æ¤Þ¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_ERR_FILEREAD', 'ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½Ê¤ï¿½é¤«ï¿½ï¿½ï¿½ï¿½Í³ï¿½Ç¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤ß½Ð¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     // PHP upload error
     // http://www.php.net/manual/en/features.file-upload.errors.php
-    define('_WEBMAP3_UPLOADER_PHP_ERR_OK', '¥¨¥é¡¼¤Ï¤Ê¤¯¡¢¥Õ¥¡¥¤¥ë¥¢¥Ã¥×¥í¡¼¥É¤ÏÀ®¸ù¤·¤Æ¤¤¤Þ¤¹');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_INI_SIZE', '¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤¿¥Õ¥¡¥¤¥ë¤Ï¡¢upload_max_filesize ¤ÎÃÍ¤òÄ¶¤¨¤Æ¤¤¤Þ¤¹');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_FORM_SIZE', '¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤¿¥Õ¥¡¥¤¥ë¤Ï¡¢%s ¤òÄ¶¤¨¤Æ¤¤¤Þ¤¹');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_PARTIAL', '¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤¿¥Õ¥¡¥¤¥ë¤Ï°ìÉô¤Î¤ß¤·¤«¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤Æ¤¤¤Þ¤»¤ó');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_NO_FILE', '¥Õ¥¡¥¤¥ë¤Ï¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤Þ¤»¤ó¤Ç¤·¤¿');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_NO_TMP_DIR', '¥Æ¥ó¥Ý¥é¥ê¥Õ¥©¥ë¥À¤¬¤¢¤ê¤Þ¤»¤ó');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_CANT_WRITE', '¥Ç¥£¥¹¥¯¤Ø¤Î½ñ¤­¹þ¤ß¤Ë¼ºÇÔ¤·¤Þ¤·¤¿');
-    define('_WEBMAP3_UPLOADER_PHP_ERR_EXTENSION', '¥Õ¥¡¥¤¥ë¤Î¥¢¥Ã¥×¥í¡¼¥É¤¬³ÈÄ¥¥â¥¸¥å¡¼¥ë¤Ë¤è¤Ã¤ÆÄä»ß¤µ¤ì¤Þ¤·¤¿');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_OK', 'ï¿½ï¿½ï¿½é¡¼ï¿½Ï¤Ê¤ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¥¢ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_INI_SIZE', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ì¤¿ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ï¡ï¿½upload_max_filesize ï¿½ï¿½ï¿½Í¤ï¿½Ä¶ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_FORM_SIZE', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ì¤¿ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ï¡ï¿½%s ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_PARTIAL', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ì¤¿ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½Î¤ß¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_NO_FILE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ï¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_NO_TMP_DIR', 'ï¿½Æ¥ï¿½Ý¥ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_CANT_WRITE', 'ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¤Î½ñ¤­¹ï¿½ï¿½ß¤Ë¼ï¿½ï¿½Ô¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_UPLOADER_PHP_ERR_EXTENSION', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ï¿½Ä¥ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½Ë¤ï¿½Ã¤ï¿½ï¿½ï¿½ß¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     // upload error
-    define('_WEBMAP3_UPLOADER_ERR_NOT_FOUND', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Õ¥¡¥¤¥ë¤¬¸«¤Ä¤«¤é¤Ê¤¤');
-    define('_WEBMAP3_UPLOADER_ERR_INVALID_FILE_SIZE', '¥Õ¥¡¥¤¥ë¡¦¥µ¥¤¥º¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤');
-    define('_WEBMAP3_UPLOADER_ERR_EMPTY_FILE_NAME', '¥Õ¥¡¥¤¥ëÌ¾¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤');
-    define('_WEBMAP3_UPLOADER_ERR_NO_FILE', '¥Õ¥¡¥¤¥ë¤Ï¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤Æ¤Ê¤¤');
-    define('_WEBMAP3_UPLOADER_ERR_NOT_SET_DIR', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Ç¥£¥ì¥¯¥È¥ê¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤');
-    define('_WEBMAP3_UPLOADER_ERR_NOT_ALLOWED_EXT', 'µö²Ä¤µ¤ì¤Æ¤¤¤Ê¤¤³ÈÄ¥»Ò¤Ç¤¹');
-    define('_WEBMAP3_UPLOADER_ERR_PHP_OCCURED', '¥¢¥Ã¥×¥í¡¼¥À¡¼¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿ ');
-    define('_WEBMAP3_UPLOADER_ERR_NOT_OPEN_DIR', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Ç¥£¥ì¥¯¥È¥ê¤¬¥ª¡¼¥×¥ó¤Ç¤­¤Ê¤¤ ');
-    define('_WEBMAP3_UPLOADER_ERR_NO_PERM_DIR', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Ç¥£¥ì¥¯¥È¥ê¤Î¥¢¥¯¥»¥¹¸¢¸Â¤¬¤Ê¤¤ ');
-    define('_WEBMAP3_UPLOADER_ERR_NOT_ALLOWED_MIME', 'µö²Ä¤µ¤ì¤Æ¤¤¤Ê¤¤MIME¥¿¥¤¥×¤Ç¤¹ ');
-    define('_WEBMAP3_UPLOADER_ERR_LARGE_FILE_SIZE', '¥Õ¥¡¥¤¥ë¡¦¥µ¥¤¥º¤¬Âç¤­¤¹¤®¤ë ');
-    define('_WEBMAP3_UPLOADER_ERR_LARGE_WIDTH', '²èÁü²£Éý¤¬Âç¤­¤¹¤®¤ë ');
-    define('_WEBMAP3_UPLOADER_ERR_LARGE_HEIGHT', '²èÁü¹â¤µ¤¬Âç¤­¤¹¤®¤ë ');
-    define('_WEBMAP3_UPLOADER_ERR_UPLOAD', '¥¢¥Ã¥×¥í¡¼¥É¤Ë¼ºÇÔ¤·¤¿ ');
+    define('_WEBMAP3_UPLOADER_ERR_NOT_FOUND', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½Ê¤ï¿½');
+    define('_WEBMAP3_UPLOADER_ERR_INVALID_FILE_SIZE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¡¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤µï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
+    define('_WEBMAP3_UPLOADER_ERR_EMPTY_FILE_NAME', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ê¤µï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
+    define('_WEBMAP3_UPLOADER_ERR_NO_FILE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ï¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ï¿½Æ¤Ê¤ï¿½');
+    define('_WEBMAP3_UPLOADER_ERR_NOT_SET_DIR', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ê¤¬ï¿½ï¿½ï¿½ê¤µï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
+    define('_WEBMAP3_UPLOADER_ERR_NOT_ALLOWED_EXT', 'ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ä¥ï¿½Ò¤Ç¤ï¿½');
+    define('_WEBMAP3_UPLOADER_ERR_PHP_OCCURED', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½é¡¼ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_NOT_OPEN_DIR', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ê¤¬ï¿½ï¿½ï¿½ï¿½ï¿½×¥ï¿½Ç¤ï¿½ï¿½Ê¤ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_NO_PERM_DIR', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¤ï¿½ï¿½Ê¤ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_NOT_ALLOWED_MIME', 'ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤Ç¤ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_LARGE_FILE_SIZE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¡¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_LARGE_WIDTH', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_LARGE_HEIGHT', 'ï¿½ï¿½ï¿½ï¿½ï¿½â¤µï¿½ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ');
+    define('_WEBMAP3_UPLOADER_ERR_UPLOAD', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤Ë¼ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ ');
 
     //---------------------------------------------------------
     // v1.10
     //---------------------------------------------------------
-    define('_WEBMAP3_TITLE_GEOCODING', '¥¸¥ª¥³¡¼¥Ç¥£¥ó¥°');
-    define('_WEBMAP3_TITLE_GEOCODING_DESC', 'Google Geocoding API ¤ò»ÈÍÑ¤·¤Æ¡¢½»½ê¤«¤é°ÞÅÙ¡¦·ÐÅÙ¤ò¸¡º÷¤·¤Þ¤¹');
-    define('_WEBMAP3_LOOK_GOOGLE_MAP', 'Âç¤­¤ÊÃÏ¿Þ¤Ç¸«¤ë');
-
+    define('_WEBMAP3_TITLE_GEOCODING', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define('_WEBMAP3_TITLE_GEOCODING_DESC', 'Google Geocoding API ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½Æ¡ï¿½ï¿½ï¿½ï¿½ê¤«ï¿½ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ù¤ò¸¡ºï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define('_WEBMAP3_LOOK_GOOGLE_MAP', 'ï¿½ç¤­ï¿½ï¿½ï¿½Ï¿Þ¤Ç¸ï¿½ï¿½ï¿½');
     // === define end ===
 }

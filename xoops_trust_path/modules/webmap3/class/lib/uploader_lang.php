@@ -28,44 +28,68 @@ define('_C_WEBMAP3_UPLOADER_UPLOAD', 14);
 //=========================================================
 // class webmap3_lib_uploader_lang
 //=========================================================
+
+/**
+ * Class webmap3_lib_uploader_lang
+ */
 class webmap3_lib_uploader_lang extends webmap3_lib_uploader
 {
     public $_language_class;
 
-    public $_php_upload_errors = array();
-    public $_uploader_errors   = array();
-    public $_errors            = array();
+    public $_php_upload_errors = [];
+    public $_uploader_errors   = [];
+    public $_errors            = [];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_lib_uploader_lang constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->_language_class = webmap3_d3_language_base::getInstance($dirname, $trust_dirname);
     }
 
-    public static function getInstance($dirname, $trust_dirname)
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_lib_uploader|\webmap3_lib_uploader_lang
+     */
+    public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_lib_uploader_lang($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // build error
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_uploader_errors()
     {
         $codes = array_unique($this->errorCodes);
         foreach ($codes as $code) {
             $this->build_uploader_error_single($code);
         }
+
         return $this->get_errors();
     }
 
+    /**
+     * @param $code
+     */
     public function build_uploader_error_single($code)
     {
         $err1 = $this->get_uploader_error_msg($code);
@@ -75,35 +99,28 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
             case 7:
                 $err2 = $this->get_php_upload_error_msg($this->mediaError);
                 break;
-
             case 8:
             case 9:
                 $err2 = $this->uploadDir;
                 break;
-
             case 10:
                 $err2 = $this->mediaType;
                 break;
-
             case 11:
                 $err1 .= ' : ' . $this->mediaSize;
                 $err1 .= ' > ' . $this->maxFileSize;
                 break;
-
             case 12:
                 $err1 .= ' : ' . $this->mediaWidth;
                 $err1 .= ' > ' . $this->maxWidth;
                 break;
-
             case 13:
                 $err1 .= ' : ' . $this->mediaHeight;
                 $err1 .= ' > ' . $this->maxHeight;
                 break;
-
             case 14:
                 $err2 = $this->mediaName;
                 break;
-
             case 1:
             case 2:
             case 3:
@@ -128,7 +145,7 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
         $err_2 = sprintf($this->get_lang('UPLOADER_PHP_ERR_FORM_SIZE'), $this->format_filesize($this->maxFileSize));
 
         // http://www.php.net/manual/en/features.file-upload.errors.php
-        $this->_php_upload_errors = array(
+        $this->_php_upload_errors = [
             //      0 => $this->get_lang('UPLOADER_PHP_ERR_OK') ,
             1 => $this->get_lang('UPLOADER_PHP_ERR_INI_SIZE'),
             2 => $err_2,
@@ -137,9 +154,9 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
             6 => $this->get_lang('UPLOADER_PHP_ERR_NO_TMP_DIR'),
             7 => $this->get_lang('UPLOADER_PHP_ERR_CANT_WRITE'),
             8 => $this->get_lang('UPLOADER_PHP_ERR_EXTENSION'),
-        );
+        ];
 
-        $this->_uploader_errors = array(
+        $this->_uploader_errors = [
             1  => $this->get_lang('UPLOADER_ERR_NOT_FOUND'),
             2  => $this->get_lang('UPLOADER_ERR_INVALID_FILE_SIZE'),
             3  => $this->get_lang('UPLOADER_ERR_EMPTY_FILE_NAME'),
@@ -154,46 +171,68 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
             12 => $this->get_lang('UPLOADER_ERR_LARGE_WIDTH'), // maxWidth
             13 => $this->get_lang('UPLOADER_ERR_LARGE_HEIGHT'), // maxHeight
             14 => $this->get_lang('UPLOADER_ERR_UPLOAD'), // mediaName
-        );
+        ];
     }
 
+    /**
+     * @param $num
+     * @return mixed|string
+     */
     public function get_php_upload_error_msg($num)
     {
         if (isset($this->_php_upload_errors[$num])) {
             return $this->_php_upload_errors[$num];
         }
+
         return 'Other Error';
     }
 
+    /**
+     * @param $num
+     * @return mixed|string
+     */
     public function get_uploader_error_msg($num)
     {
         if (isset($this->_uploader_errors[$num])) {
             return $this->_uploader_errors[$num];
         }
+
         return 'Other Error';
     }
 
     //---------------------------------------------------------
     // format
     //---------------------------------------------------------
+
+    /**
+     * @param     $size
+     * @param int $precision
+     * @return string
+     */
     public function format_filesize($size, $precision = 2)
     {
         $format = '%.' . (int)$precision . 'f';
-        $bytes  = array('B', 'KB', 'MB', 'GB', 'TB');
+        $bytes  = ['B', 'KB', 'MB', 'GB', 'TB'];
         foreach ($bytes as $unit) {
             if ($size > 1000) {
-                $size = $size / 1024;
+                $size /= 1024;
             } else {
                 break;
             }
         }
         $str = sprintf($format, $size) . ' ' . $unit;
+
         return $str;
     }
 
     //---------------------------------------------------------
     // language
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed|string
+     */
     public function get_lang($name)
     {
         return $this->_language_class->get_constant($name);
@@ -202,6 +241,10 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
     //---------------------------------------------------------
     // error
     //---------------------------------------------------------
+
+    /**
+     * @param $msg
+     */
     public function set_error($msg)
     {
         // array type
@@ -209,7 +252,6 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
             foreach ($msg as $m) {
                 $this->_errors[] = $m;
             }
-
             // string type
         } else {
             $arr = explode("\n", $msg);
@@ -219,6 +261,9 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
         }
     }
 
+    /**
+     * @return array
+     */
     public function get_errors()
     {
         return $this->_errors;
@@ -226,7 +271,7 @@ class webmap3_lib_uploader_lang extends webmap3_lib_uploader
 
     public function clear_errors()
     {
-        $this->_errors = array();
+        $this->_errors = [];
     }
 
     // --- class end ---

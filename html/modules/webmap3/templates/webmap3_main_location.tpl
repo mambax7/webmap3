@@ -1,0 +1,38 @@
+<{* $Id: webmap3_main_location.html,v 1.3 2012/04/09 12:09:43 ohwada Exp $ *}>
+
+<script type="text/javascript">
+    //<![CDATA[
+    window.onload = <{$map_func}>;
+    //]]>
+</script>
+
+<h3 align='center'><{$module_name}></h3>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php">[<{$lang_title_search}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=location">[<{$lang_title_location}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=georss">[<{$lang_title_georss}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=geocoding">[<{$lang_title_geocoding}>]</a>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/demo.php">[<{$lang_title_demo}>]</a>
+
+<h4><{$lang_title_location}></h4>
+<{$lang_title_location_desc}><br><br>
+
+<noscript>
+    <div class="webmap3_error"><{$lang_js_invalid}></div>
+</noscript>
+
+<b><{$lang_current_location}></b><br>
+<{$lang_address}> : <{$address_s}> <br>
+<{$lang_latitude}> : <{$latitude}> / <{$lang_longitude}> : <{$longitude}> / <{$lang_zoom}> : <{$zoom}><br>
+<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?fct=kml">
+    <img src="<{$xoops_url}>/modules/<{$xoops_dirname}>/images/google_earth.png" border="0" alt="GoogleEarth">
+    <{$lang_download_kml}>
+</a><br>
+<br>
+
+<div id="<{$map_div_id}>" class="webmap3_map_location">Loading ...</div>
+
+<{if $is_module_admin }>
+    <br>
+<hr/>
+    <a href="./admin/index.php">go to admin cp</a>
+<{/if}>

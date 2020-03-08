@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_gicon_manager
 //=========================================================
+
+/**
+ * Class webmap3_admin_gicon_manager
+ */
 class webmap3_admin_gicon_manager extends webmap3_admin_base
 {
     public $_gicon_handler;
@@ -51,6 +55,12 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_admin_gicon_manager constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -74,12 +84,18 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $this->_THIS_URL        = $this->_ADMIN_INDEX_URL . '?fct=' . $this->_THIS_FCT;
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_admin_base|\webmap3_admin_gicon_manager|\webmap3_lib_admin_base
+     */
     public static function getInstance($dirname, $trust_dirname)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_admin_gicon_manager($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -116,11 +132,9 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
             case 'edit_form':
                 $this->_print_edit_form();
                 break;
-
             case 'new_form':
                 $this->_print_new_form();
                 break;
-
             case 'list':
             default:
                 $this->_print_list();
@@ -131,15 +145,18 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         exit();
     }
 
+    /**
+     * @return string
+     */
     public function _get_action()
     {
         $this->_post_gicon_id = $this->_post_class->get_post_get_int('gicon_id');
         $this->_post_delgicon = $this->_post_class->get_post_int('delgicon');
         $post_action          = $this->_post_class->get_post_text('action');
 
-        if ($post_action == 'insert') {
+        if ('insert' == $post_action) {
             return 'insert';
-        } elseif (($post_action == 'update') && ($this->_post_gicon_id > 0)) {
+        } elseif (('update' == $post_action) && ($this->_post_gicon_id > 0)) {
             return 'update';
         } elseif ($this->_post_delgicon > 0) {
             return 'delete';
@@ -148,13 +165,16 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         return 'list';
     }
 
+    /**
+     * @return string
+     */
     public function _get_disp()
     {
         $get_disp = $this->_post_class->get_get_text('disp');
 
-        if (($get_disp == 'edit') && ($this->_post_gicon_id > 0)) {
+        if (('edit' == $get_disp) && ($this->_post_gicon_id > 0)) {
             return 'edit_form';
-        } elseif ($get_disp == 'new') {
+        } elseif ('new' == $get_disp) {
             return 'new_form';
         }
 
@@ -168,16 +188,19 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
     {
         $ret = $this->_exec_check();
         switch ($ret) {
-            case _C_WEBMAP3_ERR_CHECK_DIR :
+            case _C_WEBMAP3_ERR_CHECK_DIR:
                 redirect_header($this->_ADMIN_INDEX_URL, $this->_TIME_FAIL, $this->get_format_error());
                 exit();
 
             case 0:
-            default;
+            default:
                 break;
         }
     }
 
+    /**
+     * @return int
+     */
     public function _exec_check()
     {
         $ret1 = $this->check_dir($this->_TMP_DIR);
@@ -206,14 +229,14 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $ret = $this->_excute_insert();
         switch ($ret) {
             case _C_WEBMAP3_ERR_DB:
-                $msg = 'DB error <br />';
+                $msg = 'DB error <br >';
                 $msg .= $this->get_format_error();
                 redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
                 exit();
 
-            case _C_WEBMAP3_ERR_UPLOAD;
+            case _C_WEBMAP3_ERR_UPLOAD:
                 $msg = 'File Upload Error';
-                $msg .= '<br />' . $this->get_format_error(false);
+                $msg .= '<br >' . $this->get_format_error(false);
                 redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
                 exit();
 
@@ -221,7 +244,7 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
                 redirect_header($this->_THIS_URL, $this->_TIME_FAIL, _WEBMAP3_ERR_FILEREAD);
                 exit();
 
-            case _C_WEBMAP3_ERR_NO_IMAGE;
+            case _C_WEBMAP3_ERR_NO_IMAGE:
                 redirect_header($this->_THIS_URL, $this->_TIME_FAIL, _WEBMAP3_ERR_NOIMAGESPECIFIED);
                 exit();
 
@@ -237,6 +260,9 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         exit();
     }
 
+    /**
+     * @return int
+     */
     public function _excute_insert()
     {
         $shadow_tmp_name = null;
@@ -257,7 +283,7 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $ret2 = $this->_fetch_shadow();
         if ($ret2 < 0) {
             return $ret2;
-        } elseif ($ret2 == 1) {
+        } elseif (1 == $ret2) {
             $shadow_tmp_name = $this->_uploader_get_file_name();
         }
 
@@ -278,16 +304,30 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         return 0;
     }
 
+    /**
+     * @param $need_upload
+     * @return int
+     */
     public function _fetch_image($need_upload)
     {
         return $this->_uploader_fetch($this->_IMAGE_FIELD_NAME, $need_upload);
     }
 
+    /**
+     * @return int
+     */
     public function _fetch_shadow()
     {
         return $this->_uploader_fetch($this->_SHADOW_FIELD_NAME, false);
     }
 
+    /**
+     * @param      $row
+     * @param      $image_tmp_name
+     * @param      $shadow_tmp_name
+     * @param null $image_media_name
+     * @return int
+     */
     public function _update_common($row, $image_tmp_name, $shadow_tmp_name, $image_media_name = null)
     {
         $gicon_id = $row['gicon_id'];
@@ -317,6 +357,7 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $ret3 = $this->_gicon_handler->update($row);
         if (!$ret3) {
             $this->set_error($this->_gicon_handler->get_errors());
+
             return _C_WEBMAP3_ERR_DB;
         }
 
@@ -340,14 +381,14 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
                 exit();
 
             case _C_WEBMAP3_ERR_DB:
-                $msg = 'DB error <br />';
+                $msg = 'DB error <br >';
                 $msg .= $this->get_format_error();
                 redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
                 exit();
 
-            case _C_WEBMAP3_ERR_UPLOAD;
+            case _C_WEBMAP3_ERR_UPLOAD:
                 $msg = 'File Upload Error';
-                $msg .= '<br />' . $this->get_format_error(false);
+                $msg .= '<br >' . $this->get_format_error(false);
                 redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
                 exit();
 
@@ -367,6 +408,9 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         exit();
     }
 
+    /**
+     * @return int
+     */
     public function _excute_update()
     {
         $image_tmp_name  = null;
@@ -388,20 +432,19 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $ret1 = $this->_fetch_image(false);
         if ($ret1 < 0) {
             return $ret1;
-        } elseif ($ret1 == 1) {
+        } elseif (1 == $ret1) {
             $image_tmp_name = $this->_uploader_get_file_name();
         }
 
         $ret2 = $this->_fetch_shadow();
         if ($ret2 < 0) {
             return $ret2;
-        } elseif ($ret2 == 1) {
+        } elseif (1 == $ret2) {
             $shadow_tmp_name = $this->_uploader_get_file_name();
         }
 
         //delete old files
         if ($post_shadow_del || $shadow_tmp_name) {
-
             // default icons have no name value
             if ($row['gicon_shadow_path'] && $row['gicon_shadow_name']) {
                 $this->_unlink_path($row['gicon_shadow_path']);
@@ -421,6 +464,9 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         return 0;
     }
 
+    /**
+     * @param $path
+     */
     public function _unlink_path($path)
     {
         $file = XOOPS_ROOT_PATH . $path;
@@ -459,7 +505,7 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $ret = $this->_gicon_handler->delete_by_id($gicon_id);
         if (!$ret) {
             $this->set_error($this->_gicon_handler->get_errors());
-            $msg = 'DB error <br />';
+            $msg = 'DB error <br >';
             $msg .= $this->get_format_error();
             redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
             exit();
@@ -506,6 +552,12 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
     //---------------------------------------------------------
     // create image
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $tmp_name
+     * @return mixed
+     */
     public function create_main_row($row, $tmp_name)
     {
         if (empty($tmp_name)) {
@@ -535,6 +587,11 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $tmp_name
+     * @return mixed
+     */
     public function create_shadow_row($row, $tmp_name)
     {
         if (empty($tmp_name)) {
@@ -557,6 +614,12 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         return $row;
     }
 
+    /**
+     * @param $gicon_id
+     * @param $tmp_name
+     * @param $sub_dir
+     * @return array|null
+     */
     public function resize_image($gicon_id, $tmp_name, $sub_dir)
     {
         $max_width  = $this->_cfg_gicon_width;
@@ -591,7 +654,7 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
             $is_image = true;
         }
 
-        $arr = array(
+        $arr = [
             'url'      => $url,
             'path'     => $path,
             'name'     => $name,
@@ -599,11 +662,17 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
             'width'    => $width,
             'height'   => $height,
             'is_image' => $is_image,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @param $file
+     * @param $max_width
+     * @param $max_height
+     * @return bool
+     */
     public function check_resize($file, $max_width, $max_height)
     {
         $size = getimagesize($file);
@@ -618,6 +687,7 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         if ($height > $max_height) {
             return true;
         }
+
         return false;
     }
 
@@ -630,6 +700,14 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $this->_gd_class->set_jpeg_quality($this->_cfg_gicon_quality);
     }
 
+    /**
+     * @param     $src_file
+     * @param     $dst_file
+     * @param     $max_width
+     * @param     $max_height
+     * @param int $rotate
+     * @return mixed
+     */
     public function _gd_resize_rotate($src_file, $dst_file, $max_width, $max_height, $rotate = 0)
     {
         return $this->_gd_class->resize_rotate($src_file, $dst_file, $max_width, $max_height, $rotate);
@@ -650,6 +728,11 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $this->_uploader_class->init_errors();
     }
 
+    /**
+     * @param $field
+     * @param $need_upload
+     * @return int
+     */
     public function _uploader_fetch($field, $need_upload)
     {
         $this->clear_errors();
@@ -657,31 +740,40 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
         $ret = $this->_uploader_class->fetchMedia($field);
         if (!$ret) {
             $error_num = $this->_uploader_class->getMediaError();
-            if ($error_num == UPLOAD_ERR_NO_FILE) {
+            if (UPLOAD_ERR_NO_FILE == $error_num) {
                 if ($need_upload) {
                     return _C_WEBMAP3_ERR_NO_IMAGE;
                 }
+
                 return 0;   // no action
             }
 
             $this->set_error($this->_uploader_class->build_uploader_errors());
+
             return _C_WEBMAP3_ERR_UPLOAD;
         }
 
         $ret = $this->_uploader_class->upload();
         if (!$ret) {
             $this->set_error($this->_uploader_class->build_uploader_errors());
+
             return _C_WEBMAP3_ERR_UPLOAD;
         }
 
         return 1;  // success
     }
 
+    /**
+     * @return mixed
+     */
     public function _uploader_get_file_name()
     {
         return $this->_uploader_class->getSavedFileName();
     }
 
+    /**
+     * @return mixed
+     */
     public function _uploader_get_media_name()
     {
         return $this->_uploader_class->getMediaName();
@@ -690,6 +782,11 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
     //---------------------------------------------------------
     // token
     //---------------------------------------------------------
+
+    /**
+     * @param bool $allow_repost
+     * @return bool
+     */
     public function check_token($allow_repost = false)
     {
         global $xoopsGTicket;
@@ -697,16 +794,23 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
             if (!$xoopsGTicket->check(true, '', $allow_repost)) {
                 $this->_token_error_flag = true;
                 $this->_token_errors     = $xoopsGTicket->getErrors();
+
                 return false;
             }
         }
         $this->_token_error_flag = false;
+
         return true;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
         return $this->_utility_class->parse_ext($file);
@@ -715,12 +819,20 @@ class webmap3_admin_gicon_manager extends webmap3_admin_base
     //---------------------------------------------------------
     // admin_gicon_form
     //---------------------------------------------------------
+
+    /**
+     * @param $mode
+     * @param $row
+     */
     public function _print_gicon_form($mode, $row)
     {
         $form = webmap3_admin_gicon_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
         $form->print_form($mode, $row);
     }
 
+    /**
+     * @param $rows
+     */
     public function _print_gicon_list($rows)
     {
         $form = webmap3_admin_gicon_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);

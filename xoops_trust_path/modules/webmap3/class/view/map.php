@@ -16,6 +16,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_view_map
 //=========================================================
+
+/**
+ * Class webmap3_view_map
+ */
 class webmap3_view_map extends webmap3_view_base
 {
     public $_map_class;
@@ -26,6 +30,11 @@ class webmap3_view_map extends webmap3_view_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_view_map constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
@@ -39,11 +48,16 @@ class webmap3_view_map extends webmap3_view_base
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_main()
     {
         $p               = $this->build_base();
         $p['map_div_id'] = $this->_map_div_id;
         $p['map_func']   = $this->_map_func;
+
         return $p;
     }
 

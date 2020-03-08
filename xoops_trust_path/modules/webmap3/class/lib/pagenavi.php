@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_lib_pagenavi
 //=========================================================
+
+/**
+ * Class webmap3_lib_pagenavi
+ */
 class webmap3_lib_pagenavi
 {
     //  var $_MAX_PAGELIST = 10;
@@ -32,8 +36,8 @@ class webmap3_lib_pagenavi
     public $_start;
     public $_end;
     public $_flag_sortid = 0;
-    public $_sort_arr    = array();
-    public $_id_array    = array();
+    public $_sort_arr    = [];
+    public $_id_array    = [];
 
     public $_SEPARATOR_PATH  = '?';
     public $_SEPARATOR_QUERY = '&';
@@ -69,12 +73,16 @@ class webmap3_lib_pagenavi
         // dummy
     }
 
+    /**
+     * @return \webmap3_lib_pagenavi
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_lib_pagenavi();
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -86,6 +94,14 @@ class webmap3_lib_pagenavi
     // same as XoopsPageNav
     // use positon (start offset 0.10.20...)
     //---------------------------------------------------------
+
+    /**
+     * @param        $total
+     * @param        $perpage
+     * @param        $position
+     * @param string $start_name
+     * @param string $extra_arg
+     */
     public function XoopsPageNav($total, $perpage, $position, $start_name = 'start', $extra_arg = '')
     {
         $this->_total    = (int)$total;
@@ -93,7 +109,7 @@ class webmap3_lib_pagenavi
         $this->_position = (int)$position;
 
         $amp = '';
-        if (($extra_arg != '') && !$this->_check_tail_amp($extra_arg)) {
+        if (('' != $extra_arg) && !$this->_check_tail_amp($extra_arg)) {
             $amp = '&amp;';
         }
 
@@ -101,6 +117,10 @@ class webmap3_lib_pagenavi
         $this->_script = $this->_sanitize_url($url);
     }
 
+    /**
+     * @param int $offset
+     * @return string
+     */
     public function renderNav($offset = 4)
     {
         $navi = '';
@@ -124,14 +144,11 @@ class webmap3_lib_pagenavi
         }
 
         for ($i = 1; $i <= $total_pages; ++$i) {
-
             // current page
             if ($i == $current) {
                 $navi .= '<b>(' . $i . ')</b> ';
-
                 // within offset, first , last
-            } elseif ($this->_check_within($i, $current, $offset) || $i == 1 || $i == $total_pages) {
-
+            } elseif ($this->_check_within($i, $current, $offset) || 1 == $i || $i == $total_pages) {
                 // at last
                 if (($i == $total_pages) && ($current < $total_pages - $offset)) {
                     $navi .= '... ';
@@ -141,7 +158,7 @@ class webmap3_lib_pagenavi
                 $navi .= $this->_build_link($this->_page_to_position($i, $this->_perpage), $i);
 
                 // at first
-                if (($i == 1) && ($current > 1 + $offset)) {
+                if ((1 == $i) && ($current > 1 + $offset)) {
                     $navi .= '... ';
                 }
             }
@@ -155,47 +172,82 @@ class webmap3_lib_pagenavi
         return $navi;
     }
 
+    /**
+     * @param $total
+     * @param $perpage
+     * @return float
+     */
     public function _calc_total_pages($total, $perpage)
     {
         return ceil($total / $perpage);
     }
 
+    /**
+     * @param $page
+     * @param $current
+     * @param $offset
+     * @return bool
+     */
     public function _check_within($page, $current, $offset)
     {
         if (($page > $current - $offset) && ($page < $current + $offset)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $position
+     * @param $perpage
+     * @return int
+     */
     public function _position_to_page($position, $perpage)
     {
         $page = (int)floor(($position + $perpage) / $perpage);
+
         return $page;
     }
 
+    /**
+     * @param $page
+     * @param $perpage
+     * @return float|int
+     */
     public function _page_to_position($page, $perpage)
     {
         $pos = ($page - 1) * $perpage;
         if ($pos < 0) {
             $pos = 0;
         }
+
         return $pos;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public function _check_tail_amp($str)
     {
-        if (substr($str, -5) == '&amp;') {
+        if ('&amp;' == mb_substr($str, -5)) {
             return true;
-        } elseif (substr($str, -1) == '&') {
+        } elseif ('&' == mb_substr($str, -1)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $extra
+     * @param $name
+     * @return string
+     */
     public function _build_link($extra, $name)
     {
         $str = '<a href="' . $this->_script . $extra . '" >' . $name . "</a> \n";
+
         return $str;
     }
 
@@ -203,20 +255,29 @@ class webmap3_lib_pagenavi
     // build pagenavi
     // use page (1.2.3...)
     //---------------------------------------------------------
+
+    /**
+     * @param     $script
+     * @param int $page
+     * @param int $perpage
+     * @param int $total
+     * @param int $window
+     * @return string
+     */
     public function build($script, $page = -1, $perpage = -1, $total = -1, $window = 8)
     {
         $page = $this->_get_page_internal($page);
-        if ($page === false) {
+        if (false === $page) {
             return false;
         }
 
         $perpage = $this->_get_perpage_internal($perpage);
-        if ($perpage === false) {
+        if (false === $perpage) {
             return false;
         }
 
         $total = $this->_get_total_internal($total);
-        if ($total === false) {
+        if (false === $total) {
             return false;
         }
 
@@ -314,6 +375,14 @@ class webmap3_lib_pagenavi
     // build pagenavi
     // use id (1.2.3...)
     //---------------------------------------------------------
+
+    /**
+     * @param     $script
+     * @param     $id_array
+     * @param     $id_current
+     * @param int $window
+     * @return string
+     */
     public function build_id_array($script, $id_array, $id_current, $window = 7)
     {
         if (!is_array($id_array)) {
@@ -374,46 +443,68 @@ class webmap3_lib_pagenavi
         return $navi;
     }
 
+    /**
+     * @param $num
+     * @param $name
+     * @return string
+     */
     public function build_link_id_array($num, $name)
     {
         return $this->_build_link($this->_get_id_array($num), $name);
     }
 
+    /**
+     * @param $num
+     * @return bool|mixed
+     */
     public function _get_id_array($num)
     {
         if (isset($this->_id_array[$num])) {
             return $this->_id_array[$num];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // calc start end
     //---------------------------------------------------------
+
+    /**
+     * @param int $page
+     * @param int $perpage
+     * @return bool|float|int
+     */
     public function calc_start($page = -1, $perpage = -1)
     {
         $page = $this->_get_page_internal($page);
-        if ($page === false) {
+        if (false === $page) {
             return false;
         }
 
         $perpage = $this->_get_perpage_internal($perpage);
-        if ($perpage === false) {
+        if (false === $perpage) {
             return false;
         }
 
         return $this->_page_to_position($page, $perpage);
     }
 
+    /**
+     * @param     $start
+     * @param int $perpage
+     * @param int $total
+     * @return bool|int
+     */
     public function calc_end($start, $perpage = -1, $total = -1)
     {
         $perpage = $this->_get_perpage_internal($perpage);
-        if ($perpage === false) {
+        if (false === $perpage) {
             return false;
         }
 
         $total = $this->_get_total_internal($total);
-        if ($total === false) {
+        if (false === $total) {
             return false;
         }
 
@@ -444,140 +535,223 @@ class webmap3_lib_pagenavi
         $this->set_sortid($this->get_sortid_from_get());
     }
 
+    /**
+     * @return int
+     */
     public function get_page_from_get()
     {
         $val = $this->get_get_int($this->_PAGE_NAME);
         if ($val < $this->_MIN_PAGE) {
             $val = $this->_MIN_PAGE;
         }
+
         return $val;
     }
 
+    /**
+     * @return int
+     */
     public function get_perpage_from_get()
     {
         $val = $this->get_get_int($this->_PERPAGE_NAME, $this->_PERPAGE_DEFAULT);
         if ($val < $this->_MIN_PERPAGE) {
             $val = $this->_MIN_PERPAGE;
         }
+
         return $val;
     }
 
+    /**
+     * @return int
+     */
     public function get_sortid_from_get()
     {
         $val = $this->get_get_int($this->_SORTID_NAME, $this->_SORTID_DEFAULT);
         $val = $this->_adjust_sortid($val);
+
         return $val;
     }
 
+    /**
+     * @param     $key
+     * @param int $default
+     * @return int
+     */
     public function get_get_int($key, $default = 0)
     {
         $val = isset($_GET[$key]) ? (int)$_GET[$key] : (int)$default;
+
         return $val;
     }
 
     //---------------------------------------------------------
     // set and get parameter
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_total($val)
     {
         $this->_total = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_page($val)
     {
         $this->_page = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_perpage($val)
     {
         $this->_perpage = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_sortid($val)
     {
         $this->_sortid = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_perpage_default($val)
     {
         $this->_PERPAGE_DEFAULT = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_sortid_default($val)
     {
         $this->_SORTID_DEFAULT = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_max_sortid($val)
     {
         $this->_MAX_SORTID = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_separator_path($val)
     {
         $this->_SEPARATOR_PATH = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_separator_query($val)
     {
         $this->_SEPARATOR_QUERY = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_mark_id_prev($val)
     {
         $this->_MARK_ID_PREV = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_mark_id_next($val)
     {
         $this->_MARK_ID_NEXT = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_flag_debug($val)
     {
         $this->_FLAG_DEBUG = (bool)$val;
     }
 
+    /**
+     * @return int
+     */
     public function get_total()
     {
         return $this->_total;
     }
 
+    /**
+     * @return int
+     */
     public function get_page()
     {
         return $this->_page;
     }
 
+    /**
+     * @return int
+     */
     public function get_perpage()
     {
         return $this->_perpage;
     }
 
+    /**
+     * @return int
+     */
     public function get_sortid()
     {
         return $this->_sortid;
     }
 
+    /**
+     * @param $val
+     */
     public function get_perpage_default($val)
     {
         $this->_PERPAGE_DEFAULT = (int)$val;
     }
 
+    /**
+     * @return int
+     */
     public function get_max_sortid()
     {
         return $this->_MAX_SORTID;
     }
 
+    /**
+     * @return string
+     */
     public function get_separator_path()
     {
         return $this->_SEPARATOR_PATH;
     }
 
+    /**
+     * @return string
+     */
     public function get_separator_query()
     {
         return $this->_SEPARATOR_QUERY;
     }
 
+    /**
+     * @param $val
+     * @return bool|int
+     */
     public function _get_page_internal($val)
     {
         $val = (int)$val;
@@ -586,12 +760,18 @@ class webmap3_lib_pagenavi
                 $val = $this->_page;
             } else {
                 $this->_debug_msg('not set page');
+
                 return false;
             }
         }
+
         return $val;
     }
 
+    /**
+     * @param $val
+     * @return bool|int
+     */
     public function _get_perpage_internal($val)
     {
         $val = (int)$val;
@@ -600,12 +780,18 @@ class webmap3_lib_pagenavi
                 $val = $this->_perpage;
             } else {
                 $this->_debug_msg('not set perpage');
+
                 return false;
             }
         }
+
         return $val;
     }
 
+    /**
+     * @param $val
+     * @return bool|int
+     */
     public function _get_total_internal($val)
     {
         $val = (int)$val;
@@ -614,12 +800,18 @@ class webmap3_lib_pagenavi
                 $val = $this->_total;
             } else {
                 $this->_debug_msg('not set total');
+
                 return false;
             }
         }
+
         return $val;
     }
 
+    /**
+     * @param $val
+     * @return bool|int
+     */
     public function _get_sortid_internal($val)
     {
         $val = (int)$val;
@@ -628,9 +820,11 @@ class webmap3_lib_pagenavi
                 $val = $this->_sortid;
             } else {
                 $this->_debug_msg('not set sortid');
+
                 return false;
             }
         }
+
         return $val;
     }
 
@@ -640,30 +834,39 @@ class webmap3_lib_pagenavi
     public function clear_sort()
     {
         $this->_MAX_SORTID = 0;
-        $this->_sort_arr   = array();
+        $this->_sort_arr   = [];
     }
 
+    /**
+     * @param        $title
+     * @param        $sort
+     * @param string $order
+     */
     public function add_sort($title, $sort, $order = 'ASC')
     {
-        if (strtoupper($order) == 'DESC') {
+        if ('DESC' == mb_strtoupper($order)) {
             $order = 'DESC';
         } else {
             $order = 'ASC';
         }
 
-        $this->_sort_arr[$this->_MAX_SORTID] = array(
+        $this->_sort_arr[$this->_MAX_SORTID] = [
             'title' => $title,
             'sort'  => $sort,
             'order' => $order,
-        );
+        ];
 
         $this->_MAX_SORTID++;
     }
 
+    /**
+     * @param int $sortid
+     * @return bool|mixed
+     */
     public function get_sort($sortid = -1)
     {
         $sortid = $this->_get_sortid_internal($val);
-        if ($sortid === false) {
+        if (false === $sortid) {
             return false;
         }
 
@@ -672,13 +875,19 @@ class webmap3_lib_pagenavi
         if (isset($this->_sort_arr[$sortid])) {
             return $this->_sort_arr[$sortid];
         }
+
         return false;
     }
 
+    /**
+     * @param     $key
+     * @param int $sort_id
+     * @return bool
+     */
     public function get_sort_value($key, $sort_id = -1)
     {
         $sortid = $this->_get_sortid_internal($val);
-        if ($sortid === false) {
+        if (false === $sortid) {
             return false;
         }
 
@@ -687,9 +896,9 @@ class webmap3_lib_pagenavi
         if (isset($this->_sort_arr[$sortid][$key])) {
             return $this->_sort_arr[$sortid][$key];
         }
+
         return false;
     }
-
 
     //---------------------------------------------------------
     // add script
@@ -702,6 +911,12 @@ class webmap3_lib_pagenavi
     //   -2: dont add sortid
     //       ex) foo.php
     //---------------------------------------------------------
+
+    /**
+     * @param      $script
+     * @param null $separator
+     * @return string
+     */
     public function add_script_sortid($script, $separator = null)
     {
         if ($this->_sortid > $this->_MIN_SORTID) {
@@ -710,9 +925,15 @@ class webmap3_lib_pagenavi
             }
             $script .= $separator . $this->_SORTID_NAME . '=' . $this->_sortid;
         }
+
         return $script;
     }
 
+    /**
+     * @param      $script
+     * @param null $separator
+     * @return string
+     */
     public function add_script_perpage($script, $separator = null)
     {
         if ($this->_perpage > $this->_MIN_PERPAGE) {
@@ -721,32 +942,48 @@ class webmap3_lib_pagenavi
             }
             $script .= $separator . $this->_PERPAGE_NAME . '=' . $this->_perpage;
         }
+
         return $script;
     }
 
+    /**
+     * @param      $script
+     * @param null $separator
+     * @return string
+     */
     public function add_script_pagename($script, $separator = null)
     {
         if (empty($separator)) {
             $separator = $this->_get_seprator_from_script($script);
         }
         $str = $script . $separator . $this->_PAGE_NAME . '=';
+
         return $str;
     }
 
+    /**
+     * @param $script
+     * @return string
+     */
     public function _get_seprator_from_script($script)
     {
         return $this->_get_separator_from_type($this->_analyze_script_type($script));
     }
 
+    /**
+     * @param $type
+     * @return string
+     */
     public function _get_separator_from_type($type)
     {
-        if ($type == 1) {
+        if (1 == $type) {
             $str = '';
-        } elseif ($type == 2) {
+        } elseif (2 == $type) {
             $str = $this->_SEPARATOR_QUERY;
         } else {
             $str = $this->_SEPARATOR_PATH;
         }
+
         return $str;
     }
 
@@ -758,6 +995,11 @@ class webmap3_lib_pagenavi
     //   type 1: foo.php?
     //   type 2: foo.php?bar=abc
     //---------------------------------------------------------
+
+    /**
+     * @param $script
+     * @return int
+     */
     public function _analyze_script_type($script)
     {
         $type = 0;  // foo.php
@@ -778,6 +1020,12 @@ class webmap3_lib_pagenavi
     //---------------------------------------------------------
     // adjust
     //---------------------------------------------------------
+
+    /**
+     * @param $page
+     * @param $total_pages
+     * @return int
+     */
     public function _adjust_page($page, $total_pages)
     {
         if ($page < $this->_MIN_PAGE) {
@@ -785,9 +1033,14 @@ class webmap3_lib_pagenavi
         } elseif ($page > $total_pages) {
             $page = $total_pages;
         }
+
         return $page;
     }
 
+    /**
+     * @param $val
+     * @return int
+     */
     public function _adjust_sortid($val)
     {
         $val = (int)$val;
@@ -797,21 +1050,33 @@ class webmap3_lib_pagenavi
         if ($val > $this->_MAX_SORTID) {
             $val = $this->_MAX_SORTID;
         }
+
         return $val;
     }
 
     //---------------------------------------------------------
     // sanitize
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function _sanitize_url($str)
     {
         $str = $this->_deny_javascript($str);
         $str = preg_replace('/&amp;/i', '&', $str);
         $str = htmlspecialchars($str, ENT_QUOTES);
+
         return $str;
     }
 
     // Checks if Javascript are included in string
+
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function _deny_javascript($str)
     {
         $str = preg_replace('/[\x00-\x1F]/', '', $str);
@@ -833,6 +1098,10 @@ class webmap3_lib_pagenavi
     //---------------------------------------------------------
     // debug
     //---------------------------------------------------------
+
+    /**
+     * @param $msg
+     */
     public function _debug_msg($msg)
     {
         if ($this->_FLAG_DEBUG) {

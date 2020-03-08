@@ -14,29 +14,46 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webmap3_inc_admin_menu
 // caller webmap3_lib_admin_menu admin/menu.php
 //=========================================================
+
+/**
+ * Class webmap3_inc_admin_menu
+ */
 class webmap3_inc_admin_menu extends webmap3_inc_admin_menu_base
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_inc_admin_menu constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webmap3_inc_admin_menu($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return mixed|void
+     */
     public function define_main_menu()
     {
         $menu[0]['title']  = 'INDEX';

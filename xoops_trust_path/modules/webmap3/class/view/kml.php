@@ -9,6 +9,10 @@
 //=========================================================
 // class webmap3_show_kml
 //=========================================================
+
+/**
+ * Class webmap3_view_kml
+ */
 class webmap3_view_kml
 {
     public $_xoops_param;
@@ -19,6 +23,11 @@ class webmap3_view_kml
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_view_kml constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME     = $dirname;
@@ -26,12 +35,17 @@ class webmap3_view_kml
         $this->_kml_class   = webmap3_api_kml::getSingleton($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webmap3_view_kml
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_view_kml($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
@@ -48,20 +62,28 @@ class webmap3_view_kml
         $this->_kml_class->api_view_kml($this->_build_placemarks());
     }
 
+    /**
+     * @return array
+     */
     public function _build_placemarks()
     {
-        $placemark = array(
+        $placemark = [
             'name'        => $this->get_config('address'),
             'description' => $this->get_config('loc_marker_info'),
             'latitude'    => $this->get_config('latitude'),
             'longitude'   => $this->get_config('longitude'),
-        );
-        return array($placemark);
+        ];
+
+        return [$placemark];
     }
 
     //---------------------------------------------------------
     // config
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function get_config($name)
     {
         return $this->_xoops_param->get_module_config_by_name($name);

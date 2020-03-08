@@ -12,6 +12,6 @@ if (!defined('XOOPS_TRUST_PATH')) {
 
 // --- define version begin ---
 if (!defined('_C_WEBMAP3_VERSION')) {
-    define('_C_WEBMAP3_VERSION', '1.10');
-}// --- define version end ---
-;
+    define('_C_WEBMAP3_VERSION', '1.14');
+}
+// --- define version end ---

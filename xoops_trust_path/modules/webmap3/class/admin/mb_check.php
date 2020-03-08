@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_mb_check
 //=========================================================
+
+/**
+ * Class webmap3_admin_mb_check
+ */
 class webmap3_admin_mb_check extends webmap3_admin_mb_check_base
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -25,12 +28,16 @@ class webmap3_admin_mb_check extends webmap3_admin_mb_check_base
         $this->set_lang_success(_AM_WEBMAP3_CHK_MB_SUCCESS);
     }
 
+    /**
+     * @return \webmap3_admin_mb_check|\webmap3_lib_multibyte
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_admin_mb_check();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 

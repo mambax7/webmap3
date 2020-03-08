@@ -6,7 +6,7 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-$constpref = strtoupper('_BL_' . $GLOBALS['MY_DIRNAME'] . '_');
+$constpref = mb_strtoupper('_BL_' . $GLOBALS['MY_DIRNAME'] . '_');
 
 // === define begin ===
 if (!defined($constpref . 'LANG_LOADED')) {
@@ -18,6 +18,5 @@ if (!defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'HEIGHT', '表示の高さ');
     define($constpref . 'TIMEOUT', '表示の遅延時間');
     define($constpref . 'TIMEOUT_DSC', 'ミリ秒');
-
     // === define end ===
 }

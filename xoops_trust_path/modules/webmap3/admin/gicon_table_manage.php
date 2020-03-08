@@ -32,5 +32,4 @@ webmap3_include_once('class/admin/gicon_table_manage.php');
 $manage = webmap3_admin_gicon_table_manage::getInstance(WEBMAP3_DIRNAME, WEBMAP3_TRUST_DIRNAME);
 $manage->main();
 
-exit();// --- main end ---
-;
+exit(); // --- main end ---

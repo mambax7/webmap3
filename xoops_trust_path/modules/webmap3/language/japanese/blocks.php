@@ -6,7 +6,7 @@
 // 2009-02-11 K.OHWADA
 //=========================================================
 
-$constpref = strtoupper('_BL_' . $GLOBALS['MY_DIRNAME'] . '_');
+$constpref = mb_strtoupper('_BL_' . $GLOBALS['MY_DIRNAME'] . '_');
 
 // === define begin ===
 if (!defined($constpref . 'LANG_LOADED')) {
@@ -15,9 +15,8 @@ if (!defined($constpref . 'LANG_LOADED')) {
     //---------------------------------------------------------
     // v1.10
     //---------------------------------------------------------
-    define($constpref . 'HEIGHT', 'É½¼¨¤Î¹â¤µ');
-    define($constpref . 'TIMEOUT', 'É½¼¨¤ÎÃÙ±ä»þ´Ö');
-    define($constpref . 'TIMEOUT_DSC', '¥ß¥êÉÃ');
-
+    define($constpref . 'HEIGHT', 'É½ï¿½ï¿½ï¿½Î¹â¤µ');
+    define($constpref . 'TIMEOUT', 'É½ï¿½ï¿½ï¿½ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TIMEOUT_DSC', 'ï¿½ß¥ï¿½ï¿½ï¿½');
     // === define end ===
 }

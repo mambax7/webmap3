@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_gd_check
 //=========================================================
+
+/**
+ * Class webmap3_admin_gd_check
+ */
 class webmap3_admin_gd_check extends webmap3_admin_gd_check_base
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -26,12 +29,16 @@ class webmap3_admin_gd_check extends webmap3_admin_gd_check_base
         $this->set_lang_failed(_AM_WEBMAP3_CHK_GD_FAILED);
     }
 
+    /**
+     * @return \webmap3_admin_gd_check
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_admin_gd_check();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 

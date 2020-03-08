@@ -14,9 +14,12 @@
 //=========================================================
 // class webmap3_lib_kml_document_object
 //=========================================================
+
+/**
+ * Class webmap3_lib_kml_document_object
+ */
 class webmap3_lib_kml_document_object extends webmap3_lib_xml_single_object
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -29,6 +32,11 @@ class webmap3_lib_kml_document_object extends webmap3_lib_xml_single_object
     //---------------------------------------------------------
     // build
     //---------------------------------------------------------
+
+    /**
+     * @param $item
+     * @return array
+     */
     public function _build(&$item)
     {
         if (isset($item['tag_use'])) {
@@ -46,6 +54,7 @@ class webmap3_lib_kml_document_object extends webmap3_lib_xml_single_object
         if (isset($item['open'])) {
             $item['open'] = (int)$item['open'];
         }
+
         return $item;
     }
 
@@ -55,9 +64,12 @@ class webmap3_lib_kml_document_object extends webmap3_lib_xml_single_object
 //=========================================================
 // class webmap3_lib_kml_folder_object
 //=========================================================
+
+/**
+ * Class webmap3_lib_kml_folder_object
+ */
 class webmap3_lib_kml_folder_object extends webmap3_lib_xml_single_object
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -70,6 +82,11 @@ class webmap3_lib_kml_folder_object extends webmap3_lib_xml_single_object
     //---------------------------------------------------------
     // build
     //---------------------------------------------------------
+
+    /**
+     * @param $item
+     * @return array
+     */
     public function _build(&$item)
     {
         if (isset($item['tag_use'])) {
@@ -87,6 +104,7 @@ class webmap3_lib_kml_folder_object extends webmap3_lib_xml_single_object
         if (isset($item['open'])) {
             $item['open'] = (int)$item['open'];
         }
+
         return $item;
     }
 
@@ -96,9 +114,12 @@ class webmap3_lib_kml_folder_object extends webmap3_lib_xml_single_object
 //=========================================================
 // class webmap3_lib_kml_placemarks_object
 //=========================================================
+
+/**
+ * Class webmap3_lib_kml_placemarks_object
+ */
 class webmap3_lib_kml_placemarks_object extends webmap3_lib_xml_iterate_object
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -111,6 +132,11 @@ class webmap3_lib_kml_placemarks_object extends webmap3_lib_xml_iterate_object
     //---------------------------------------------------------
     // build
     //---------------------------------------------------------
+
+    /**
+     * @param $item
+     * @return array
+     */
     public function _build(&$item)
     {
         if (isset($item['name'])) {
@@ -125,6 +151,7 @@ class webmap3_lib_kml_placemarks_object extends webmap3_lib_xml_iterate_object
         if (isset($item['longitude'])) {
             $item['longitude'] = (float)$item['longitude'];
         }
+
         return $item;
     }
 
@@ -134,6 +161,10 @@ class webmap3_lib_kml_placemarks_object extends webmap3_lib_xml_iterate_object
 //=========================================================
 // class webmap3_build_kml
 //=========================================================
+
+/**
+ * Class webmap3_lib_kml_build
+ */
 class webmap3_lib_kml_build extends webmap3_lib_xml_build
 {
     public $_CONTENT_TYPE_KML    = 'Content-Type: application/vnd.google-earth.kml+xml';
@@ -173,12 +204,16 @@ class webmap3_lib_kml_build extends webmap3_lib_xml_build
         $this->set_view_title('Google KML');
     }
 
+    /**
+     * @return \webmap3_lib_kml_build|\webmap3_lib_xml_base|\webmap3_lib_xml_build
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_lib_kml_build();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -202,71 +237,114 @@ class webmap3_lib_kml_build extends webmap3_lib_xml_build
     //--------------------------------------------------------
     // set param
     //--------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_dirname($val)
     {
         $this->_DIRNAME = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_document_tag_use($val)
     {
         $this->_DOCUMENT_TAG_USE = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_document_open_use($val)
     {
         $this->_DOCUMENT_OPEN_USE = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_document_open($val)
     {
         $this->_DOCUMENT_OPEN = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_document_name($val)
     {
         $this->_DOCUMENT_NAME = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_document_description($val)
     {
         $this->_DOCUMENT_DESCRIPTION = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_folder_tag_use($val)
     {
         $this->_FOLDER_TAG_USE = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_folder_open_use($val)
     {
         $this->_FOLDER_OPEN_USE = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_folder_open($val)
     {
         $this->_FOLDER_OPEN = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_folder_name($val)
     {
         $this->_FOLDER_NAME = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_folder_description($val)
     {
         $this->_FOLDER_DESCRIPTION = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_page($val)
     {
         $this->_page = (int)$val;
     }
 
+    /**
+     * @return mixed
+     */
     public function build_document_name()
     {
         return $this->_build_name($this->_DOCUMENT_NAME_TPL);
     }
 
+    /**
+     * @return mixed
+     */
     public function build_folder_name()
     {
         return $this->_build_name($this->_FOLDER_NAME_TPL);
@@ -275,41 +353,53 @@ class webmap3_lib_kml_build extends webmap3_lib_xml_build
     //--------------------------------------------------------
     // private
     //--------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function _get_document_param()
     {
-        $arr = array(
+        $arr = [
             'tag_use'     => $this->_DOCUMENT_TAG_USE,
             'open_use'    => $this->_DOCUMENT_OPEN_USE,
             'name'        => $this->_DOCUMENT_NAME,
             'description' => $this->_DOCUMENT_DESCRIPTION,
             'open'        => $this->_DOCUMENT_OPEN,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function _get_folder_param()
     {
-        $arr = array(
+        $arr = [
             'tag_use'     => $this->_FOLDER_TAG_USE,
             'open_use'    => $this->_FOLDER_OPEN_USE,
             'name'        => $this->_FOLDER_NAME,
             'description' => $this->_FOLDER_DESCRIPTION,
             'open'        => $this->_FOLDER_OPEN,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function _build_name($str)
     {
         $str = str_replace('{SITE_NAME}', $this->get_xoops_sitename(), $str);
         if ($this->_DIRNAME) {
             $str = str_replace('{MODULE_NAME}', $this->get_xoops_module_name($this->_DIRNAME), $str);
         }
-        if (!is_null($this->_page)) {
+        if (null !== $this->_page) {
             $str = str_replace('{PAGE}', $this->_page, $str);
         }
+
         return $str;
     }
 
@@ -323,11 +413,18 @@ class webmap3_lib_kml_build extends webmap3_lib_xml_build
         $this->_obj_placemarks = new webmap3_lib_kml_placemarks_object();
     }
 
+    /**
+     * @param $val
+     */
     public function set_placemarks($val)
     {
         $this->_obj_placemarks->set_vars($val);
     }
 
+    /**
+     * @param $template
+     * @return mixed|string|void
+     */
     public function _build_template($template)
     {
         $this->_obj_document->set_vars($this->_get_document_param());

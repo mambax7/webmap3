@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_inc_xoops_version_base
 //=========================================================
+
+/**
+ * Class webmap3_inc_xoops_version_base
+ */
 class webmap3_inc_xoops_version_base
 {
     public $_module_mid      = 0;
@@ -35,6 +39,11 @@ class webmap3_inc_xoops_version_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_inc_xoops_version_base constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME    = $dirname;
@@ -48,6 +57,10 @@ class webmap3_inc_xoops_version_base
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_modversion()
     {
         $this->modify_config_title_length();
@@ -62,6 +75,7 @@ class webmap3_inc_xoops_version_base
 
         if ($this->_HAS_ADMIN) {
             $arr['hasAdmin']   = 1;
+            $arr['system_menu']   = 1;
             $arr['adminindex'] = 'admin/index.php';
             $arr['adminmenu']  = 'admin/menu.php';
         } else {
@@ -126,25 +140,37 @@ class webmap3_inc_xoops_version_base
         $config->update();
     }
 
+    /**
+     * @return bool
+     */
     public function check_post_fct_modulesadmin()
     {
-        if (isset($_POST['fct']) && ($_POST['fct'] == 'modulesadmin')) {
+        if (isset($_POST['fct']) && ('modulesadmin' == $_POST['fct'])) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function check_post_dirname()
     {
         if (isset($_POST['dirname']) && ($_POST['dirname'] == $this->_DIRNAME)) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // Basic Defintion
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_basic()
     {
         $module_icon = 'module_icon.php';
@@ -152,7 +178,7 @@ class webmap3_inc_xoops_version_base
             $module_icon = 'images/module_icon.png';
         }
 
-        $arr = array();
+        $arr = [];
 
         $arr['name']        = $this->lang('NAME') . ' (' . $this->_DIRNAME . ')';
         $arr['description'] = $this->lang('DESC');
@@ -167,7 +193,7 @@ class webmap3_inc_xoops_version_base
 
         // Any tables can't be touched by modulesadmin.
         $arr['sqlfile'] = false;
-        $arr['tables']  = array();
+        $arr['tables']  = [];
 
         return $arr;
     }
@@ -180,20 +206,29 @@ class webmap3_inc_xoops_version_base
     //---------------------------------------------------------
     // Search
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_search()
     {
-        $arr         = array();
+        $arr         = [];
         $arr['file'] = 'include/search.inc.php';
         $arr['func'] = $this->_DIRNAME . '_search';
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // Comments
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_comments()
     {
-        $arr = array();
+        $arr = [];
 
         // Comments
         $arr['pageName'] = 'index.php';
@@ -231,6 +266,9 @@ class webmap3_inc_xoops_version_base
         // dummy
     }
 
+    /**
+     * @return bool
+     */
     public function check_keep_blocks()
     {
         if (!$this->_is_module_admin) {
@@ -245,18 +283,24 @@ class webmap3_inc_xoops_version_base
         if (defined('XOOPS_CUBE_LEGACY')) {
             return false;
         }
-        if (substr(XOOPS_VERSION, 6, 3) >= 2.1) {
+        if (mb_substr(XOOPS_VERSION, 6, 3) >= 2.1) {
             return false;
         }
-        if ($_POST['op'] != 'update_ok') {
+        if ('update_ok' != $_POST['op']) {
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @param $blocks
+     * @return mixed
+     */
     public function build_keep_blocks($blocks)
     {
         $block = webmap3_xoops_block::getSingleton($this->_DIRNAME);
+
         return $block->keep_option($blocks);
     }
 
@@ -271,19 +315,33 @@ class webmap3_inc_xoops_version_base
     //---------------------------------------------------------
     // langauge
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function lang($name)
     {
         return constant($this->lang_name($name));
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function lang_name($name)
     {
-        return strtoupper('_MI_' . $this->_DIRNAME . '_' . $name);
+        return mb_strtoupper('_MI_' . $this->_DIRNAME . '_' . $name);
     }
 
     //---------------------------------------------------------
     // xoops param
     //---------------------------------------------------------
+
+    /**
+     * @param $mid
+     * @return bool
+     */
     public function get_user_is_module_admin($mid)
     {
         global $xoopsUser;
@@ -292,19 +350,26 @@ class webmap3_inc_xoops_version_base
                 return true;
             }
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // module handler
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @return int
+     */
     public function get_module_mid_by_dirname($dirname)
     {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($dirname);
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname($dirname);
         if (is_object($module)) {
             return $module->getVar('mid');
         }
+
         return 0;
     }
 

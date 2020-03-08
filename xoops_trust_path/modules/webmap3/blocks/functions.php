@@ -13,18 +13,32 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //---------------------------------------------------------
 // blocks
 //---------------------------------------------------------
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webmap3_location_show($options)
 {
     $inc_class = b_webmap3_blocks($options);
+
     return $inc_class->location_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webmap3_location_edit($options)
 {
     $inc_class = b_webmap3_blocks($options);
+
     return $inc_class->location_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function &b_webmap3_blocks($options)
 {
     if (isset($options[0]) && $options[0]) {
@@ -34,5 +48,6 @@ function &b_webmap3_blocks($options)
     }
 
     $ret = webmap3_inc_blocks::getSingleton($dirname, WEBMAP3_TRUST_DIRNAME);
+
     return $ret;
 }

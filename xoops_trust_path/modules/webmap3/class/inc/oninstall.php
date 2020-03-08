@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_inc_oninstall
 //=========================================================
+
+/**
+ * Class webmap3_inc_oninstall
+ */
 class webmap3_inc_oninstall extends webmap3_inc_oninstall_base
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -25,12 +28,16 @@ class webmap3_inc_oninstall extends webmap3_inc_oninstall_base
         $this->set_trust_dirname(WEBMAP3_TRUST_DIRNAME);
     }
 
+    /**
+     * @return \webmap3_inc_oninstall
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webmap3_inc_oninstall();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 

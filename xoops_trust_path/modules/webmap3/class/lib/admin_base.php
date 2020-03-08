@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_lib_admin_base
 //=========================================================
+
+/**
+ * Class webmap3_lib_admin_base
+ */
 class webmap3_lib_admin_base
 {
     public $_module_mid;
@@ -41,6 +45,12 @@ class webmap3_lib_admin_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_lib_admin_base constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_DIRNAME       = $dirname;
@@ -56,18 +66,30 @@ class webmap3_lib_admin_base
         $this->_prefix_am = '_AM_' . $trust_dirname . '_' . $this->_PREFIX_TITLE . '_';
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_lib_admin_base
+     */
     public static function getInstance($dirname, $trust_dirname)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_lib_admin_base($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // title
     //---------------------------------------------------------
+
+    /**
+     * @param $title
+     * @param $url
+     * @return string
+     */
     public function build_admin_bread_crumb($title, $url)
     {
         $text = '<a href="' . $this->_MODULE_URL . '/admin/index.php">';
@@ -77,35 +99,52 @@ class webmap3_lib_admin_base
         $text .= '<a href="' . $url . '">';
         $text .= $this->sanitize($title);
         $text .= '</a>';
-        $text .= "<br /><br />\n";
+        $text .= "<br ><br >\n";
+
         return $text;
     }
 
+    /**
+     * @param      $name
+     * @param bool $format
+     * @return mixed|string
+     */
     public function build_admin_title($name, $format = true)
     {
         $str = $this->get_admin_title($name);
         if ($format) {
             $str = '<h3>' . $str . "</h3>\n";
         }
+
         return $str;
     }
 
+    /**
+     * @param $name
+     * @return mixed|string
+     */
     public function get_admin_title($name)
     {
-        $const_name_1 = strtoupper($this->_prefix_mi . $name);
-        $const_name_2 = strtoupper($this->_prefix_am . $name);
+        $const_name_1 = mb_strtoupper($this->_prefix_mi . $name);
+        $const_name_2 = mb_strtoupper($this->_prefix_am . $name);
 
         if (defined($const_name_1)) {
             return constant($const_name_1);
         } elseif (defined($const_name_2)) {
             return constant($const_name_2);
         }
+
         return $const_name_2;
     }
 
+    /**
+     * @param $fct
+     * @return string
+     */
     public function build_this_url($fct)
     {
         $str = $this->_MODULE_URL . '/admin/index.php?fct=' . $fct;
+
         return $str;
     }
 
@@ -114,14 +153,20 @@ class webmap3_lib_admin_base
     //---------------------------------------------------------
     public function clear_errors()
     {
-        $this->_errors = array();
+        $this->_errors = [];
     }
 
+    /**
+     * @return mixed
+     */
     public function get_errors()
     {
         return $this->_errors;
     }
 
+    /**
+     * @param $msg
+     */
     public function set_error($msg)
     {
         // array type
@@ -129,7 +174,6 @@ class webmap3_lib_admin_base
             foreach ($msg as $m) {
                 $this->_errors[] = $m;
             }
-
             // string type
         } else {
             $arr = explode("\n", $msg);
@@ -139,6 +183,11 @@ class webmap3_lib_admin_base
         }
     }
 
+    /**
+     * @param bool $flag_sanitize
+     * @param bool $flag_highlight
+     * @return string
+     */
     public function get_format_error($flag_sanitize = true, $flag_highlight = true)
     {
         $val = '';
@@ -146,43 +195,60 @@ class webmap3_lib_admin_base
             if ($flag_sanitize) {
                 $msg = $this->sanitize($msg);
             }
-            $val .= $msg . "<br />\n";
+            $val .= $msg . "<br >\n";
         }
 
         if ($flag_highlight) {
             $val = $this->highlight($val);
         }
+
         return $val;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
     }
 
+    /**
+     * @param $msg
+     * @return string
+     */
     public function highlight($msg)
     {
         $str = '<span style="' . $this->_SPAN_STYLE_RED . '">';
         $str .= $msg;
         $str .= "</span>\n";
+
         return $str;
     }
 
     //---------------------------------------------------------
     // ticket
     //---------------------------------------------------------
+
     public function get_token()
     {
         global $xoopsGTicket;
         if (is_object($xoopsGTicket)) {
             return $xoopsGTicket->issue();
         }
+
         return null;
     }
 
+    /**
+     * @param bool $allow_repost
+     * @return bool
+     */
     public function check_token($allow_repost = false)
     {
         global $xoopsGTicket;
@@ -190,10 +256,12 @@ class webmap3_lib_admin_base
             if (!$xoopsGTicket->check(true, '', $allow_repost)) {
                 $this->_token_error_flag = true;
                 $this->_token_errors     = $xoopsGTicket->getErrors();
+
                 return false;
             }
         }
         $this->_token_error_flag = false;
+
         return true;
     }
 
@@ -205,21 +273,30 @@ class webmap3_lib_admin_base
     //---------------------------------------------------------
     // xoops param
     //---------------------------------------------------------
+
+    /**
+     * @return int|mixed
+     */
     public function get_module_mid()
     {
         global $xoopsModule;
         if (is_object($xoopsModule)) {
             return $xoopsModule->mid();
         }
+
         return 0;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function get_module_name()
     {
         global $xoopsModule;
         if (is_object($xoopsModule)) {
             return $xoopsModule->getVar('name', 'n');
         }
+
         return null;
     }
 

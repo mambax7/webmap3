@@ -18,6 +18,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webmap3_admin_gicon_form
 //=========================================================
+
+/**
+ * Class webmap3_admin_gicon_form
+ */
 class webmap3_admin_gicon_form extends webmap3_lib_form_lang
 {
     public $_gicon_handler;
@@ -41,6 +45,12 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webmap3_admin_gicon_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -54,18 +64,29 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         $this->_THIS_URL = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
     }
 
-    public static function getInstance($dirname, $trust_dirname)
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return \webmap3_admin_gicon_form|\webmap3_lib_form
+     */
+    public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webmap3_admin_gicon_form($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // print form
     //---------------------------------------------------------
+
+    /**
+     * @param $mode
+     * @param $row
+     */
     public function print_form($mode, $row)
     {
         switch ($mode) {
@@ -73,7 +94,6 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
                 $title  = _AM_WEBMAP3_GICON_MENU_EDIT;
                 $action = 'update';
                 break;
-
             case 'new':
             default:
                 $title  = _AM_WEBMAP3_GICON_MENU_NEW;
@@ -114,12 +134,15 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         echo $this->build_form_end();
     }
 
+    /**
+     * @return string
+     */
     public function _build_line_image_file()
     {
         $desc = _AM_WEBMAP3_CAP_MAXPIXEL . ' ';
         $desc .= $this->_cfg_gicon_width . ' x ';
         $desc .= $this->_cfg_gicon_width . ' px';
-        $desc .= "<br />\n";
+        $desc .= "<br >\n";
         $desc .= _AM_WEBMAP3_DSC_RESIZE . ' ';
 
         $ele = $this->_build_ele_image_file();
@@ -127,68 +150,91 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         return $this->build_line_cap_ele(_AM_WEBMAP3_GICON_IMAGE_SEL, $desc, $ele);
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_image_file()
     {
         $path = $this->get_row_by_key('gicon_image_path');
 
         $text = $this->build_form_file($this->_IMAGE_FIELD_NAME);
-        $text .= "<br />\n";
+        $text .= "<br >\n";
 
         if ($path) {
             $text .= $this->_build_image_link($path);
         }
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function _build_line_shadow_file()
     {
         return $this->build_line_ele(_AM_WEBMAP3_GICON_SHADOW_SEL, $this->_build_ele_shadow_file());
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_shadow_file()
     {
         $path = $this->get_row_by_key('gicon_shadow_path');
 
         $text = $this->build_form_file($this->_SHADOW_FIELD_NAME);
-        $text .= "<br />\n";
+        $text .= "<br >\n";
 
         if ($path) {
             $del_name  = 'shadow_del';
             $del_value = $this->_post_class->get_post_int($del_name);
-            $del_opts  = array(_AM_WEBMAP3_GICON_SHADOW_DEL => $this->_C_YES);
+            $del_opts  = [_AM_WEBMAP3_GICON_SHADOW_DEL => $this->_C_YES];
 
             $text .= $this->build_form_checkbox($del_name, $del_value, $del_opts);
-            $text .= "<br />\n";
+            $text .= "<br >\n";
             $text .= $this->_build_image_link($path);
         }
+
         return $text;
     }
 
+    /**
+     * @param $path
+     * @return string
+     */
     public function _build_image_link($path)
     {
         $url_s = $this->_gicon_handler->build_icon_url($path, true);
         $text  = '<a href="' . $url_s . '" target="_blank">';
-        $text .= $url_s;
-        $text .= "<br />\n";
-        $text .= '<img src="' . $url_s . '" border="0" />';
-        $text .= "</a><br />\n";
+        $text  .= $url_s;
+        $text  .= "<br >\n";
+        $text  .= '<img src="' . $url_s . '" border="0" >';
+        $text  .= "</a><br >\n";
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_button()
     {
         $str = $this->build_input_submit('submit', _SUBMIT);
         $str .= ' ';
         $str .= $this->build_input_reset('reset', _CANCEL);
+
         return $str;
     }
 
     //---------------------------------------------------------
     // list
     //---------------------------------------------------------
+
+    /**
+     * @param $rows
+     */
     public function print_list($rows)
     {
-
         // --- form ---
         echo "<form name='MainForm' action='' method='post' style='margin:10px;'>\n";
         echo $this->build_html_token();
@@ -217,6 +263,9 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         // --- table form end ---
     }
 
+    /**
+     * @param $row
+     */
     public function _print_line($row)
     {
         $oddeven = $this->get_alternate_class();
@@ -225,7 +274,7 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         $title_s       = $this->sanitize($row['gicon_title']);
         $del_confirm   = 'confirm("' . sprintf(_AM_WEBMAP3_GICON_DELCONFIRM, $title_s) . '")';
         $onclick       = 'if (' . $del_confirm . ') { document.MainForm.delgicon.value="' . $gicon_id . '"; submit(); }';
-        $button_delete = "<input type='button' value='" . _DELETE . "' onclick='" . $onclick . "' />";
+        $button_delete = "<input type='button' value='" . _DELETE . "' onclick='" . $onclick . "' >";
 
         echo '<tr>';
 
@@ -240,7 +289,7 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         echo '<td class="' . $oddeven . '">';
         if ($row['gicon_image_path']) {
             $image_url_s = $this->_gicon_handler->build_icon_url($row['gicon_image_path'], true);
-            echo '<img src="' . $image_url_s . '" valign="middle" />';
+            echo '<img src="' . $image_url_s . '" valign="middle" >';
             echo ' ( ' . (int)$row['gicon_image_width'] . ' x ' . (int)$row['gicon_image_height'] . ' )';
         }
         echo "</td>\n";
@@ -248,7 +297,7 @@ class webmap3_admin_gicon_form extends webmap3_lib_form_lang
         echo '<td class="' . $oddeven . '">';
         if ($row['gicon_shadow_path']) {
             $shadow_url_s = $this->_gicon_handler->build_icon_url($row['gicon_shadow_path'], true);
-            echo '<img src="' . $shadow_url_s . '" valign="middle" />';
+            echo '<img src="' . $shadow_url_s . '" valign="middle" >';
             echo ' ( ' . (int)$row['gicon_shadow_width'] . ' x ' . (int)$row['gicon_shadow_height'] . ' )';
         }
         echo "</td>\n";

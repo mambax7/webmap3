@@ -1,6 +1,6 @@
 /* ========================================================
  * $Id: map.js,v 1.2 2012/04/09 12:09:43 ohwada Exp $
- * http://code.google.com/intl/en/apis/maps/documentation/javascript/
+ * https://code.google.com/intl/en/apis/maps/documentation/javascript/
  * ========================================================
  */
 
